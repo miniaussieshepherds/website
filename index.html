@@ -140,8 +140,68 @@
       color: #555;
       font-size: 0.98rem;
     }
+.pro-tile {
+  background: var(--white);
+  border-radius: 18px;
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border: 1px solid rgba(0,0,0,0.05);
+}
 
-<!-- STATS -->
+.pro-tile:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+.icon-circle {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: var(--ice-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.icon-circle svg {
+  stroke: var(--charcoal);
+}
+    .pro-tile {
+  background: var(--white);
+  border-radius: 18px;
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.pro-tile:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+.icon-circle {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: var(--ice-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.icon-circle svg {
+  width: 32px;
+  height: 32px;
+  fill: var(--charcoal);
+}
 <section class="stats">
   <div class="section-inner">
     <div class="section-header">
@@ -150,30 +210,56 @@
     </div>
 
     <div class="stats-grid">
-      <div class="stat-card pro-card">
+
+      <div class="stat-card pro-tile">
+        <div class="icon-circle">
+          <!-- Filled Height Icon -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#1A1A1A">
+            <rect x="5" y="3" width="4" height="18" rx="1"/>
+            <rect x="15" y="3" width="4" height="18" rx="1"/>
+          </svg>
+        </div>
         <h3>Height</h3>
         <p>16 inches</p>
       </div>
 
-      <div class="stat-card pro-card">
+      <div class="stat-card pro-tile">
+        <div class="icon-circle">
+          <!-- Filled Weight Icon -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#1A1A1A">
+            <circle cx="12" cy="12" r="9"/>
+          </svg>
+        </div>
         <h3>Weight</h3>
         <p>28 lbs</p>
       </div>
 
-      <div class="stat-card pro-card">
+      <div class="stat-card pro-tile">
+        <div class="icon-circle">
+          <!-- Filled DNA Icon -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#1A1A1A">
+            <path d="M7 2c3 3 7 3 10 0v20c-3-3-7-3-10 0V2z"/>
+          </svg>
+        </div>
         <h3>DNA</h3>
         <p>Full Embark Panel</p>
       </div>
 
-      <div class="stat-card pro-card">
+      <div class="stat-card pro-tile">
+        <div class="icon-circle">
+          <!-- Filled Color Icon -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#1A1A1A">
+            <circle cx="12" cy="12" r="10"/>
+          </svg>
+        </div>
         <h3>Color</h3>
         <p>Blue Merle</p>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- TRAITS -->
 <section class="traits">
   <div class="section-inner">
     <div class="section-header">
@@ -182,25 +268,51 @@
     </div>
 
     <div class="traits-grid">
-      <div class="trait glass-card">
-        <span>🐾</span>
+
+      <div class="trait pro-tile">
+        <div class="icon-circle">
+          <!-- Filled Confidence Icon -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#1A1A1A">
+            <path d="M12 2l10 10-10 10L2 12 12 2z"/>
+          </svg>
+        </div>
         <p>Confident</p>
       </div>
 
-      <div class="trait glass-card">
-        <span>⚡</span>
+      <div class="trait pro-tile">
+        <div class="icon-circle">
+          <!-- Filled Drive Icon -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#1A1A1A">
+            <path d="M3 11h14l-5-5 2-2 9 9-9 9-2-2 5-5H3z"/>
+          </svg>
+        </div>
         <p>High Drive</p>
       </div>
 
-      <div class="trait glass-card">
-        <span>❤️</span>
+      <div class="trait pro-tile">
+        <div class="icon-circle">
+          <!-- Filled Family Icon -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#1A1A1A">
+            <circle cx="8" cy="10" r="3"/>
+            <circle cx="16" cy="10" r="3"/>
+            <path d="M2 22c1-5 5-8 10-8s9 3 10 8"/>
+          </svg>
+        </div>
         <p>Family Friendly</p>
       </div>
 
-      <div class="trait glass-card">
-        <span>🧠</span>
+      <div class="trait pro-tile">
+        <div class="icon-circle">
+          <!-- Filled Trainability Icon -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#1A1A1A">
+            <circle cx="12" cy="12" r="10"/>
+            <rect x="11" y="6" width="2" height="12" rx="1" fill="#fff"/>
+            <rect x="6" y="11" width="12" height="2" rx="1" fill="#fff"/>
+          </svg>
+        </div>
         <p>Highly Trainable</p>
       </div>
+
     </div>
   </div>
 </section>
