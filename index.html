@@ -354,6 +354,37 @@
       transition: transform 0.18s ease, box-shadow 0.18s ease;
     }
 
+    /* Desktop hover affordance: make it obvious the card previews full screen */
+    .gallery-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.00) 55%, rgba(0,0,0,0.34) 100%);
+      opacity: 0;
+      transition: opacity 0.18s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .gallery-item::after {
+      content: 'Full screen';
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.28);
+      background: rgba(28,28,30,0.55);
+      color: rgba(255,255,255,0.95);
+      font-size: 0.82rem;
+      letter-spacing: 0.02em;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      pointer-events: none;
+      z-index: 2;
+    }
+
     .gallery-item img {
       width: 100%;
       height: 100%;
@@ -372,6 +403,15 @@
 
       .gallery-item:hover img {
         transform: scale(1.03);
+      }
+
+      .gallery-item:hover::before {
+        opacity: 1;
+      }
+
+      .gallery-item:hover::after {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
 
@@ -461,11 +501,8 @@
       }
 
       .lightbox {
-        pointer-events: none;
-      }
-
-      .lightbox__close {
-        display: none;
+        pointer-events: auto;
+        cursor: zoom-out;
       }
     }
 
@@ -903,6 +940,13 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     isOpen = false;
   }
 
+  function scheduleHoverClose(delayMs) {
+    if (hoverCloseTimer) clearTimeout(hoverCloseTimer);
+    hoverCloseTimer = setTimeout(() => {
+      closeLightbox();
+    }, delayMs);
+  }
+
   const items = document.querySelectorAll('.gallery-item');
   items.forEach(item => {
     const img = item.querySelector('img');
@@ -927,10 +971,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
           hoverOpenTimer = null;
         }
 
-        if (hoverCloseTimer) clearTimeout(hoverCloseTimer);
-        hoverCloseTimer = setTimeout(() => {
-          closeLightbox();
-        }, 120);
+        scheduleHoverClose(140);
       });
     } else {
       item.addEventListener('click', (e) => {
@@ -939,6 +980,34 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       });
     }
   });
+
+  if (supportsHover) {
+    // Desktop: allow hovering/clicking the overlay without it immediately closing.
+    lightbox.addEventListener('mouseenter', () => {
+      if (hoverCloseTimer) {
+        clearTimeout(hoverCloseTimer);
+        hoverCloseTimer = null;
+      }
+    });
+
+    lightbox.addEventListener('mouseleave', () => {
+      scheduleHoverClose(140);
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      // Click anywhere on the dark overlay to close.
+      if (e.target === lightbox || e.target === lightboxImg) {
+        closeLightbox();
+      }
+    });
+
+    if (lightboxClose) {
+      lightboxClose.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeLightbox();
+      });
+    }
+  }
 
   if (!supportsHover) {
     lightbox.addEventListener('click', (e) => {
