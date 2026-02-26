@@ -36,6 +36,11 @@
       box-sizing: border-box;
     }
 
+    html {
+      /* Best-practice: keep layout stable when scrollbars toggle (supported in modern browsers). */
+      scrollbar-gutter: stable;
+    }
+
     body {
       margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
@@ -979,6 +984,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   const lightboxClose = lightbox.querySelector('.lightbox__close');
 
   let isOpen = false;
+  let savedBodyPaddingRight = '';
+
+  function getScrollbarWidth() {
+    return Math.max(0, window.innerWidth - document.documentElement.clientWidth);
+  }
 
   function openLightbox(src, alt, lockScroll) {
     if (!lightboxImg) return;
@@ -989,6 +999,13 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     isOpen = true;
 
     if (lockScroll) {
+      // Prevent layout "jolt" by reserving scrollbar space while scroll is locked.
+      const scrollbarWidth = getScrollbarWidth();
+      savedBodyPaddingRight = document.body.style.paddingRight;
+      if (scrollbarWidth > 0) {
+        document.body.style.paddingRight = `${scrollbarWidth}px`;
+      }
+
       document.documentElement.classList.add('lightbox-open');
       document.body.classList.add('lightbox-open');
     }
@@ -1000,6 +1017,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     lightbox.setAttribute('aria-hidden', 'true');
     document.documentElement.classList.remove('lightbox-open');
     document.body.classList.remove('lightbox-open');
+    document.body.style.paddingRight = savedBodyPaddingRight;
     isOpen = false;
   }
 
