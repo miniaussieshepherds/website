@@ -563,6 +563,52 @@
       z-index: 3;
     }
 
+    .lightbox__nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.28);
+      background: rgba(28,28,30,0.55);
+      color: rgba(255,255,255,0.95);
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-tap-highlight-color: transparent;
+      z-index: 4;
+      opacity: 0.78;
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+
+    .lightbox__nav--prev {
+      left: -8px;
+    }
+
+    .lightbox__nav--next {
+      right: -8px;
+    }
+
+    .lightbox__nav:hover {
+      opacity: 1;
+      transform: translateY(-50%) scale(1.02);
+    }
+
+    .lightbox__nav:focus-visible {
+      outline: 3px solid rgba(169, 215, 242, 0.85);
+      outline-offset: 3px;
+      opacity: 1;
+    }
+
+    .lightbox__nav:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+
     .lightbox__close:focus-visible {
       outline: 3px solid rgba(169, 215, 242, 0.85);
       outline-offset: 3px;
@@ -687,7 +733,6 @@
   background: var(--charcoal);
   color: var(--white);
   padding: 60px 20px 30px;
-  margin-top: 80px;
 }
 
 .footer-inner {
@@ -925,6 +970,8 @@
   <div class="lightbox" id="lightbox" aria-hidden="true">
     <div class="lightbox__content" role="dialog" aria-modal="true" aria-label="Image viewer">
       <button class="lightbox__close" type="button" aria-label="Close image">×</button>
+      <button class="lightbox__nav lightbox__nav--prev" type="button" aria-label="Previous image">‹</button>
+      <button class="lightbox__nav lightbox__nav--next" type="button" aria-label="Next image">›</button>
       <img class="lightbox__img" alt="">
     </div>
   </div>
@@ -1014,19 +1061,40 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   if (!lightbox) return;
   const lightboxImg = lightbox.querySelector('.lightbox__img');
   const lightboxClose = lightbox.querySelector('.lightbox__close');
+  const lightboxPrev = lightbox.querySelector('.lightbox__nav--prev');
+  const lightboxNext = lightbox.querySelector('.lightbox__nav--next');
 
   let isOpen = false;
   let savedBodyPaddingRight = '';
   let savedRootScrollbarWidth = '';
 
+  const galleryImgs = Array.from(document.querySelectorAll('.gallery-item img'));
+  let currentIndex = -1;
+
   function getScrollbarWidth() {
     return Math.max(0, window.innerWidth - document.documentElement.clientWidth);
   }
 
-  function openLightbox(src, alt, lockScroll) {
+  function setLightboxImage(index) {
     if (!lightboxImg) return;
-    lightboxImg.src = src;
-    lightboxImg.alt = alt || '';
+    if (!galleryImgs.length) return;
+
+    const normalized = ((index % galleryImgs.length) + galleryImgs.length) % galleryImgs.length;
+    const img = galleryImgs[normalized];
+    if (!img) return;
+
+    lightboxImg.src = img.currentSrc || img.src;
+    lightboxImg.alt = img.alt || '';
+    currentIndex = normalized;
+
+    const disableNav = galleryImgs.length <= 1;
+    if (lightboxPrev) lightboxPrev.disabled = disableNav;
+    if (lightboxNext) lightboxNext.disabled = disableNav;
+  }
+
+  function openLightbox(index, lockScroll) {
+    if (!lightboxImg) return;
+    setLightboxImage(index);
     lightbox.classList.add('is-open');
     lightbox.setAttribute('aria-hidden', 'false');
     isOpen = true;
@@ -1063,16 +1131,36 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     isOpen = false;
   }
 
-  const items = document.querySelectorAll('.gallery-item');
-  items.forEach(item => {
-    const img = item.querySelector('img');
-    if (!img) return;
-
+  galleryImgs.forEach((img, index) => {
+    const item = img.closest('.gallery-item');
+    if (!item) return;
     item.addEventListener('click', (e) => {
       e.preventDefault();
-      openLightbox(img.currentSrc || img.src, img.alt, true);
+      openLightbox(index, true);
     });
   });
+
+  function go(delta) {
+    if (!galleryImgs.length) return;
+    const nextIndex = (currentIndex < 0 ? 0 : currentIndex) + delta;
+    setLightboxImage(nextIndex);
+  }
+
+  if (lightboxPrev) {
+    lightboxPrev.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      go(-1);
+    });
+  }
+
+  if (lightboxNext) {
+    lightboxNext.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      go(1);
+    });
+  }
 
   lightbox.addEventListener('click', (e) => {
     if (e.target === lightbox || e.target === lightboxImg) {
@@ -1088,7 +1176,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   }
 
   document.addEventListener('keydown', (e) => {
+    if (!isOpen) return;
     if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') go(-1);
+    if (e.key === 'ArrowRight') go(1);
   });
 })();
 </script>
