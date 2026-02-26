@@ -100,13 +100,22 @@
       opacity: 0.95;
     }
 
+    .cta-row {
+      margin-top: 24px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
     .cta-button {
       display: inline-block;
-      margin-top: 24px;
       padding: 12px 28px;
       background: var(--charcoal);
       color: var(--white);
       border-radius: 999px;
+      border: 1px solid transparent;
       text-decoration: none;
       font-weight: 600;
       font-size: 0.95rem;
@@ -118,6 +127,22 @@
     .cta-button:hover {
       background: var(--copper);
       transform: translateY(-1px);
+    }
+
+    .cta-button.secondary {
+      background: transparent;
+      border-color: rgba(255,255,255,0.72);
+      color: rgba(255,255,255,0.95);
+    }
+
+    .cta-button.secondary:hover {
+      background: rgba(255,255,255,0.12);
+      transform: translateY(-1px);
+    }
+
+    .cta-button:focus-visible {
+      outline: 3px solid rgba(169, 215, 242, 0.85);
+      outline-offset: 3px;
     }
 
     /* SECTION WRAPPERS */
@@ -489,12 +514,15 @@
   <div class="hero-content">
     <h1>Buddy — Mini American Shepherd Stud</h1>
     <p>Proven genetics. Exceptional temperament. Modern, responsible breeding for the next generation of Mini Americans.</p>
-    <a href="#contact" class="cta-button">Request Stud Info</a>
+    <div class="cta-row">
+      <a href="#contact" class="cta-button">Request Stud Info</a>
+      <a href="#profile" class="cta-button secondary">Learn More</a>
+    </div>
   </div>
 </section>
 
   <!-- STATS -->
-  <section class="stats">
+  <section class="stats" id="profile">
     <div class="section-inner">
       <div class="section-header">
         <h2>Stud Profile</h2>
@@ -640,31 +668,31 @@
       </div>
       <div class="gallery-grid">
         <figure class="gallery-item">
-          <img src="images/gallery-01.jpg" alt="Buddy running outdoors" loading="lazy" decoding="async">
+          <img src="images/gallery-01.jpg" alt="Buddy standing in a grassy field" loading="lazy" decoding="async">
         </figure>
         <figure class="gallery-item">
-          <img src="images/gallery-02.jpg" alt="Buddy standing with another dog" loading="lazy" decoding="async">
+          <img src="images/gallery-02.jpg" alt="Buddy standing on a rocky shoreline" loading="lazy" decoding="async">
         </figure>
         <figure class="gallery-item">
-          <img src="images/gallery-03.jpg" alt="Close-up portrait of Buddy" loading="lazy" decoding="async">
+          <img src="images/gallery-03.jpg" alt="Buddy running outdoors" loading="lazy" decoding="async">
         </figure>
         <figure class="gallery-item">
-          <img src="images/gallery-04.jpg" alt="Buddy resting beside a bowl" loading="lazy" decoding="async">
+          <img src="images/gallery-04.jpg" alt="Buddy posed on grass with another dog" loading="lazy" decoding="async">
         </figure>
         <figure class="gallery-item">
-          <img src="images/gallery-05.jpg" alt="Buddy relaxing indoors" loading="lazy" decoding="async">
+          <img src="images/gallery-05.jpg" alt="Buddy sitting outdoors at sunset" loading="lazy" decoding="async">
         </figure>
         <figure class="gallery-item">
-          <img src="images/gallery-06.jpg" alt="Buddy on a rocky shoreline" loading="lazy" decoding="async">
+          <img src="images/gallery-06.jpg" alt="Buddy relaxing indoors with a toy" loading="lazy" decoding="async">
         </figure>
         <figure class="gallery-item">
-          <img src="images/gallery-07.jpg" alt="Buddy sitting outdoors at sunset" loading="lazy" decoding="async">
+          <img src="images/gallery-07.jpg" alt="Close-up portrait of Buddy" loading="lazy" decoding="async">
         </figure>
         <figure class="gallery-item">
           <img src="images/gallery-08.jpg" alt="Buddy lounging with a tennis ball" loading="lazy" decoding="async">
         </figure>
         <figure class="gallery-item">
-          <img src="images/gallery-09.jpg" alt="Buddy standing in a grassy field" loading="lazy" decoding="async">
+          <img src="images/gallery-09.jpg" alt="Buddy with a paw in a water bowl" loading="lazy" decoding="async">
         </figure>
       </div>
     </div>
