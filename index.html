@@ -140,182 +140,61 @@
       color: #555;
       font-size: 0.98rem;
     }
-.pro-tile {
-  background: var(--white);
-  border-radius: 18px;
-  padding: 32px 24px;
-  text-align: center;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  border: 1px solid rgba(0,0,0,0.05);
-}
 
-.pro-tile:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
-}
+    /* Card layouts (Stud Profile + Temperament & Traits) */
+    .stats-grid,
+    .traits-grid {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
 
-.icon-circle {
-  width: 64px;
-  height: 64px;
-  margin: 0 auto 16px;
-  border-radius: 50%;
-  background: var(--ice-blue);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-}
-
-.icon-circle svg {
-  stroke: var(--charcoal);
-}
     .pro-tile {
-  background: var(--white);
-  border-radius: 18px;
-  padding: 32px 24px;
-  text-align: center;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  border: 1px solid rgba(0,0,0,0.05);
-}
+      background: var(--white);
+      border-radius: 18px;
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
 
-.pro-tile:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
-}
+    .pro-tile:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+    }
 
-.icon-circle {
-  width: 64px;
-  height: 64px;
-  margin: 0 auto 16px;
-  border-radius: 50%;
-  background: var(--ice-blue);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-}
+    .pro-tile h3 {
+      font-size: 1.05rem;
+      margin: 0 0 6px;
+    }
 
-.icon-circle svg {
-  width: 32px;
-  height: 32px;
-  fill: var(--charcoal);
-}
-<section class="stats">
-  <div class="section-inner">
-    <div class="section-header">
-      <h2>Stud Profile</h2>
-      <p>Key structural and temperament traits that define Buddy’s quality as a Mini American Shepherd stud.</p>
-    </div>
+    .pro-tile p {
+      color: #555;
+      font-size: 0.95rem;
+      margin: 0;
+    }
 
-    <div class="stats-grid">
+    .icon-circle {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: var(--ice-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      color: var(--charcoal);
+    }
 
-      <div class="stat-card pro-tile">
-        <div class="icon-circle">
-          <!-- Filled Height Icon -->
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="#1A1A1A">
-            <rect x="5" y="3" width="4" height="18" rx="1"/>
-            <rect x="15" y="3" width="4" height="18" rx="1"/>
-          </svg>
-        </div>
-        <h3>Height</h3>
-        <p>16 inches</p>
-      </div>
-
-      <div class="stat-card pro-tile">
-        <div class="icon-circle">
-          <!-- Filled Weight Icon -->
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="#1A1A1A">
-            <circle cx="12" cy="12" r="9"/>
-          </svg>
-        </div>
-        <h3>Weight</h3>
-        <p>28 lbs</p>
-      </div>
-
-      <div class="stat-card pro-tile">
-        <div class="icon-circle">
-          <!-- Filled DNA Icon -->
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="#1A1A1A">
-            <path d="M7 2c3 3 7 3 10 0v20c-3-3-7-3-10 0V2z"/>
-          </svg>
-        </div>
-        <h3>DNA</h3>
-        <p>Full Embark Panel</p>
-      </div>
-
-      <div class="stat-card pro-tile">
-        <div class="icon-circle">
-          <!-- Filled Color Icon -->
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="#1A1A1A">
-            <circle cx="12" cy="12" r="10"/>
-          </svg>
-        </div>
-        <h3>Color</h3>
-        <p>Blue Merle</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<section class="traits">
-  <div class="section-inner">
-    <div class="section-header">
-      <h2>Temperament & Traits</h2>
-      <p>Balanced drive, confidence, and biddability — ideal for performance and active family homes.</p>
-    </div>
-
-    <div class="traits-grid">
-
-      <div class="trait pro-tile">
-        <div class="icon-circle">
-          <!-- Filled Confidence Icon -->
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="#1A1A1A">
-            <path d="M12 2l10 10-10 10L2 12 12 2z"/>
-          </svg>
-        </div>
-        <p>Confident</p>
-      </div>
-
-      <div class="trait pro-tile">
-        <div class="icon-circle">
-          <!-- Filled Drive Icon -->
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="#1A1A1A">
-            <path d="M3 11h14l-5-5 2-2 9 9-9 9-2-2 5-5H3z"/>
-          </svg>
-        </div>
-        <p>High Drive</p>
-      </div>
-
-      <div class="trait pro-tile">
-        <div class="icon-circle">
-          <!-- Filled Family Icon -->
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="#1A1A1A">
-            <circle cx="8" cy="10" r="3"/>
-            <circle cx="16" cy="10" r="3"/>
-            <path d="M2 22c1-5 5-8 10-8s9 3 10 8"/>
-          </svg>
-        </div>
-        <p>Family Friendly</p>
-      </div>
-
-      <div class="trait pro-tile">
-        <div class="icon-circle">
-          <!-- Filled Trainability Icon -->
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="#1A1A1A">
-            <circle cx="12" cy="12" r="10"/>
-            <rect x="11" y="6" width="2" height="12" rx="1" fill="#fff"/>
-            <rect x="6" y="11" width="12" height="2" rx="1" fill="#fff"/>
-          </svg>
-        </div>
-        <p>Highly Trainable</p>
-      </div>
-
-    </div>
-  </div>
-</section>
+    .icon-circle svg {
+      width: 28px;
+      height: 28px;
+      display: block;
+      fill: currentColor;
+    }
 
     /* PEDIGREE */
     .pedigree {
@@ -558,19 +437,43 @@
         <p>Key details at a glance for breeders focused on structure, health, and temperament.</p>
       </div>
       <div class="stats-grid">
-        <div class="stat-card">
+        <div class="stat-card pro-tile">
+          <div class="icon-circle" aria-hidden="true">
+            <!-- Ruler (filled) -->
+            <svg viewBox="0 0 24 24">
+              <path d="M7 2h4a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 3h2a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2h-2V5z"/>
+            </svg>
+          </div>
           <h3>Height</h3>
           <p>16 inches</p>
         </div>
-        <div class="stat-card">
+        <div class="stat-card pro-tile">
+          <div class="icon-circle" aria-hidden="true">
+            <!-- Kettlebell (filled) -->
+            <svg viewBox="0 0 24 24">
+              <path d="M9 6a3 3 0 1 1 6 0v1h1a4 4 0 0 1 4 4v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-6a4 4 0 0 1 4-4h1V6z"/>
+            </svg>
+          </div>
           <h3>Weight</h3>
           <p>28 lbs</p>
         </div>
-        <div class="stat-card">
+        <div class="stat-card pro-tile">
+          <div class="icon-circle" aria-hidden="true">
+            <!-- DNA helix (filled) -->
+            <svg viewBox="0 0 24 24">
+              <path d="M7 3c0 3 3 5 5 6s5 3 5 6v6h-2v-6c0-2-2.2-3.6-4-4.5S9 9 9 7V3H7zm10 0v4c0 3-3 5-5 6s-5 3-5 6v2h2v-2c0-2 2.2-3.6 4-4.5s4-2.5 4-4.5V3h-2z"/>
+            </svg>
+          </div>
           <h3>DNA</h3>
           <p>Full Embark Panel</p>
         </div>
-        <div class="stat-card">
+        <div class="stat-card pro-tile">
+          <div class="icon-circle" aria-hidden="true">
+            <!-- Droplet (filled) -->
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2s7 7.2 7 12.3A7 7 0 0 1 5 14.3C5 9.2 12 2 12 2z"/>
+            </svg>
+          </div>
           <h3>Color</h3>
           <p>Blue Merle</p>
         </div>
@@ -586,21 +489,43 @@
         <p>Balanced drive, biddability, and off‑switch — ideal for active homes and performance prospects.</p>
       </div>
       <div class="traits-grid">
-        <div class="trait">
-          <span>🐾</span>
-          <p>Confident</p>
+        <div class="trait pro-tile">
+          <div class="icon-circle" aria-hidden="true">
+            <!-- Shield (filled) -->
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2l8 4v6c0 5.2-3.4 9.7-8 10-4.6-.3-8-4.8-8-10V6l8-4z"/>
+            </svg>
+          </div>
+          <h3>Confident</h3>
         </div>
-        <div class="trait">
-          <span>⚡</span>
-          <p>High Drive</p>
+        <div class="trait pro-tile">
+          <div class="icon-circle" aria-hidden="true">
+            <!-- Bolt (filled) -->
+            <svg viewBox="0 0 24 24">
+              <path d="M13 2L3 14h7l-1 8 12-14h-7l-1-6z"/>
+            </svg>
+          </div>
+          <h3>High Drive</h3>
         </div>
-        <div class="trait">
-          <span>❤️</span>
-          <p>Family Friendly</p>
+        <div class="trait pro-tile">
+          <div class="icon-circle" aria-hidden="true">
+            <!-- Heart (filled) -->
+            <svg viewBox="0 0 24 24">
+              <path d="M12 21s-7-4.6-9.4-8.8C.8 8.7 3.2 5.5 6.5 5.5c1.9 0 3.4 1 4.5 2.3 1.1-1.3 2.6-2.3 4.5-2.3 3.3 0 5.7 3.2 3.9 6.7C19 16.4 12 21 12 21z"/>
+            </svg>
+          </div>
+          <h3>Family Friendly</h3>
         </div>
-        <div class="trait">
-          <span>🧠</span>
-          <p>Highly Trainable</p>
+        <div class="trait pro-tile">
+          <div class="icon-circle" aria-hidden="true">
+            <!-- Graduation cap (filled) -->
+            <svg viewBox="0 0 24 24">
+              <path d="M12 3L2 8l10 5 10-5-10-5z"/>
+              <path d="M6 11.2V16c0 2 3.1 3.8 6 3.8s6-1.8 6-3.8v-4.8l-6 3-6-3z"/>
+              <path d="M22 8v6.2c0 .9-.7 1.6-1.6 1.6H20V9.1L22 8z"/>
+            </svg>
+          </div>
+          <h3>Highly Trainable</h3>
         </div>
       </div>
     </div>
