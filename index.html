@@ -339,14 +339,15 @@
 
     .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      /* ~2x thumbnail area vs previous 220px min */
+      grid-template-columns: repeat(auto-fit, minmax(min(440px, 100%), 1fr));
       gap: 16px;
     }
 
     .gallery-item {
       position: relative;
       overflow: hidden;
-      border-radius: 16px;
+      border-radius: 8px;
       border: 1px solid rgba(28,28,30,0.10);
       background: var(--white);
       box-shadow: 0 10px 24px rgba(0,0,0,0.10);
@@ -876,6 +877,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   const lightboxClose = lightbox.querySelector('.lightbox__close');
 
   let isOpen = false;
+  let hoverOpenTimer = null;
+  let hoverCloseTimer = null;
 
   function openLightbox(src, alt, lockScroll) {
     if (!lightboxImg) return;
@@ -906,8 +909,29 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     if (!img) return;
 
     if (supportsHover) {
-      item.addEventListener('mouseenter', () => openLightbox(img.currentSrc || img.src, img.alt, false));
-      item.addEventListener('mouseleave', closeLightbox);
+      item.addEventListener('mouseenter', () => {
+        if (hoverCloseTimer) {
+          clearTimeout(hoverCloseTimer);
+          hoverCloseTimer = null;
+        }
+
+        if (hoverOpenTimer) clearTimeout(hoverOpenTimer);
+        hoverOpenTimer = setTimeout(() => {
+          openLightbox(img.currentSrc || img.src, img.alt, false);
+        }, 70);
+      });
+
+      item.addEventListener('mouseleave', () => {
+        if (hoverOpenTimer) {
+          clearTimeout(hoverOpenTimer);
+          hoverOpenTimer = null;
+        }
+
+        if (hoverCloseTimer) clearTimeout(hoverCloseTimer);
+        hoverCloseTimer = setTimeout(() => {
+          closeLightbox();
+        }, 120);
+      });
     } else {
       item.addEventListener('click', (e) => {
         e.preventDefault();
