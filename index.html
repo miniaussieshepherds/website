@@ -688,6 +688,29 @@
       transform: translateY(-1px);
     }
 
+    .contact-form button:disabled {
+      opacity: 0.7;
+      cursor: default;
+      transform: none;
+    }
+
+    .hp {
+      position: absolute;
+      left: -10000px;
+      top: auto;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    .form-status {
+      margin: 6px 0 0;
+      text-align: center;
+      min-height: 1.2em;
+      color: rgba(255,255,255,0.88);
+      font-size: 0.95rem;
+    }
+
     /* RESPONSIVE */
     @media (max-width: 768px) {
       section {
@@ -983,11 +1006,19 @@
         <h2>Stud Inquiry</h2>
         <p>Share a few details about your female and breeding goals, and we’ll follow up with availability and terms.</p>
       </div>
-      <form class="contact-form">
-        <input type="text" placeholder="Your Name" required>
-        <input type="email" placeholder="Email Address" required>
-        <textarea placeholder="Tell us about your female (age, health testing, temperament, goals)" required></textarea>
+      <form class="contact-form" id="contactForm" action="https://formspree.io/f/mojnrowo" method="POST" novalidate>
+        <input type="hidden" name="_subject" value="New stud inquiry — MiniAussieShepherds.com">
+
+        <label class="hp" aria-hidden="true">
+          Leave this field blank
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off">
+        </label>
+
+        <input type="text" name="name" placeholder="Your Name" autocomplete="name" required>
+        <input type="email" name="email" placeholder="Email Address" autocomplete="email" required>
+        <textarea name="message" placeholder="Tell us about your female (age, health testing, temperament, goals)" required></textarea>
         <button type="submit">Send Inquiry</button>
+        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
       </form>
     </div>
   </section>
@@ -1025,6 +1056,69 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
   btn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+  });
+})();
+
+// Contact form (Formspree) + basic anti-spam
+(() => {
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+  if (!('fetch' in window)) return; // graceful fallback to normal POST
+
+  const statusEl = document.getElementById('formStatus');
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const hp = form.querySelector('input[name="_gotcha"]');
+  let startedAt = Date.now();
+
+  function setStatus(message) {
+    if (!statusEl) return;
+    statusEl.textContent = message;
+  }
+
+  form.addEventListener('focusin', () => {
+    if (!startedAt) startedAt = Date.now();
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Honeypot: bots often fill hidden fields
+    if (hp && hp.value && hp.value.trim().length) {
+      setStatus('Thanks!');
+      form.reset();
+      startedAt = Date.now();
+      return;
+    }
+
+    // Time-to-submit: reject ultra-fast submissions
+    const elapsedMs = Date.now() - startedAt;
+    if (elapsedMs < 3000) {
+      setStatus('Please wait a moment and try again.');
+      return;
+    }
+
+    if (submitBtn) submitBtn.disabled = true;
+    setStatus('Sending…');
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' },
+      });
+
+      if (res.ok) {
+        setStatus('Message sent. We’ll get back to you soon.');
+        form.reset();
+        startedAt = Date.now();
+      } else {
+        setStatus('Something went wrong. Please try again or email us directly.');
+      }
+    } catch {
+      setStatus('Network error. Please try again or email us directly.');
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+    }
   });
 })();
 
