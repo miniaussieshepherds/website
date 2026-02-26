@@ -387,7 +387,11 @@
 
     .gallery-banner {
       margin: 18px 0 18px;
-      border-radius: 8px;
+      /* Full-bleed banner (full page width, not constrained by the container) */
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+      border-radius: 0;
       overflow: hidden;
       border: 1px solid rgba(28,28,30,0.10);
       background: var(--white);
