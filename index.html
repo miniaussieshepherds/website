@@ -230,6 +230,11 @@
       .pro-tile:hover {
         transform: none;
       }
+
+      .gallery-item,
+      .gallery-item img {
+        transition: none;
+      }
     }
 
     /* PEDIGREE */
@@ -293,21 +298,44 @@
 
     /* GALLERY */
     .gallery {
-      background: var(--white);
+      background: linear-gradient(180deg, var(--white) 0%, rgba(245, 242, 236, 0.35) 100%);
     }
 
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
+      gap: 16px;
     }
 
-    .gallery-grid img {
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      border: 1px solid rgba(28,28,30,0.10);
+      background: var(--white);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.10);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .gallery-item img {
       width: 100%;
-      border-radius: 12px;
+      height: 100%;
+      display: block;
       object-fit: cover;
       aspect-ratio: 4 / 3;
-      border: 1px solid var(--warm-gray);
+      transform: scale(1);
+      transition: transform 0.35s ease;
+    }
+
+    @media (hover: hover) {
+      .gallery-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 16px 34px rgba(0,0,0,0.14);
+      }
+
+      .gallery-item:hover img {
+        transform: scale(1.03);
+      }
     }
 
     /* CONTACT */
@@ -608,13 +636,36 @@
     <div class="section-inner">
       <div class="section-header">
         <h2>Gallery</h2>
-        <p>A curated look at Buddy’s structure, coat, and expression in different environments.</p>
+        <p>A curated look at Buddy’s structure, movement, and temperament in real-life settings.</p>
       </div>
       <div class="gallery-grid">
-        <img src="IMAGE1.jpg" alt="Buddy standing in profile">
-        <img src="IMAGE2.jpg" alt="Buddy moving at a trot">
-        <img src="IMAGE3.jpg" alt="Buddy relaxed with family">
-        <img src="IMAGE4.jpg" alt="Close‑up of Buddy’s expression">
+        <figure class="gallery-item">
+          <img src="images/gallery-01.jpg" alt="Buddy running outdoors" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gallery-item">
+          <img src="images/gallery-02.jpg" alt="Buddy standing with another dog" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gallery-item">
+          <img src="images/gallery-03.jpg" alt="Close-up portrait of Buddy" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gallery-item">
+          <img src="images/gallery-04.jpg" alt="Buddy resting beside a bowl" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gallery-item">
+          <img src="images/gallery-05.jpg" alt="Buddy relaxing indoors" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gallery-item">
+          <img src="images/gallery-06.jpg" alt="Buddy on a rocky shoreline" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gallery-item">
+          <img src="images/gallery-07.jpg" alt="Buddy sitting outdoors at sunset" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gallery-item">
+          <img src="images/gallery-08.jpg" alt="Buddy lounging with a tennis ball" loading="lazy" decoding="async">
+        </figure>
+        <figure class="gallery-item">
+          <img src="images/gallery-09.jpg" alt="Buddy standing in a grassy field" loading="lazy" decoding="async">
+        </figure>
       </div>
     </div>
   </section>
@@ -660,7 +711,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
     <div class="footer-col">
       <h4>Contact</h4>
-      <p>Email: info@miniaussieshepherds.com</p>
+      <p>Email: chris@miniaussieshepherds.com</p>
       <p>Location: Massachusetts, USA</p>
     </div>
 
