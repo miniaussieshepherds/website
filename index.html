@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Buddy — Mini American Shepherd Stud</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --charcoal: #1C1C1E;
+      --steel-blue: #4A5E72;
+      --ice-blue: #A9D7F2;
+      --copper: #A46A3D;
+      --cream: #F5F2EC;
+      --warm-gray: #D4D4D4;
+      --white: #FFFFFF;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+      color: var(--charcoal);
+      background: var(--white);
+    }
+
+    section {
+      padding: 80px 20px;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      letter-spacing: 0.03em;
+    }
+
+    p {
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      color: var(--white);
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 0 20px;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2.4rem, 4vw, 3.4rem);
+      margin-bottom: 12px;
+    }
+
+    .hero-content p {
+      font-size: 1.05rem;
+      opacity: 0.95;
+    }
+
+    .cta-button {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 12px 28px;
+      background: var(--charcoal);
+      color: var(--white);
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: background 0.25s ease, transform 0.15s ease;
+    }
+
+    .cta-button:hover {
+      background: var(--copper);
+      transform: translateY(-1px);
+    }
+
+    /* SECTION WRAPPERS */
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-header h2 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .section-header p {
+      color: #555;
+      font-size: 0.98rem;
+    }
+
+    /* STATS */
+    .stats {
+      background: var(--cream);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+    }
+
+    .stat-card {
+      padding: 20px;
+      border-radius: 12px;
+      background: var(--white);
+      border: 1px solid var(--warm-gray);
+      text-align: left;
+    }
+
+    .stat-card h3 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #666;
+      margin-bottom: 6px;
+    }
+
+    .stat-card p {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    /* TRAITS */
+    .traits {
+      background: var(--steel-blue);
+      color: var(--white);
+    }
+
+    .traits .section-header p {
+      color: rgba(255,255,255,0.8);
+    }
+
+    .traits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
+    }
+
+    .trait {
+      padding: 20px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.06);
+      text-align: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .trait span {
+      display: block;
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .trait p {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    /* PEDIGREE */
+    .pedigree {
+      background: var(--white);
+    }
+
+    .pedigree-sub {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 0.98rem;
+    }
+
+    .pedigree-tree {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .parent {
+      padding: 20px 24px;
+      border-left: 3px solid var(--steel-blue);
+      background: var(--cream);
+      border-radius: 8px;
+      min-width: 220px;
+    }
+
+    .parent h3 {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .parent p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    /* HEALTH */
+    .health {
+      background: var(--cream);
+    }
+
+    .health-badges {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .badge {
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: var(--charcoal);
+      color: var(--white);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* GALLERY */
+    .gallery {
+      background: var(--white);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      border-radius: 12px;
+      object-fit: cover;
+      aspect-ratio: 4 / 3;
+      border: 1px solid var(--warm-gray);
+    }
+
+    /* CONTACT */
+    .contact {
+      background: var(--charcoal);
+      color: var(--white);
+    }
+
+    .contact .section-header p {
+      color: rgba(255,255,255,0.8);
+    }
+
+    .contact-form {
+      max-width: 520px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: none;
+      font-size: 0.95rem;
+      font-family: inherit;
+    }
+
+    .contact-form textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .contact-form button {
+      padding: 13px;
+      border-radius: 999px;
+      border: none;
+      background: var(--ice-blue);
+      color: var(--charcoal);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.25s ease, transform 0.15s ease;
+    }
+
+    .contact-form button:hover {
+      background: var(--copper);
+      color: var(--white);
+      transform: translateY(-1px);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      section {
+        padding: 60px 16px;
+      }
+
+      .hero-content {
+        padding: 0 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="YOUR-VIDEO-URL.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Buddy — Mini American Shepherd Stud</h1>
+      <p>Proven genetics. Exceptional temperament. Modern, responsible breeding for the next generation of Mini Americans.</p>
+      <a href="#contact" class="cta-button">Request Stud Info</a>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2>Stud Profile</h2>
+        <p>Key details at a glance for breeders focused on structure, health, and temperament.</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Height</h3>
+          <p>16 inches</p>
+        </div>
+        <div class="stat-card">
+          <h3>Weight</h3>
+          <p>28 lbs</p>
+        </div>
+        <div class="stat-card">
+          <h3>DNA</h3>
+          <p>Full Embark Panel</p>
+        </div>
+        <div class="stat-card">
+          <h3>Color</h3>
+          <p>Blue Merle</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAITS -->
+  <section class="traits">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2>Temperament & Traits</h2>
+        <p>Balanced drive, biddability, and off‑switch — ideal for active homes and performance prospects.</p>
+      </div>
+      <div class="traits-grid">
+        <div class="trait">
+          <span>🐾</span>
+          <p>Confident</p>
+        </div>
+        <div class="trait">
+          <span>⚡</span>
+          <p>High Drive</p>
+        </div>
+        <div class="trait">
+          <span>❤️</span>
+          <p>Family Friendly</p>
+        </div>
+        <div class="trait">
+          <span>🧠</span>
+          <p>Highly Trainable</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PEDIGREE -->
+  <section class="pedigree">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2>Pedigree</h2>
+      </div>
+      <p class="pedigree-sub">Buddy’s lineage combines proven structure, health, and temperament from carefully selected Mini American Shepherd lines.</p>
+      <div class="pedigree-tree">
+        <div class="parent">
+          <h3>Sire</h3>
+          <p>Champion‑sired blue merle with strong performance and conformation background.</p>
+        </div>
+        <div class="parent">
+          <h3>Dam</h3>
+          <p>Health‑tested dam with stable, people‑oriented temperament and clean movement.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HEALTH -->
+  <section class="health">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2>Health Testing</h2>
+        <p>Transparent, up‑to‑date health testing to support responsible breeding decisions.</p>
+      </div>
+      <div class="health-badges">
+        <div class="badge">OFA</div>
+        <div class="badge">Embark</div>
+        <div class="badge">CERF</div>
+        <div class="badge">MDR1</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2>Gallery</h2>
+        <p>A curated look at Buddy’s structure, coat, and expression in different environments.</p>
+      </div>
+      <div class="gallery-grid">
+        <img src="IMAGE1.jpg" alt="Buddy standing in profile">
+        <img src="IMAGE2.jpg" alt="Buddy moving at a trot">
+        <img src="IMAGE3.jpg" alt="Buddy relaxed with family">
+        <img src="IMAGE4.jpg" alt="Close‑up of Buddy’s expression">
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2>Stud Inquiry</h2>
+        <p>Share a few details about your female and breeding goals, and we’ll follow up with availability and terms.</p>
+      </div>
+      <form class="contact-form">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Email Address" required>
+        <textarea placeholder="Tell us about your female (age, health testing, temperament, goals)" required></textarea>
+        <button type="submit">Send Inquiry</button>
+      </form>
+    </div>
+  </section>
+
+</body>
+</html>
