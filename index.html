@@ -385,6 +385,23 @@
       background: linear-gradient(180deg, var(--white) 0%, rgba(245, 242, 236, 0.35) 100%);
     }
 
+    .gallery-banner {
+      margin: 18px 0 18px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(28,28,30,0.10);
+      background: var(--white);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.10);
+    }
+
+    .gallery-banner img {
+      width: 100%;
+      display: block;
+      height: clamp(180px, 26vw, 360px);
+      object-fit: cover;
+      object-position: center;
+    }
+
     .gallery-grid {
       display: grid;
       /* ~2x thumbnail area vs previous 220px min */
@@ -561,6 +578,11 @@
     html.lightbox-open,
     body.lightbox-open {
       overflow: hidden;
+    }
+
+    html.lightbox-open {
+      /* Reserve scrollbar width to prevent layout shift when scroll is locked */
+      padding-right: var(--scrollbar-width, 0px);
     }
 
     /* CONTACT */
@@ -866,6 +888,11 @@
         <h2>Gallery</h2>
         <p>A curated look at Buddy’s structure, movement, and temperament in real-life settings.</p>
       </div>
+
+      <div class="gallery-banner">
+        <img src="images/banner-1.jpg" alt="Buddy banner photo" loading="lazy" decoding="async">
+      </div>
+
       <div class="gallery-grid">
         <figure class="gallery-item">
           <img src="images/gallery-01.jpg" alt="Buddy standing in a grassy field" loading="lazy" decoding="async">
@@ -985,6 +1012,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
   let isOpen = false;
   let savedBodyPaddingRight = '';
+  let savedRootScrollbarWidth = '';
 
   function getScrollbarWidth() {
     return Math.max(0, window.innerWidth - document.documentElement.clientWidth);
@@ -1002,7 +1030,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       // Prevent layout "jolt" by reserving scrollbar space while scroll is locked.
       const scrollbarWidth = getScrollbarWidth();
       savedBodyPaddingRight = document.body.style.paddingRight;
+      savedRootScrollbarWidth = document.documentElement.style.getPropertyValue('--scrollbar-width');
+
       if (scrollbarWidth > 0) {
+        document.documentElement.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
+        // Keep body padding as a secondary fallback for older browsers/layout edge cases.
         document.body.style.paddingRight = `${scrollbarWidth}px`;
       }
 
@@ -1018,6 +1050,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     document.documentElement.classList.remove('lightbox-open');
     document.body.classList.remove('lightbox-open');
     document.body.style.paddingRight = savedBodyPaddingRight;
+    if (savedRootScrollbarWidth) {
+      document.documentElement.style.setProperty('--scrollbar-width', savedRootScrollbarWidth);
+    } else {
+      document.documentElement.style.removeProperty('--scrollbar-width');
+    }
     isOpen = false;
   }
 
