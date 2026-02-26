@@ -141,72 +141,69 @@
       font-size: 0.98rem;
     }
 
-    /* STATS */
-    .stats {
-      background: var(--cream);
-    }
+<!-- STATS -->
+<section class="stats">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2>Stud Profile</h2>
+      <p>Key structural and temperament traits that define Buddy’s quality as a Mini American Shepherd stud.</p>
+    </div>
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 20px;
-    }
+    <div class="stats-grid">
+      <div class="stat-card pro-card">
+        <h3>Height</h3>
+        <p>16 inches</p>
+      </div>
 
-    .stat-card {
-      padding: 20px;
-      border-radius: 12px;
-      background: var(--white);
-      border: 1px solid var(--warm-gray);
-      text-align: left;
-    }
+      <div class="stat-card pro-card">
+        <h3>Weight</h3>
+        <p>28 lbs</p>
+      </div>
 
-    .stat-card h3 {
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #666;
-      margin-bottom: 6px;
-    }
+      <div class="stat-card pro-card">
+        <h3>DNA</h3>
+        <p>Full Embark Panel</p>
+      </div>
 
-    .stat-card p {
-      font-size: 1.1rem;
-      font-weight: 600;
-    }
+      <div class="stat-card pro-card">
+        <h3>Color</h3>
+        <p>Blue Merle</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    /* TRAITS */
-    .traits {
-      background: var(--steel-blue);
-      color: var(--white);
-    }
+<!-- TRAITS -->
+<section class="traits">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2>Temperament & Traits</h2>
+      <p>Balanced drive, confidence, and biddability — ideal for performance and active family homes.</p>
+    </div>
 
-    .traits .section-header p {
-      color: rgba(255,255,255,0.8);
-    }
+    <div class="traits-grid">
+      <div class="trait glass-card">
+        <span>🐾</span>
+        <p>Confident</p>
+      </div>
 
-    .traits-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 20px;
-    }
+      <div class="trait glass-card">
+        <span>⚡</span>
+        <p>High Drive</p>
+      </div>
 
-    .trait {
-      padding: 20px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.06);
-      text-align: center;
-      backdrop-filter: blur(4px);
-    }
+      <div class="trait glass-card">
+        <span>❤️</span>
+        <p>Family Friendly</p>
+      </div>
 
-    .trait span {
-      display: block;
-      font-size: 1.8rem;
-      margin-bottom: 8px;
-    }
-
-    .trait p {
-      font-size: 1rem;
-      font-weight: 500;
-    }
+      <div class="trait glass-card">
+        <span>🧠</span>
+        <p>Highly Trainable</p>
+      </div>
+    </div>
+  </div>
+</section>
 
     /* PEDIGREE */
     .pedigree {
@@ -348,6 +345,74 @@
         padding: 0 16px;
       }
     }
+
+    /* Professional stat cards */
+.pro-card {
+  background: var(--white);
+  border: 1px solid rgba(0,0,0,0.05);
+  border-radius: 14px;
+  padding: 28px 24px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pro-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.10);
+}
+
+/* Glass-style trait cards */
+.glass-card {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 16px;
+  padding: 24px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+    .footer {
+  background: var(--charcoal);
+  color: var(--white);
+  padding: 60px 20px 30px;
+  margin-top: 80px;
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+}
+
+.footer-col h4 {
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+}
+
+.footer-col p,
+.footer-col a {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+}
+
+.footer-col a:hover {
+  color: var(--ice-blue);
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+}
   </style>
 </head>
 <body>
@@ -512,5 +577,31 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 </script>
+  <!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Buddy the Mini American Shepherd</h4>
+      <p>Premium stud services focused on structure, temperament, and responsible breeding.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p>Email: info@miniaussieshepherds.com</p>
+      <p>Location: Massachusetts, USA</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Links</h4>
+      <p><a href="#contact">Stud Inquiry</a></p>
+      <p><a href="#gallery">Gallery</a></p>
+      <p><a href="#pedigree">Pedigree</a></p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 MiniAussieShepherds.com — All Rights Reserved.</p>
+  </div>
+</footer>
 </body>
 </html>
