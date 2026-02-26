@@ -386,8 +386,8 @@
     }
 
     .gallery-banner {
-      /* Centered banner container (~80% of page width) */
-      width: 80vw;
+      /* Match the gallery cards container width */
+      width: 100%;
       margin: 18px auto;
       border-radius: 0;
       overflow: hidden;
@@ -399,9 +399,7 @@
     .gallery-banner img {
       width: 100%;
       display: block;
-      height: clamp(360px, 52vw, 720px);
-      object-fit: cover;
-      object-position: center;
+      height: auto;
     }
 
     .gallery-grid {
