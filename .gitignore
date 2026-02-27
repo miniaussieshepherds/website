@@ -1,0 +1,6 @@
+# Design source files
+*.psd
+
+# OS cruft
+.DS_Store
+Thumbs.db
