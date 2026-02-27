@@ -307,6 +307,8 @@
       background: linear-gradient(180deg, rgba(169,215,242,0.30), rgba(245,242,236,0.42));
       flex: 0 0 auto;
       position: relative;
+      background-size: cover;
+      background-position: center;
     }
 
     .ped-photo::after {
@@ -316,6 +318,27 @@
       border-radius: 999px;
       border: 1px dashed rgba(28,28,30,0.18);
       opacity: 0.9;
+    }
+
+    .ped-photo-img {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      border: 1px solid rgba(28,28,30,0.10);
+      background: rgba(245,242,236,0.42);
+      display: block;
+      object-fit: cover;
+      flex: 0 0 auto;
+    }
+
+    .ped-name a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(28,28,30,0.18);
+    }
+
+    .ped-name a:hover {
+      border-bottom-color: rgba(28,28,30,0.40);
     }
 
     .ped-lines {
@@ -365,6 +388,11 @@
     }
 
     .ped-card--subject .ped-photo {
+      width: 52px;
+      height: 52px;
+    }
+
+    .ped-card--subject .ped-photo-img {
       width: 52px;
       height: 52px;
     }
@@ -470,8 +498,8 @@
             <div class="ped-card" data-line="sire" style="grid-column: 2; grid-row: 1 / span 16;">
               <div class="ped-photo" aria-hidden="true"></div>
               <div class="ped-lines">
-                <div class="ped-name">Sire (Name)</div>
-                <div class="ped-meta">Titles: — • Reg #: —</div>
+                <div class="ped-name"><a href="https://www.pedigreedatabase.com/australian_shepherd/dog.html?id=3229979-alta-play-once-again-a-red-token?_v=20230401104811" target="_blank" rel="noopener noreferrer">Alta Play Once Again A Red Token</a></div>
+                <div class="ped-meta">PedigreeDatabase profile</div>
                 <div class="ped-tags" aria-hidden="true"><span class="tag">Add photo</span><span class="tag">Add titles</span></div>
               </div>
             </div>
@@ -485,13 +513,13 @@
             </div>
 
             <!-- Column 3: grandparents (each spans 8 rows) -->
-            <div class="ped-card" data-line="sire" style="grid-column: 3; grid-row: 1 / span 8;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Sire’s Sire</div><div class="ped-meta">Titles: — • Reg #: —</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 3; grid-row: 1 / span 8;"><img class="ped-photo-img" src="images/sire-02-Alta%27s%20Stylin%20In%20My%20Jaguar.jpg" alt="Alta's Stylin In My Jaguar" loading="lazy" decoding="async"><div class="ped-lines"><div class="ped-name"><a href="https://www.pedigreedatabase.com/australian_shepherd/dog.html?id=2385981-altas-stylin-in-my-jaguar?_v=20180911171604" target="_blank" rel="noopener noreferrer">Alta's Stylin In My Jaguar</a></div><div class="ped-meta">PedigreeDatabase profile</div></div></div>
             <div class="ped-card" data-line="sire" style="grid-column: 3; grid-row: 9 / span 8;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Sire’s Dam</div><div class="ped-meta">Titles: — • Reg #: —</div></div></div>
             <div class="ped-card" data-line="dam" style="grid-column: 3; grid-row: 17 / span 8;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Dam’s Sire</div><div class="ped-meta">Titles: — • Reg #: —</div></div></div>
             <div class="ped-card" data-line="dam" style="grid-column: 3; grid-row: 25 / span 8;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Dam’s Dam</div><div class="ped-meta">Titles: — • Reg #: —</div></div></div>
 
             <!-- Column 4: great‑grandparents (each spans 4 rows) -->
-            <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 1 / span 4;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">GG‑1</div><div class="ped-meta">Titles: —</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 1 / span 4;"><img class="ped-photo-img" src="images/sire-03-Coat%20Tails%20Range%20Ryder%20of%20Alta.jpg" alt="Coat Tails Range Ryder of Alta" loading="lazy" decoding="async"><div class="ped-lines"><div class="ped-name"><a href="https://www.pedigreedatabase.com/australian_shepherd/dog.html?id=2357113-coat-tails-range-ryder-of-alta?_v=20180911171212" target="_blank" rel="noopener noreferrer">Coat Tails Range Ryder of Alta</a></div><div class="ped-meta">PedigreeDatabase profile</div></div></div>
             <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 5 / span 4;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">GG‑2</div><div class="ped-meta">Titles: —</div></div></div>
             <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 9 / span 4;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">GG‑3</div><div class="ped-meta">Titles: —</div></div></div>
             <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 13 / span 4;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">GG‑4</div><div class="ped-meta">Titles: —</div></div></div>
