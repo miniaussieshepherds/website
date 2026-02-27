@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Buddy — 5‑Generation Pedigree</title>
+  <title>Buddy — 4‑Generation Pedigree</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     :root {
@@ -247,13 +247,13 @@
     }
 
     .pedigree {
-      min-width: 1220px;
+      min-width: 1168px;
       padding: 16px;
     }
 
     .ped-head {
       display: grid;
-      grid-template-columns: 240px repeat(5, 220px);
+      grid-template-columns: 240px repeat(4, 220px);
       gap: 12px;
       padding: 0 0 12px;
       margin-bottom: 12px;
@@ -274,7 +274,7 @@
 
     .ped-grid {
       display: grid;
-      grid-template-columns: 240px repeat(5, 220px);
+      grid-template-columns: 240px repeat(4, 220px);
       grid-auto-rows: 58px;
       gap: 12px;
     }
@@ -400,7 +400,7 @@
       <div class="brand">
         <img src="images/main-logo.png" alt="Mini Aussie Shepherds" loading="eager" decoding="async">
         <div class="brand-text">
-          <strong>Buddy — 5‑Generation Pedigree</strong>
+          <strong>Buddy — 4‑Generation Pedigree</strong>
           <span>Tap a toggle to emphasize sire/dam lines</span>
         </div>
       </div>
@@ -416,7 +416,7 @@
       <div class="page-head">
         <div>
           <h1>Pedigree Overview</h1>
-          <p class="sub">This page is designed to present a clean, breeder‑friendly 5‑generation pedigree. Add ancestor names, titles, registrations, and photos over time — and use the highlight controls to quickly show sire‑side or dam‑side strength during inquiries.</p>
+          <p class="sub">This page is designed to present a clean, breeder‑friendly 4‑generation pedigree. Add ancestor names, titles, registrations, and photos over time — and use the highlight controls to quickly show sire‑side or dam‑side strength during inquiries.</p>
           <div class="legend" aria-label="Legend">
             <span class="chip"><span class="dot" aria-hidden="true"></span>Sire line</span>
             <span class="chip"><span class="dot dam" aria-hidden="true"></span>Dam line</span>
@@ -441,7 +441,7 @@
         <span class="hint">Tip: on mobile, scroll sideways to see all generations.</span>
       </div>
 
-      <div class="pedigree-scroll" aria-label="Five-generation pedigree">
+      <div class="pedigree-scroll" aria-label="Four-generation pedigree">
         <div class="pedigree">
           <div class="ped-head" aria-hidden="true">
             <strong>Dog</strong>
@@ -449,7 +449,6 @@
             <strong>Grandparents</strong>
             <strong>Great‑Grandparents</strong>
             <strong>2× Great</strong>
-            <strong>3× Great</strong>
           </div>
 
           <div class="ped-grid">
@@ -519,39 +518,6 @@
             <div class="ped-card" data-line="dam" style="grid-column: 5; grid-row: 29 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑15</div><div class="ped-meta">—</div></div></div>
             <div class="ped-card" data-line="dam" style="grid-column: 5; grid-row: 31 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑16</div><div class="ped-meta">—</div></div></div>
 
-            <!-- Column 6: 3× great (each spans 1 row) -->
-            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 1;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑01</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑02</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 3;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑03</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 4;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑04</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 5;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑05</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 6;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑06</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 7;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑07</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 8;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑08</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 9;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑09</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 10;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑10</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 11;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑11</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 12;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑12</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 13;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑13</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 14;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑14</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 15;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑15</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 16;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑16</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 17;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑17</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 18;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑18</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 19;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑19</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 20;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑20</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 21;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑21</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 22;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑22</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 23;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑23</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 24;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑24</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 25;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑25</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 26;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑26</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 27;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑27</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 28;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑28</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 29;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑29</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 30;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑30</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 31;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑31</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 32;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑32</div><div class="ped-meta">—</div></div></div>
           </div>
         </div>
       </div>
