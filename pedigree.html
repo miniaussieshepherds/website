@@ -235,6 +235,15 @@
       background: var(--white);
       box-shadow: 0 18px 40px rgba(0,0,0,0.10);
       overflow: auto;
+      cursor: grab;
+    }
+
+    .pedigree-scroll.is-dragging {
+      cursor: grabbing;
+    }
+
+    .pedigree-scroll.is-dragging * {
+      user-select: none;
     }
 
     .pedigree {
@@ -554,6 +563,7 @@
       const root = document.getElementById('pageRoot');
       const buttons = document.querySelectorAll('[data-hl]');
       const printBtn = document.getElementById('printBtn');
+      const scroller = document.querySelector('.pedigree-scroll');
 
       function setHighlight(mode) {
         if (!root) return;
@@ -570,6 +580,48 @@
 
       if (printBtn) {
         printBtn.addEventListener('click', () => window.print());
+      }
+
+      // Click + drag anywhere to pan the pedigree (desktop)
+      if (scroller) {
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let startScrollLeft = 0;
+        let startScrollTop = 0;
+
+        scroller.addEventListener('pointerdown', (e) => {
+          if (e.pointerType !== 'mouse') return; // keep native touch scrolling
+          if (e.button !== 0) return;
+          if (e.target && e.target.closest && e.target.closest('a, button, input, textarea, select, label')) return;
+
+          isDragging = true;
+          startX = e.clientX;
+          startY = e.clientY;
+          startScrollLeft = scroller.scrollLeft;
+          startScrollTop = scroller.scrollTop;
+          scroller.classList.add('is-dragging');
+
+          scroller.setPointerCapture(e.pointerId);
+          e.preventDefault();
+        });
+
+        scroller.addEventListener('pointermove', (e) => {
+          if (!isDragging) return;
+          const dx = e.clientX - startX;
+          const dy = e.clientY - startY;
+          scroller.scrollLeft = startScrollLeft - dx;
+          scroller.scrollTop = startScrollTop - dy;
+        });
+
+        function endDrag() {
+          isDragging = false;
+          scroller.classList.remove('is-dragging');
+        }
+
+        scroller.addEventListener('pointerup', endDrag);
+        scroller.addEventListener('pointercancel', endDrag);
+        scroller.addEventListener('lostpointercapture', endDrag);
       }
 
       setHighlight('none');
