@@ -224,6 +224,10 @@
       margin: 18px 0 14px;
     }
 
+    .controls .controls-label {
+      margin-left: 6px;
+    }
+
     .controls .hint {
       color: rgba(28,28,30,0.65);
       font-size: 0.9rem;
@@ -251,7 +255,7 @@
 
       .ped-head,
       .ped-grid {
-        grid-template-columns: repeat(5, 220px);
+        grid-template-columns: repeat(var(--ped-cols), 220px);
       }
     }
 
@@ -269,9 +273,21 @@
       padding: 12px;
     }
 
+    #pageRoot {
+      --ped-cols: 5;
+    }
+
+    #pageRoot[data-cols="4"] {
+      --ped-cols: 4;
+    }
+
+    #pageRoot[data-cols="3"] {
+      --ped-cols: 3;
+    }
+
     .ped-head {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(var(--ped-cols), minmax(0, 1fr));
       gap: 10px;
       padding: 0 0 12px;
       margin-bottom: 12px;
@@ -292,9 +308,27 @@
 
     .ped-grid {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(var(--ped-cols), minmax(0, 1fr));
       grid-auto-rows: 54px;
       gap: 10px;
+    }
+
+    #pageRoot[data-cols="4"] .ped-head strong:nth-child(5) {
+      display: none;
+    }
+
+    #pageRoot[data-cols="3"] .ped-head strong:nth-child(4),
+    #pageRoot[data-cols="3"] .ped-head strong:nth-child(5) {
+      display: none;
+    }
+
+    #pageRoot[data-cols="4"] .ped-grid > .ped-card[style*="grid-column: 5"] {
+      display: none;
+    }
+
+    #pageRoot[data-cols="3"] .ped-grid > .ped-card[style*="grid-column: 4"],
+    #pageRoot[data-cols="3"] .ped-grid > .ped-card[style*="grid-column: 5"] {
+      display: none;
     }
 
     .ped-card {
@@ -586,6 +620,10 @@
         <button class="btn" type="button" data-hl="none">Show All</button>
         <button class="btn" type="button" data-hl="sire">Highlight Sire Line</button>
         <button class="btn" type="button" data-hl="dam">Highlight Dam Line</button>
+        <span class="hint controls-label" aria-hidden="true">Generations:</span>
+        <button class="btn" type="button" data-cols="3">3</button>
+        <button class="btn" type="button" data-cols="4">4</button>
+        <button class="btn" type="button" data-cols="5">5</button>
         <button class="btn" type="button" id="printBtn">Print / Save PDF</button>
         <span class="hint">Tip: on desktop, click and drag to pan. On mobile, scroll sideways.</span>
       </div>
@@ -653,18 +691,18 @@
             <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 3 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Ruff House Porsche</div><div class="ped-meta">DN36452101</div></div></div>
             <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 5 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Away To Me Cadillac Jack CGC, ETD</div><div class="ped-meta">2009 • AKC DN31794902<br>HD-OFA: Good (MAS-882G24M-VPI)</div></div></div>
             <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 7 / span 2;"><img class="ped-photo-img" src="images/sire-dam-03-alta-chyna-rose.jpg" alt="Alta Chyna Rose" loading="lazy" decoding="async"><div class="ped-lines"><div class="ped-name">Alta Chyna Rose</div><div class="ped-meta">2009 • AKC DN36148301<br>Red, white markings, tan points<br>CAN 2009 • COI 20.69%</div></div></div>
-            <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 9 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑05</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 11 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑06</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 13 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑07</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 15 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑08</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 4; grid-row: 17 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑09</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 4; grid-row: 19 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑10</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 4; grid-row: 21 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑11</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 4; grid-row: 23 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑12</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 4; grid-row: 25 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑13</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 4; grid-row: 27 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑14</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 4; grid-row: 29 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑15</div><div class="ped-meta">—</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 4; grid-row: 31 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑16</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 9 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Energie's The King</div><div class="ped-meta">DA42238701</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 11 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Energie's Kamina</div><div class="ped-meta">DN39097402</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 13 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Timeless Rolling Rapid With Energie</div><div class="ped-meta">DN20646401</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 15 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Energie's Great Companion</div><div class="ped-meta">MAS ASDM-GM-080002</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 4; grid-row: 17 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Legacy's Live Free Of Die</div><div class="ped-meta">AKC DN37326803 (07-15)</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 4; grid-row: 19 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Alta Chyna Rose</div><div class="ped-meta">AKC DN36148301</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 4; grid-row: 21 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Legacy's American Outlaw</div><div class="ped-meta">DN38043702</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 4; grid-row: 23 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Moonbaby's All American Girl</div><div class="ped-meta">LOF 1 B.AMER.MINI. 1 578/253 • AKC DN41551801</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 4; grid-row: 25 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Away To Me Cadillac Jack TKP</div><div class="ped-meta">AKC DN31794902</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 4; grid-row: 27 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Alta Blue Linen</div><div class="ped-meta">DN33611002</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 4; grid-row: 29 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Moonbaby's Ride The Lightning</div><div class="ped-meta">AKC DN34429803</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 4; grid-row: 31 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Moonbaby N' Destiny's You Wish</div><div class="ped-meta">AKC DN41024401</div></div></div>
 
             <!-- Column 5: 3× great (each spans 1 row) -->
             <div class="ped-card" data-line="sire" style="grid-column: 5; grid-row: 1 / span 1;"><img class="ped-photo-img" src="images/sire-04-Southern%20Cross%20Check%20My%20Label.webp" alt="Southern Cross Check My Label" loading="lazy" decoding="async"><div class="ped-lines"><div class="ped-name">Southern Cross Check My Label</div><div class="ped-meta">2005 • NSDR MA23,336-0376<br>HD-OFA: Good (MAS-506G40M-PI)</div></div></div>
@@ -720,6 +758,7 @@
     (() => {
       const root = document.getElementById('pageRoot');
       const buttons = document.querySelectorAll('[data-hl]');
+      const colsButtons = document.querySelectorAll('button[data-cols]');
       const printBtn = document.getElementById('printBtn');
       const scroller = document.querySelector('.pedigree-scroll');
       const photoModal = document.getElementById('photoModal');
@@ -738,6 +777,17 @@
 
       buttons.forEach((b) => {
         b.addEventListener('click', () => setHighlight(b.getAttribute('data-hl')));
+      });
+
+      function setColumns(cols) {
+        if (!root) return;
+        const normalized = String(cols);
+        root.setAttribute('data-cols', normalized);
+        colsButtons.forEach((b) => b.classList.toggle('pill-active', b.getAttribute('data-cols') === normalized));
+      }
+
+      colsButtons.forEach((b) => {
+        b.addEventListener('click', () => setColumns(b.getAttribute('data-cols')));
       });
 
       if (printBtn) {
@@ -835,6 +885,7 @@
       });
 
       setHighlight('none');
+      setColumns('5');
     })();
   </script>
 </body>
