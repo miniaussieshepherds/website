@@ -424,6 +424,18 @@
       width: 100%;
     }
 
+    /* 3× Great: place text to the right of the image */
+    .ped-grid > .ped-card[style*="grid-column: 5"] {
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ped-grid > .ped-card[style*="grid-column: 5"] .ped-lines {
+      width: auto;
+      flex: 1 1 auto;
+    }
+
     .ped-name {
       font-weight: 750;
       font-size: 0.92rem;
