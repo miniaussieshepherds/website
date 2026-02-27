@@ -245,7 +245,13 @@
       }
 
       .pedigree {
-        min-width: 980px;
+        width: max-content;
+        min-width: 0;
+      }
+
+      .ped-head,
+      .ped-grid {
+        grid-template-columns: repeat(5, 220px);
       }
     }
 
