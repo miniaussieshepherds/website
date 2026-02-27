@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Buddy — 5‑Generation Pedigree</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --charcoal: #1C1C1E;
+      --steel-blue: #4A5E72;
+      --ice-blue: #A9D7F2;
+      --copper: #A46A3D;
+      --cream: #F5F2EC;
+      --warm-gray: #D4D4D4;
+      --white: #FFFFFF;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+      color: var(--charcoal);
+      background: var(--white);
+    }
+
+    a { color: inherit; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(28,28,30,0.10);
+    }
+
+    .topbar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand img {
+      width: 150px;
+      height: auto;
+      display: block;
+    }
+
+    .brand .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .brand .brand-text strong {
+      font-weight: 750;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand .brand-text span {
+      font-size: 0.88rem;
+      color: rgba(28,28,30,0.70);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(28,28,30,0.14);
+      background: var(--white);
+      color: var(--charcoal);
+      text-decoration: none;
+      font-weight: 650;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.15s ease, background 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      background: rgba(245,242,236,0.65);
+    }
+
+    .btn.primary {
+      background: var(--charcoal);
+      color: var(--white);
+      border-color: transparent;
+    }
+
+    .btn.primary:hover {
+      background: var(--copper);
+    }
+
+    .btn.pill-active {
+      border-color: rgba(28,28,30,0.28);
+      box-shadow: 0 10px 22px rgba(0,0,0,0.10);
+      transform: translateY(-1px);
+    }
+
+    main {
+      padding: 32px 20px 80px;
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .page-head {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 20px;
+      align-items: start;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 980px) {
+      .page-head {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 3.6vw, 2.6rem);
+      letter-spacing: 0.03em;
+    }
+
+    .sub {
+      margin-top: 10px;
+      color: rgba(28,28,30,0.72);
+      line-height: 1.7;
+    }
+
+    .panel {
+      border-radius: 14px;
+      border: 1px solid rgba(28,28,30,0.10);
+      background: rgba(245,242,236,0.30);
+      padding: 18px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+    }
+
+    .panel h2 {
+      font-size: 1.05rem;
+      margin: 0 0 8px;
+      letter-spacing: 0.02em;
+    }
+
+    .panel ul {
+      margin: 0;
+      padding-left: 18px;
+      color: rgba(28,28,30,0.80);
+      line-height: 1.65;
+    }
+
+    .panel li {
+      margin: 6px 0;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(28,28,30,0.12);
+      background: rgba(255,255,255,0.72);
+      font-size: 0.85rem;
+      color: rgba(28,28,30,0.80);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--steel-blue);
+    }
+
+    .dot.dam { background: var(--copper); }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin: 18px 0 14px;
+    }
+
+    .controls .hint {
+      color: rgba(28,28,30,0.65);
+      font-size: 0.9rem;
+    }
+
+    .pedigree-scroll {
+      border-radius: 14px;
+      border: 1px solid rgba(28,28,30,0.10);
+      background: var(--white);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.10);
+      overflow: auto;
+    }
+
+    .pedigree {
+      min-width: 1220px;
+      padding: 16px;
+    }
+
+    .ped-head {
+      display: grid;
+      grid-template-columns: 240px repeat(5, 220px);
+      gap: 12px;
+      padding: 0 0 12px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(28,28,30,0.10);
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(10px);
+      z-index: 2;
+    }
+
+    .ped-head strong {
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(28,28,30,0.70);
+    }
+
+    .ped-grid {
+      display: grid;
+      grid-template-columns: 240px repeat(5, 220px);
+      grid-auto-rows: 58px;
+      gap: 12px;
+    }
+
+    .ped-card {
+      height: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(28,28,30,0.10);
+      background: rgba(245,242,236,0.26);
+      padding: 10px 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow: hidden;
+    }
+
+    .ped-card[data-line="sire"] {
+      border-left: 4px solid var(--steel-blue);
+    }
+
+    .ped-card[data-line="dam"] {
+      border-left: 4px solid var(--copper);
+    }
+
+    .ped-photo {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      border: 1px solid rgba(28,28,30,0.10);
+      background: linear-gradient(180deg, rgba(169,215,242,0.30), rgba(245,242,236,0.42));
+      flex: 0 0 auto;
+      position: relative;
+    }
+
+    .ped-photo::after {
+      content: "";
+      position: absolute;
+      inset: 10px;
+      border-radius: 999px;
+      border: 1px dashed rgba(28,28,30,0.18);
+      opacity: 0.9;
+    }
+
+    .ped-lines {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .ped-name {
+      font-weight: 750;
+      font-size: 0.92rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ped-meta {
+      font-size: 0.78rem;
+      color: rgba(28,28,30,0.70);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ped-tags {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(28,28,30,0.10);
+      background: rgba(255,255,255,0.65);
+      font-size: 0.72rem;
+      letter-spacing: 0.02em;
+      color: rgba(28,28,30,0.78);
+    }
+
+    .ped-card--subject {
+      align-items: flex-start;
+      padding-top: 14px;
+      background: rgba(255,255,255,0.86);
+    }
+
+    .ped-card--subject .ped-photo {
+      width: 52px;
+      height: 52px;
+    }
+
+    .ped-card--subject .ped-name {
+      font-size: 1.05rem;
+    }
+
+    /* Highlight controls */
+    .hl-sire .ped-card[data-line="dam"],
+    .hl-dam .ped-card[data-line="sire"] {
+      opacity: 0.22;
+      filter: grayscale(0.35);
+    }
+
+    .hl-sire .ped-card[data-line="dam"] .ped-name,
+    .hl-dam .ped-card[data-line="sire"] .ped-name {
+      font-weight: 650;
+    }
+
+    /* Print-friendly */
+    @media print {
+      .topbar, .controls { display: none !important; }
+      main { padding: 0; }
+      .pedigree-scroll { box-shadow: none; border: none; }
+      .pedigree { padding: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <img src="images/main-logo.png" alt="Mini Aussie Shepherds" loading="eager" decoding="async">
+        <div class="brand-text">
+          <strong>Buddy — 5‑Generation Pedigree</strong>
+          <span>Tap a toggle to emphasize sire/dam lines</span>
+        </div>
+      </div>
+      <div class="top-actions">
+        <a class="btn" href="index.html#pedigree">Back</a>
+        <a class="btn primary" href="index.html#contact">Stud Inquiry</a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <div class="wrap" id="pageRoot">
+      <div class="page-head">
+        <div>
+          <h1>Pedigree Overview</h1>
+          <p class="sub">This page is designed to present a clean, breeder‑friendly 5‑generation pedigree. Add ancestor names, titles, registrations, and photos over time — and use the highlight controls to quickly show sire‑side or dam‑side strength during inquiries.</p>
+          <div class="legend" aria-label="Legend">
+            <span class="chip"><span class="dot" aria-hidden="true"></span>Sire line</span>
+            <span class="chip"><span class="dot dam" aria-hidden="true"></span>Dam line</span>
+          </div>
+        </div>
+        <aside class="panel">
+          <h2>Pedigree Strengths (edit these)</h2>
+          <ul>
+            <li>Notable titles / proven producers (placeholder)</li>
+            <li>Health testing transparency across key ancestors (placeholder)</li>
+            <li>Temperament consistency and stable structure (placeholder)</li>
+            <li>Performance focus: agility / obedience / working drive (placeholder)</li>
+          </ul>
+        </aside>
+      </div>
+
+      <div class="controls" aria-label="Pedigree controls">
+        <button class="btn" type="button" data-hl="none">Show All</button>
+        <button class="btn" type="button" data-hl="sire">Highlight Sire Line</button>
+        <button class="btn" type="button" data-hl="dam">Highlight Dam Line</button>
+        <button class="btn" type="button" id="printBtn">Print / Save PDF</button>
+        <span class="hint">Tip: on mobile, scroll sideways to see all generations.</span>
+      </div>
+
+      <div class="pedigree-scroll" aria-label="Five-generation pedigree">
+        <div class="pedigree">
+          <div class="ped-head" aria-hidden="true">
+            <strong>Dog</strong>
+            <strong>Parents</strong>
+            <strong>Grandparents</strong>
+            <strong>Great‑Grandparents</strong>
+            <strong>2× Great</strong>
+            <strong>3× Great</strong>
+          </div>
+
+          <div class="ped-grid">
+            <!-- Column 1: subject (spans all 32 leaf rows) -->
+            <div class="ped-card ped-card--subject" data-line="sire" style="grid-column: 1; grid-row: 1 / span 32;">
+              <div class="ped-photo" aria-hidden="true"></div>
+              <div class="ped-lines">
+                <div class="ped-name">Buddy (Placeholder Name)</div>
+                <div class="ped-meta">Reg #: — • Color: — • DOB: —</div>
+                <div class="ped-tags" aria-hidden="true">
+                  <span class="tag">Stud</span>
+                  <span class="tag">Full Embark</span>
+                  <span class="tag">OFA</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 2: parents (each spans 16 rows) -->
+            <div class="ped-card" data-line="sire" style="grid-column: 2; grid-row: 1 / span 16;">
+              <div class="ped-photo" aria-hidden="true"></div>
+              <div class="ped-lines">
+                <div class="ped-name">Sire (Name)</div>
+                <div class="ped-meta">Titles: — • Reg #: —</div>
+                <div class="ped-tags" aria-hidden="true"><span class="tag">Add photo</span><span class="tag">Add titles</span></div>
+              </div>
+            </div>
+            <div class="ped-card" data-line="dam" style="grid-column: 2; grid-row: 17 / span 16;">
+              <div class="ped-photo" aria-hidden="true"></div>
+              <div class="ped-lines">
+                <div class="ped-name">Dam (Name)</div>
+                <div class="ped-meta">Titles: — • Reg #: —</div>
+                <div class="ped-tags" aria-hidden="true"><span class="tag">Add photo</span><span class="tag">Add notes</span></div>
+              </div>
+            </div>
+
+            <!-- Column 3: grandparents (each spans 8 rows) -->
+            <div class="ped-card" data-line="sire" style="grid-column: 3; grid-row: 1 / span 8;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Sire’s Sire</div><div class="ped-meta">Titles: — • Reg #: —</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 3; grid-row: 9 / span 8;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Sire’s Dam</div><div class="ped-meta">Titles: — • Reg #: —</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 3; grid-row: 17 / span 8;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Dam’s Sire</div><div class="ped-meta">Titles: — • Reg #: —</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 3; grid-row: 25 / span 8;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Dam’s Dam</div><div class="ped-meta">Titles: — • Reg #: —</div></div></div>
+
+            <!-- Column 4: great‑grandparents (each spans 4 rows) -->
+            <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 1 / span 4;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">GG‑1</div><div class="ped-meta">Titles: —</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 5 / span 4;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">GG‑2</div><div class="ped-meta">Titles: —</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 9 / span 4;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">GG‑3</div><div class="ped-meta">Titles: —</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 13 / span 4;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">GG‑4</div><div class="ped-meta">Titles: —</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 4; grid-row: 17 / span 4;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">GG‑5</div><div class="ped-meta">Titles: —</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 4; grid-row: 21 / span 4;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">GG‑6</div><div class="ped-meta">Titles: —</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 4; grid-row: 25 / span 4;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">GG‑7</div><div class="ped-meta">Titles: —</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 4; grid-row: 29 / span 4;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">GG‑8</div><div class="ped-meta">Titles: —</div></div></div>
+
+            <!-- Column 5: 2× great (each spans 2 rows) -->
+            <div class="ped-card" data-line="sire" style="grid-column: 5; grid-row: 1 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑01</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 5; grid-row: 3 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑02</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 5; grid-row: 5 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑03</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 5; grid-row: 7 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑04</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 5; grid-row: 9 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑05</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 5; grid-row: 11 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑06</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 5; grid-row: 13 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑07</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 5; grid-row: 15 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑08</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 5; grid-row: 17 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑09</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 5; grid-row: 19 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑10</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 5; grid-row: 21 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑11</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 5; grid-row: 23 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑12</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 5; grid-row: 25 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑13</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 5; grid-row: 27 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑14</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 5; grid-row: 29 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑15</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 5; grid-row: 31 / span 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">2×G‑16</div><div class="ped-meta">—</div></div></div>
+
+            <!-- Column 6: 3× great (each spans 1 row) -->
+            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 1;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑01</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 2;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑02</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 3;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑03</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 4;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑04</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 5;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑05</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 6;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑06</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 7;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑07</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 8;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑08</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 9;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑09</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 10;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑10</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 11;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑11</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 12;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑12</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 13;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑13</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 14;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑14</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 15;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑15</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 6; grid-row: 16;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑16</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 17;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑17</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 18;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑18</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 19;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑19</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 20;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑20</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 21;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑21</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 22;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑22</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 23;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑23</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 24;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑24</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 25;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑25</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 26;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑26</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 27;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑27</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 28;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑28</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 29;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑29</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 30;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑30</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 31;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑31</div><div class="ped-meta">—</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 6; grid-row: 32;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">3×G‑32</div><div class="ped-meta">—</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (() => {
+      const root = document.getElementById('pageRoot');
+      const buttons = document.querySelectorAll('[data-hl]');
+      const printBtn = document.getElementById('printBtn');
+
+      function setHighlight(mode) {
+        if (!root) return;
+        root.classList.remove('hl-sire', 'hl-dam');
+        if (mode === 'sire') root.classList.add('hl-sire');
+        if (mode === 'dam') root.classList.add('hl-dam');
+
+        buttons.forEach((b) => b.classList.toggle('pill-active', b.getAttribute('data-hl') === mode));
+      }
+
+      buttons.forEach((b) => {
+        b.addEventListener('click', () => setHighlight(b.getAttribute('data-hl')));
+      });
+
+      if (printBtn) {
+        printBtn.addEventListener('click', () => window.print());
+      }
+
+      setHighlight('none');
+    })();
+  </script>
+</body>
+</html>
