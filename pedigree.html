@@ -273,6 +273,7 @@
     @media (max-width: 820px) {
       .pedigree-scroll {
         overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
       }
 
       .pedigree {
@@ -282,7 +283,25 @@
 
       .ped-head,
       .ped-grid {
-        grid-template-columns: repeat(var(--ped-cols), 220px);
+        grid-template-columns: repeat(var(--ped-cols), 240px);
+      }
+    }
+
+    /* Mobile/touch: always use horizontal scroll + fixed column widths (avoid squished cards) */
+    @media (hover: none) and (pointer: coarse) {
+      .pedigree-scroll {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .pedigree {
+        width: max-content;
+        min-width: 0;
+      }
+
+      .ped-head,
+      .ped-grid {
+        grid-template-columns: repeat(var(--ped-cols), 240px);
       }
     }
 
@@ -371,7 +390,7 @@
       overflow: hidden;
     }
 
-    /* Show magnifier cursor only on cards with truncated meta (2x/3x Great). */
+    /* Show magnifier cursor only on cards with truncated meta. */
     .ped-card.meta-truncated {
       cursor: zoom-in;
     }
@@ -1148,11 +1167,7 @@
       }
 
       function updateTruncatedMetaUI() {
-        document
-          .querySelectorAll(
-            '.ped-grid > .ped-card[style*="grid-column: 4"] .ped-meta, .ped-grid > .ped-card[style*="grid-column: 5"] .ped-meta'
-          )
-          .forEach((metaEl) => {
+        document.querySelectorAll('.ped-grid > .ped-card .ped-meta').forEach((metaEl) => {
             const text = metaEl.innerText.replace(/\n{3,}/g, '\n\n').trim();
             const card = metaEl.closest('.ped-card');
 
