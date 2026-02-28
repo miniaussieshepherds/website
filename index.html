@@ -1347,6 +1347,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   let isVisible = false;
   let isAnimating = false;
   let ticking = false;
+  const hasInitialHash = Boolean(window.location.hash);
+  // If we land via a hash (e.g. index.html#pedigree), the browser scroll jump can
+  // trigger a "first" scroll event. We suppress morph until after that settles.
+  let morphEnabled = !hasInitialHash;
 
   function morphWithRects({ src, fromRect, toRect }, onDone) {
     if (reduceMotion) {
@@ -1474,12 +1478,33 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   // If user loads mid-page (or refreshes while scrolled), show the header without morph.
   update({ allowMorph: false });
 
+  if (hasInitialHash) {
+    // Ensure the post-hash scroll position is reflected without animation.
+    // Keep morph disabled until the window load event (after the anchor jump).
+    requestAnimationFrame(() => update({ allowMorph: false }));
+    window.addEventListener(
+      'load',
+      () => {
+        update({ allowMorph: false });
+        morphEnabled = true;
+      },
+      { once: true }
+    );
+  }
+
+  // On bfcache restore (back/forward), sync without morph.
+  window.addEventListener('pageshow', (e) => {
+    if (!e.persisted) return;
+    update({ allowMorph: false });
+    morphEnabled = true;
+  });
+
   window.addEventListener('scroll', () => {
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(() => {
       ticking = false;
-      update({ allowMorph: true });
+      update({ allowMorph: morphEnabled });
     });
   }, { passive: true });
 })();
