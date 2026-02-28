@@ -225,6 +225,24 @@
       margin: 18px 0 14px;
     }
 
+    /* Add line colors to highlight filter buttons (replaces legend chips) */
+    .controls .btn[data-hl="sire"],
+    .controls .btn[data-hl="dam"] {
+      gap: 8px;
+    }
+
+    .controls .btn[data-hl="sire"]::before,
+    .controls .btn[data-hl="dam"]::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      flex: 0 0 auto;
+    }
+
+    .controls .btn[data-hl="sire"]::before { background: var(--steel-blue); }
+    .controls .btn[data-hl="dam"]::before { background: var(--copper); }
+
     .controls .controls-label {
       margin-left: 6px;
     }
@@ -616,10 +634,6 @@
         <div>
           <h1>Pedigree Overview</h1>
           <p class="sub">This page is designed to present a clean, breeder‑friendly 5‑generation pedigree. Add ancestor names, titles, registrations, and photos over time — and use the highlight controls to quickly show sire‑side or dam‑side strength during inquiries.</p>
-          <div class="legend" aria-label="Legend">
-            <span class="chip"><span class="dot" aria-hidden="true"></span>Sire line</span>
-            <span class="chip"><span class="dot dam" aria-hidden="true"></span>Dam line</span>
-          </div>
         </div>
         <aside class="panel">
           <h2>Pedigree Strengths (edit these)</h2>
@@ -803,12 +817,17 @@
       }
 
       colsButtons.forEach((b) => {
-        b.addEventListener('click', () => setColumns(b.getAttribute('data-cols')));
+        b.addEventListener('click', () => {
+          setColumns(b.getAttribute('data-cols'));
+          requestAnimationFrame(updateTruncatedMetaUI);
+        });
       });
 
       if (printBtn) {
         printBtn.addEventListener('click', () => window.print());
       }
+
+      window.addEventListener('resize', () => requestAnimationFrame(updateTruncatedMetaUI));
 
       // Click + drag anywhere to pan the pedigree (desktop)
       if (scroller) {
@@ -900,35 +919,57 @@
         }
       });
 
-      // Full meta on hover (native tooltip), while UI stays clamped
-      document
-        .querySelectorAll(
-          '.ped-grid > .ped-card[style*="grid-column: 4"] .ped-meta, .ped-grid > .ped-card[style*="grid-column: 5"] .ped-meta'
-        )
-        .forEach((metaEl) => {
-          const text = metaEl.innerText.replace(/\n{3,}/g, '\n\n').trim();
-          const card = metaEl.closest('.ped-card');
+      function isMetaVisuallyTruncated(metaEl) {
+        const rect = metaEl.getBoundingClientRect();
+        if (!rect.width || !rect.height) return false;
 
-          if (!text) {
+        // Compare the clamped element's visible height with an unclamped clone.
+        const clone = metaEl.cloneNode(true);
+        clone.removeAttribute('title');
+        clone.style.position = 'absolute';
+        clone.style.left = '-9999px';
+        clone.style.top = '0';
+        clone.style.visibility = 'hidden';
+        clone.style.pointerEvents = 'none';
+        clone.style.width = `${Math.ceil(rect.width)}px`;
+        clone.style.maxHeight = 'none';
+        clone.style.height = 'auto';
+        clone.style.overflow = 'visible';
+        clone.style.display = 'block';
+        clone.style.webkitLineClamp = 'unset';
+        clone.style.WebkitLineClamp = 'unset';
+        clone.style.lineClamp = 'unset';
+
+        document.body.appendChild(clone);
+        const fullHeight = clone.scrollHeight;
+        document.body.removeChild(clone);
+
+        return fullHeight > metaEl.clientHeight + 1;
+      }
+
+      function updateTruncatedMetaUI() {
+        document
+          .querySelectorAll(
+            '.ped-grid > .ped-card[style*="grid-column: 4"] .ped-meta, .ped-grid > .ped-card[style*="grid-column: 5"] .ped-meta'
+          )
+          .forEach((metaEl) => {
+            const text = metaEl.innerText.replace(/\n{3,}/g, '\n\n').trim();
+            const card = metaEl.closest('.ped-card');
+
             metaEl.removeAttribute('title');
             if (card) card.classList.remove('meta-truncated');
-            return;
-          }
 
-          // Only add a tooltip when it's likely to be truncated (more than 3 explicit lines).
-          // These meta blocks use <br> heavily, so newline counting matches the "rows" intent.
-          const lineCount = text.split('\n').filter(Boolean).length;
-          if (lineCount > 3) {
+            if (!text) return;
+            if (!isMetaVisuallyTruncated(metaEl)) return;
+
             metaEl.setAttribute('title', text);
             if (card) card.classList.add('meta-truncated');
-          } else {
-            metaEl.removeAttribute('title');
-            if (card) card.classList.remove('meta-truncated');
-          }
-        });
+          });
+      }
 
       setHighlight('none');
       setColumns('5');
+      requestAnimationFrame(updateTruncatedMetaUI);
     })();
   </script>
 </body>
