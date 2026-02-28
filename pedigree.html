@@ -125,7 +125,7 @@
 
     .btn.pill-active {
       border-color: rgba(28,28,30,0.28);
-      box-shadow: 0 10px 22px rgba(0,0,0,0.10);
+      box-shadow: 3px 4px 5px rgba(0,0,0,0.10);
       transform: translateY(-1px);
     }
 
@@ -169,7 +169,7 @@
       border: 1px solid rgba(28,28,30,0.10);
       background: rgba(245,242,236,0.30);
       padding: 18px;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+      box-shadow: 3px 4px 5px rgba(0,0,0,0.10);
     }
 
     .panel h2 {
@@ -443,7 +443,7 @@
       overflow: hidden;
       background: var(--white);
       border: 1px solid rgba(255,255,255,0.16);
-      box-shadow: 0 18px 44px rgba(0,0,0,0.22);
+      box-shadow: 3px 4px 5px rgba(0,0,0,0.10);
     }
 
     .photo-modal__img {
@@ -676,7 +676,7 @@
         </div>
         <aside class="panel">
           <h2>Pedigree Strengths (edit these)</h2>
-          <ul>
+          <ul id="pedigreeStrengthsList">
             <li>Notable titles / proven producers (placeholder)</li>
             <li>Health testing transparency across key ancestors (placeholder)</li>
             <li>Temperament consistency and stable structure (placeholder)</li>
@@ -834,6 +834,100 @@
       const photoModalImg = document.getElementById('photoModalImg');
       const photoModalName = document.getElementById('photoModalName');
       const photoModalMeta = document.getElementById('photoModalMeta');
+      const strengthsList = document.getElementById('pedigreeStrengthsList');
+
+      function toUniqueSortedArray(set) {
+        return Array.from(set).sort((a, b) => a.localeCompare(b));
+      }
+
+      function addListItem(ul, text) {
+        const li = document.createElement('li');
+        li.textContent = text;
+        ul.appendChild(li);
+      }
+
+      function populateStrengthsFromPedigree() {
+        if (!strengthsList) return;
+
+        const titleSet = new Set();
+        const geneticSet = new Set();
+        const orthoSet = new Set();
+        const otherHealthSet = new Set();
+
+        const metaEls = document.querySelectorAll('.ped-card .ped-meta');
+        metaEls.forEach((el) => {
+          const raw = (el.innerText || '').replace(/\u2022/g, '\n');
+          const lines = raw
+            .split(/\r?\n/)
+            .map((l) => l.trim())
+            .filter(Boolean);
+
+          // Titles: capture lines after a "Titles:" label.
+          const titlesIdx = lines.findIndex((l) => /^Titles\s*:/i.test(l));
+          if (titlesIdx !== -1) {
+            for (let i = titlesIdx + 1; i < lines.length; i++) {
+              const t = lines[i];
+              if (!t) break;
+              if (/^(Color\s*:|Reg\s*#\s*:|AKC\b|LOF\b|Born\s*:|DOB\s*:|Date of Birth\s*:)/i.test(t)) break;
+              titleSet.add(t);
+            }
+          }
+
+          // Titles: also pick up common title abbreviations used inline.
+          lines.forEach((l) => {
+            const matches = l.match(/\b(HCH|GCH|CH|TKP|CGC|ETD)\b/g);
+            if (matches) matches.forEach((m) => titleSet.add(m));
+          });
+
+          // Health/testing/structure: classify by common keywords.
+          lines.forEach((l) => {
+            // Skip obvious non-trait lines.
+            if (/^(Reg\s*#\s*:|AKC\b|LOF\b)/i.test(l)) return;
+            if (/^Titles\s*:/i.test(l)) return;
+            if (/^Color\s*:/i.test(l)) return;
+
+            const isGenetic =
+              /\b(N\/?N|clear|panel|DNA|CDPA|MDR1|DM|HSF4|CEA|PRA|HC[-\s]?DNA|CDDY|IVDD)\b/i.test(l);
+            const isOrtho = /\b(Hips?|Elbows?|OFA|PennHIP|Pat\.?|HD[-\s]?[A-Z0-9])\b/i.test(l);
+
+            if (isGenetic) {
+              geneticSet.add(l);
+              return;
+            }
+            if (isOrtho) {
+              orthoSet.add(l);
+              return;
+            }
+
+            if (/\b(COI|Height)\b/i.test(l)) {
+              otherHealthSet.add(l);
+            }
+          });
+        });
+
+        // Replace placeholder list with scraped items.
+        strengthsList.innerHTML = '';
+
+        const titles = toUniqueSortedArray(titleSet);
+        const genetic = toUniqueSortedArray(geneticSet);
+        const ortho = toUniqueSortedArray(orthoSet);
+        const other = toUniqueSortedArray(otherHealthSet);
+
+        const formatTop = (arr, max) => (arr.length > max ? `${arr.slice(0, max).join(', ')} ...` : arr.join(', '));
+
+        if (titles.length) addListItem(strengthsList, `Titles shown: ${formatTop(titles, 10)}`);
+        if (genetic.length) addListItem(strengthsList, `Genetic/health testing shown: ${formatTop(genetic, 10)}`);
+        if (ortho.length) addListItem(strengthsList, `Ortho/structure shown: ${formatTop(ortho, 10)}`);
+        if (other.length) addListItem(strengthsList, `Other notes shown: ${formatTop(other, 6)}`);
+
+        // If we couldn't find anything, keep a minimal editable fallback.
+        if (!strengthsList.children.length) {
+          addListItem(strengthsList, 'Notable titles / proven producers');
+          addListItem(strengthsList, 'Health testing transparency across key ancestors');
+          addListItem(strengthsList, 'Temperament consistency and stable structure');
+          addListItem(strengthsList, 'Performance focus: agility / obedience / working drive');
+        }
+      }
 
       function setHighlight(mode) {
         if (!root) return;
@@ -1036,6 +1130,7 @@
 
       setHighlight('none');
       setColumns('5');
+      populateStrengthsFromPedigree();
       requestAnimationFrame(updateTruncatedMetaUI);
     })();
   </script>
