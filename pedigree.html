@@ -560,10 +560,45 @@
       color: rgba(28,28,30,0.78);
     }
 
+    /* Parents (Column 1): full-width image banner at top */
+    .ped-card--parent {
+      padding: 0;
+      gap: 0;
+    }
+
+    .ped-card--parent > .ped-photo-img {
+      width: 100%;
+      height: 190px;
+      border-radius: 0;
+      border: 0;
+      object-fit: cover;
+      display: block;
+    }
+
+    .ped-card--parent > .ped-lines {
+      padding: 10px 10px;
+      gap: 4px;
+    }
+
     .ped-card--subject {
-      align-items: flex-start;
-      padding-top: 14px;
+      flex-direction: row;
+      align-items: stretch;
+      padding: 0;
+      gap: 0;
       background: rgba(255,255,255,0.86);
+    }
+
+    .ped-card--subject .subject-photo {
+      width: 240px;
+      background-image: url('images/buddy-card.jpg');
+      background-size: cover;
+      background-position: center;
+      flex: 0 0 auto;
+    }
+
+    .ped-card--subject .ped-lines {
+      padding: 14px 16px;
+      gap: 6px;
     }
 
     .ped-card--subject .ped-photo {
@@ -591,7 +626,7 @@
     }
 
     .subject-row .ped-name {
-      font-size: 0.525rem;
+      font-size: 1.05rem;
     }
 
     /* Highlight controls */
@@ -664,7 +699,7 @@
 
       <div class="subject-row" aria-label="Dog summary">
         <div class="ped-card ped-card--subject" data-line="sire">
-          <div class="ped-photo" aria-hidden="true"></div>
+          <div class="subject-photo" role="img" aria-label="Lightlake Let Me Entertain You"></div>
           <div class="ped-lines">
             <div class="ped-name">Lightlake Let Me Entertain You</div>
             <div class="ped-meta">Reg #: MET.MAS.170/23 • Color: red merle • DOB: 12 Apr 2023</div>
@@ -689,14 +724,14 @@
 
           <div class="ped-grid">
             <!-- Column 1: parents (each spans 16 rows) -->
-            <div class="ped-card" data-line="sire" style="grid-column: 1; grid-row: 1 / span 16;">
+            <div class="ped-card ped-card--parent" data-line="sire" style="grid-column: 1; grid-row: 1 / span 16;">
               <img class="ped-photo-img" src="images/sire-00-purple-rain-of-surf-paradise-02.jpg" alt="Purple Rain of Surf Paradise" loading="lazy" decoding="async">
               <div class="ped-lines">
                 <div class="ped-name"><a href="https://dogs.pedigreeonline.com/purple-rain-of-surf-paradise-WwZnJhHg/pedigree" target="_blank" rel="noopener noreferrer">Purple Rain of Surf Paradise</a></div>
-                <div class="ped-meta">Reg #: MET.MAS.115/H/22<br>• LOF 1 B.AMER.MINI. 4109/377AKC DNA<br>• CDPA N/N<br>• MDR1 N/N<br>• DM N/N<br>• HD-A<br>• HSF4 N/N<br>• Pat. 0<br>• CDDY (IVDD WT/WT)<br><br>Titles:<br>HCH — Hungarian Champion<br>Color: Black tri</div>
+                <div class="ped-meta">Reg #: MET.MAS.115/H/22<br>• LOF 1 B.AMER.MINI. 4109/377AKC DNA<br>• CDPA N/N<br>• MDR1 N/N<br>• DM N/N<br>• HD-A<br>• HSF4 N/N<br>• Pat. 0<br>• CDDY (IVDD WT/WT)<br><br>Titles:<br>HCH — Hungarian Champion<br><br>Color: Black tri</div>
               </div>
             </div>
-            <div class="ped-card" data-line="dam" style="grid-column: 1; grid-row: 17 / span 16;">
+            <div class="ped-card ped-card--parent" data-line="dam" style="grid-column: 1; grid-row: 17 / span 16;">
               <img class="ped-photo-img" src="images/dam-blue-elks-shes-got-the-look.jpg" alt="Blue Elk's She's Got The Look" loading="lazy" decoding="async">
               <div class="ped-lines">
                 <div class="ped-name">Blue Elk's She's Got The Look</div>
@@ -705,23 +740,23 @@
             </div>
 
             <!-- Column 2: grandparents (each spans 8 rows) -->
-            <div class="ped-card" data-line="sire" style="grid-column: 2; grid-row: 1 / span 8;"><img class="ped-photo-img" src="images/sire-01-alta-play-once-again-a-red-token.jpg" alt="Alta Play Once Again A Red Token" loading="lazy" decoding="async"><div class="ped-lines"><div class="ped-name"><a href="https://www.pedigreedatabase.com/australian_shepherd/dog.html?id=3229979-alta-play-once-again-a-red-token?_v=20230401104811" target="_blank" rel="noopener noreferrer">Alta Play Once Again A Red Token</a></div><div class="ped-meta">AKC DN50850706<br>Hips: A/A (Excellent) • Elbows: 0 (Normal)<br>Clear full panel</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 2; grid-row: 1 / span 8;"><img class="ped-photo-img" src="images/sire-01-alta-play-once-again-a-red-token.jpg" alt="Alta Play Once Again A Red Token" loading="lazy" decoding="async"><div class="ped-lines"><div class="ped-name"><a href="https://www.pedigreedatabase.com/australian_shepherd/dog.html?id=3229979-alta-play-once-again-a-red-token?_v=20230401104811" target="_blank" rel="noopener noreferrer">Alta Play Once Again A Red Token</a></div><div class="ped-meta">AKC DN50850706<br>Hips: A/A (Excellent)<br>Elbows: 0 (Normal)<br>Clear full panel</div></div></div>
             <div class="ped-card" data-line="sire" style="grid-column: 2; grid-row: 9 / span 8;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Energies Masal Mara</div><div class="ped-meta">AKC DN47950701</div></div></div>
             <div class="ped-card" data-line="dam" style="grid-column: 2; grid-row: 17 / span 8;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Moonbaby's Shot In The Dark</div><div class="ped-meta">AKC DN51667004<br>Height: 45.5cm<br>Elbows: OFA - Normal<br>Hips: OFA - Good<br><br>Titles:<br>CH — Champion</div></div></div>
             <div class="ped-card" data-line="dam" style="grid-column: 2; grid-row: 25 / span 8;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Moonbaby's Starstruck Independence of Away To Me</div><div class="ped-meta">AKC DN44377407<br>Height: 42cm<br>Elbow Rating: OFA - Normal<br>Hip Rating: OFA - Good<br><br>Titles:<br>GCH — Grand Champion<br>CH — Champion</div></div></div>
 
             <!-- Column 3: great‑grandparents (each spans 4 rows) -->
-            <div class="ped-card" data-line="sire" style="grid-column: 3; grid-row: 1 / span 4;"><img class="ped-photo-img" src="images/sire-02-Alta%27s%20Stylin%20In%20My%20Jaguar.jpg" alt="Alta's Stylin In My Jaguar" loading="lazy" decoding="async"><div class="ped-lines"><div class="ped-name"><a href="https://www.pedigreedatabase.com/australian_shepherd/dog.html?id=2385981-altas-stylin-in-my-jaguar?_v=20180911171604" target="_blank" rel="noopener noreferrer">Alta's Stylin In My Jaguar</a></div><div class="ped-meta">2011 • AKC DN33611001<br>PennHIP: 90th percentile</div></div></div>
-            <div class="ped-card" data-line="sire" style="grid-column: 3; grid-row: 5 / span 4;"><img class="ped-photo-img" src="images/sire-alta-buttons-n-bows.jpg" alt="Alta Buttons N Bows" loading="lazy" decoding="async"><div class="ped-lines"><div class="ped-name">Alta Buttons N Bows</div><div class="ped-meta">AKC DN38298701<br>Born: 13 July 2013</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 3; grid-row: 1 / span 4;"><img class="ped-photo-img" src="images/sire-02-Alta%27s%20Stylin%20In%20My%20Jaguar.jpg" alt="Alta's Stylin In My Jaguar" loading="lazy" decoding="async"><div class="ped-lines"><div class="ped-name"><a href="https://www.pedigreedatabase.com/australian_shepherd/dog.html?id=2385981-altas-stylin-in-my-jaguar?_v=20180911171604" target="_blank" rel="noopener noreferrer">Alta's Stylin In My Jaguar</a></div><div class="ped-meta">AKC DN33611001<br>PennHIP: 90th percentile</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 3; grid-row: 5 / span 4;"><img class="ped-photo-img" src="images/sire-alta-buttons-n-bows.jpg" alt="Alta Buttons N Bows" loading="lazy" decoding="async"><div class="ped-lines"><div class="ped-name">Alta Buttons N Bows</div><div class="ped-meta">AKC DN38298701<br>DOB: 13 July 2013</div></div></div>
             <div class="ped-card" data-line="sire" style="grid-column: 3; grid-row: 9 / span 4;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Energies I Am Al Albatraz</div><div class="ped-meta">AKC DN44222006</div></div></div>
             <div class="ped-card" data-line="sire" style="grid-column: 3; grid-row: 13 / span 4;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Energie's Great Rolling</div><div class="ped-meta">AKC DN34089801</div></div></div>
             <div class="ped-card" data-line="dam" style="grid-column: 3; grid-row: 17 / span 4;"><img class="ped-photo-img" src="images/dam-moonbabys-when-it-counts.jpg" alt="Moonbaby's When It Counts" loading="lazy" decoding="async"><div class="ped-lines"><div class="ped-name">Moonbaby's When It Counts</div><div class="ped-meta">AKC DN42343601<br>Height: 46cm<br>Elbows: OFA - Normal<br>Hips: OFA - Excellent</div></div></div>
             <div class="ped-card" data-line="dam" style="grid-column: 3; grid-row: 21 / span 4;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Moonbaby's Barefoot Blue Jean Night</div><div class="ped-meta">AKC DN44377403<br>Height: 42cm<br>Elbows: OFA - Normal<br>Hips: OFA - Excellent</div></div></div>
-            <div class="ped-card" data-line="dam" style="grid-column: 3; grid-row: 25 / span 4;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Legacy's American Outlaw</div><div class="ped-meta">AKC DN3843702<br>Color: Black Tricolor<br>Call Name: Doc<br>Date of Birth: 2012-11-26<br>Height: 42cm<br>Elbows: OFA - Normal<br>Hips: OFA - Excellent</div></div></div>
+            <div class="ped-card" data-line="dam" style="grid-column: 3; grid-row: 25 / span 4;"><div class="ped-photo" aria-hidden="true"></div><div class="ped-lines"><div class="ped-name">Legacy's American Outlaw</div><div class="ped-meta">AKC DN3843702<br>Color: Black Tricolor<br>Call Name: Doc<br>DOB: 2012-11-26<br>Height: 42cm<br>Elbows: OFA - Normal<br>Hips: OFA - Excellent</div></div></div>
             <div class="ped-card" data-line="dam" style="grid-column: 3; grid-row: 29 / span 4;"><img class="ped-photo-img" src="images/dam-moonbabys-all-american-girl.jpg" alt="Moonbaby's All American Girl" loading="lazy" decoding="async"><div class="ped-lines"><div class="ped-name">Moonbaby's All American Girl</div><div class="ped-meta">AKC DN41551801<br>Height: 38cm</div></div></div>
 
             <!-- Column 4: 2× great (each spans 2 rows) -->
-            <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 1 / span 2;"><img class="ped-photo-img" src="images/sire-03-Coat%20Tails%20Range%20Ryder%20of%20Alta.jpg" alt="Coat Tails Range Ryder of Alta" loading="lazy" decoding="async"><div class="ped-lines"><div class="ped-name"><a href="https://www.pedigreedatabase.com/australian_shepherd/dog.html?id=2357113-coat-tails-range-ryder-of-alta?_v=20180911171212" target="_blank" rel="noopener noreferrer">Coat Tails Range Ryder of Alta</a></div><div class="ped-meta">2008 • AKC DN36502101</div></div></div>
+            <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 1 / span 2;"><img class="ped-photo-img" src="images/sire-03-Coat%20Tails%20Range%20Ryder%20of%20Alta.jpg" alt="Coat Tails Range Ryder of Alta" loading="lazy" decoding="async"><div class="ped-lines"><div class="ped-name"><a href="https://www.pedigreedatabase.com/australian_shepherd/dog.html?id=2357113-coat-tails-range-ryder-of-alta?_v=20180911171212" target="_blank" rel="noopener noreferrer">Coat Tails Range Ryder of Alta</a></div><div class="ped-meta">AKC DN36502101</div></div></div>
             <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 3 / span 2;"><img class="ped-photo-img" src="images/dam-ruffhouse-prosche.jpg" alt="Ruff House Porsche" loading="lazy" decoding="async"><div class="ped-lines"><div class="ped-name">Ruff House Porsche</div><div class="ped-meta">AKC DN36452101<br>Hip Rating: OFA - Excellent</div></div></div>
             <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 5 / span 2;"><img class="ped-photo-img" src="images/dam-away-to-me-cadillac-jack.jpg" alt="Away To Me Cadillac Jack" loading="lazy" decoding="async"><div class="ped-lines"><div class="ped-name">Away To Me Cadillac Jack</div><div class="ped-meta">2009 • AKC DN31794902<br>Elbows: OFA - Normal<br>Hips: OFA - Good<br>GCH, CH, TKP<br>CGC, ETD</div></div></div>
             <div class="ped-card" data-line="sire" style="grid-column: 4; grid-row: 7 / span 2;"><img class="ped-photo-img" src="images/sire-dam-03-alta-chyna-rose.jpg" alt="Alta Chyna Rose" loading="lazy" decoding="async"><div class="ped-lines"><div class="ped-name">Alta Chyna Rose</div><div class="ped-meta">2009 • AKC DN36148301<br>Height: 37cm<br>Hips: OFA - Good<br>Red, white markings, tan points<br>CAN 2009 • COI 20.69%</div></div></div>
