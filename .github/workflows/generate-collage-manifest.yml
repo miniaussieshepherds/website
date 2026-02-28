@@ -1,0 +1,44 @@
+name: Generate collage manifest
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'images/collage/**'
+      - 'scripts/generate-collage-manifest.mjs'
+      - '.github/workflows/generate-collage-manifest.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    # Prevent infinite loop on the bot commit.
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+
+      - name: Generate manifest.js
+        run: node scripts/generate-collage-manifest.mjs
+
+      - name: Commit changes (if any)
+        run: |
+          git status --porcelain
+          git add images/collage/manifest.js
+          if git diff --cached --quiet; then
+            echo "No manifest changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: update collage manifest [skip ci]"
+          git push

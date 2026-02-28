@@ -348,19 +348,29 @@
 
     .collage-grid {
       display: grid;
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      grid-template-rows: repeat(6, 1fr);
-      gap: 12px;
-      height: clamp(240px, 28vw, 360px);
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
     }
 
     .collage-tile {
+      appearance: none;
+      border: 0;
+      padding: 0;
+      text-align: inherit;
+      cursor: pointer;
+      width: 100%;
       border-radius: 18px;
       overflow: hidden;
       background: linear-gradient(180deg, rgba(245, 242, 236, 0.55) 0%, var(--white) 60%);
       border: 1px solid rgba(28,28,30,0.08);
       box-shadow: 0 10px 26px rgba(0,0,0,0.08);
       position: relative;
+      aspect-ratio: 4 / 3;
+    }
+
+    .collage-tile:focus-visible {
+      outline: 3px solid rgba(169, 215, 242, 0.85);
+      outline-offset: 3px;
     }
 
     .collage-tile.is-missing {
@@ -1084,25 +1094,9 @@
 
   <!-- STATS -->
   <section class="stats" id="profile">
-    <div class="collage-band" aria-label="Buddy photo collage">
+    <div class="collage-band" id="gallery" aria-label="Buddy photo collage">
       <div class="collage-band__wrap">
-        <div class="collage-grid">
-          <div class="collage-tile collage-tile--a is-missing" role="img" aria-label="Buddy photo">
-            <img src="images/collage/buddy-01.jpg" alt="Buddy photo" loading="lazy" decoding="async" onerror="this.closest('.collage-tile').classList.add('is-missing'); this.remove();" onload="this.closest('.collage-tile').classList.remove('is-missing');">
-          </div>
-          <div class="collage-tile collage-tile--b is-missing" role="img" aria-label="Buddy photo">
-            <img src="images/collage/buddy-02.jpg" alt="Buddy photo" loading="lazy" decoding="async" onerror="this.closest('.collage-tile').classList.add('is-missing'); this.remove();" onload="this.closest('.collage-tile').classList.remove('is-missing');">
-          </div>
-          <div class="collage-tile collage-tile--c is-missing" role="img" aria-label="Buddy photo">
-            <img src="images/collage/buddy-03.jpg" alt="Buddy photo" loading="lazy" decoding="async" onerror="this.closest('.collage-tile').classList.add('is-missing'); this.remove();" onload="this.closest('.collage-tile').classList.remove('is-missing');">
-          </div>
-          <div class="collage-tile collage-tile--d is-missing" role="img" aria-label="Buddy photo">
-            <img src="images/collage/buddy-04.jpg" alt="Buddy photo" loading="lazy" decoding="async" onerror="this.closest('.collage-tile').classList.add('is-missing'); this.remove();" onload="this.closest('.collage-tile').classList.remove('is-missing');">
-          </div>
-          <div class="collage-tile collage-tile--e is-missing" role="img" aria-label="Buddy photo">
-            <img src="images/collage/buddy-05.jpg" alt="Buddy photo" loading="lazy" decoding="async" onerror="this.closest('.collage-tile').classList.add('is-missing'); this.remove();" onload="this.closest('.collage-tile').classList.remove('is-missing');">
-          </div>
-        </div>
+        <div class="collage-grid" id="collageGrid" aria-label="Buddy photos"></div>
       </div>
     </div>
 
@@ -1206,41 +1200,6 @@
     </div>
   </section>
 
-  <!-- GALLERY -->
-  <section class="gallery" id="gallery">
-    <div class="section-inner">
-      <div class="section-header">
-        <h2>Gallery</h2>
-        <p>A curated look at Buddy’s structure, movement, and temperament in real-life settings.</p>
-      </div>
-
-      <div class="gallery-banner">
-        <img src="images/banner-1.jpg" alt="Buddy banner photo" loading="lazy" decoding="async">
-      </div>
-
-      <div class="gallery-grid">
-        <figure class="gallery-item">
-          <img src="images/gallery-01.jpg" alt="Buddy standing in a grassy field" loading="lazy" decoding="async">
-        </figure>
-        <figure class="gallery-item">
-          <img src="images/gallery-02.jpg" alt="Buddy standing on a rocky shoreline" loading="lazy" decoding="async">
-        </figure>
-        <figure class="gallery-item">
-          <img src="images/gallery-03.jpg" alt="Buddy running outdoors" loading="lazy" decoding="async">
-        </figure>
-        <figure class="gallery-item">
-          <img src="images/gallery-04.jpg" alt="Buddy posed on grass with another dog" loading="lazy" decoding="async">
-        </figure>
-        <figure class="gallery-item">
-          <img src="images/gallery-05.jpg" alt="Buddy sitting outdoors at sunset" loading="lazy" decoding="async">
-        </figure>
-        <figure class="gallery-item">
-          <img src="images/gallery-06.jpg" alt="Buddy relaxing indoors with a toy" loading="lazy" decoding="async">
-        </figure>
-      </div>
-    </div>
-  </section>
-
   <!-- FULLSCREEN GALLERY VIEWER -->
   <div class="lightbox" id="lightbox" aria-hidden="true">
     <div class="lightbox__content" role="dialog" aria-modal="true" aria-label="Image viewer">
@@ -1315,6 +1274,7 @@
       </form>
     </div>
   </section>
+  <script src="images/collage/manifest.js"></script>
 <script>
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
@@ -1503,11 +1463,65 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 })();
 
 (() => {
+  // Hero collage thumbnails (from images/collage/manifest.js)
+  const collageGrid = document.getElementById('collageGrid');
+  const collageImages = Array.isArray(window.__COLLAGE_IMAGES__) ? window.__COLLAGE_IMAGES__.slice() : [];
+
+  function shuffleInPlace(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function filenameFromUrl(url) {
+    try {
+      const clean = String(url).split('?')[0].split('#')[0];
+      return clean.split('/').pop() || '';
+    } catch {
+      return '';
+    }
+  }
+
+  function makeAltFromUrl(url) {
+    const file = filenameFromUrl(url);
+    if (!file) return 'Buddy photo';
+    const base = file.replace(/\.[^.]+$/, '');
+    const words = base.replace(/[_-]+/g, ' ').trim();
+    return words ? `Buddy photo (${words})` : 'Buddy photo';
+  }
+
+  const orderedImages = collageImages.length ? shuffleInPlace(collageImages) : [];
+
+  if (collageGrid && orderedImages.length) {
+    const frag = document.createDocumentFragment();
+    orderedImages.forEach((src, index) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'collage-tile';
+      btn.setAttribute('data-index', String(index));
+      btn.setAttribute('aria-label', 'Open photo');
+
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = makeAltFromUrl(src);
+      img.loading = 'lazy';
+      img.decoding = 'async';
+
+      btn.appendChild(img);
+      frag.appendChild(btn);
+    });
+
+    collageGrid.innerHTML = '';
+    collageGrid.appendChild(frag);
+  }
+
   // Scroll-reveal animations
-  const containers = document.querySelectorAll('.stats-grid, .traits-grid, .gallery-grid');
+  const containers = document.querySelectorAll('.stats-grid, .traits-grid, .collage-grid');
   const revealTargets = [];
   containers.forEach(container => {
-    const cards = container.querySelectorAll('.pro-tile, .gallery-item');
+    const cards = container.querySelectorAll('.pro-tile, .collage-tile');
     cards.forEach((card, index) => {
       card.classList.add('reveal');
       const delay = Math.min(index * 70, 280);
@@ -1542,7 +1556,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   let savedBodyPaddingRight = '';
   let savedRootScrollbarWidth = '';
 
-  const galleryImgs = Array.from(document.querySelectorAll('.gallery-item img'));
+  const galleryImgs = orderedImages.slice();
   let currentIndex = -1;
 
   function getScrollbarWidth() {
@@ -1554,11 +1568,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     if (!galleryImgs.length) return;
 
     const normalized = ((index % galleryImgs.length) + galleryImgs.length) % galleryImgs.length;
-    const img = galleryImgs[normalized];
-    if (!img) return;
+    const src = galleryImgs[normalized];
+    if (!src) return;
 
-    lightboxImg.src = img.currentSrc || img.src;
-    lightboxImg.alt = img.alt || '';
+    lightboxImg.src = src;
+    lightboxImg.alt = makeAltFromUrl(src);
     currentIndex = normalized;
 
     const disableNav = galleryImgs.length <= 1;
@@ -1605,14 +1619,17 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     isOpen = false;
   }
 
-  galleryImgs.forEach((img, index) => {
-    const item = img.closest('.gallery-item');
-    if (!item) return;
-    item.addEventListener('click', (e) => {
-      e.preventDefault();
-      openLightbox(index, true);
+  if (collageGrid && galleryImgs.length) {
+    collageGrid.addEventListener('click', (e) => {
+      const target = e.target;
+      if (!target || !target.closest) return;
+      const btn = target.closest('.collage-tile[data-index]');
+      if (!btn) return;
+      const idx = Number(btn.getAttribute('data-index'));
+      if (!Number.isFinite(idx)) return;
+      openLightbox(idx, true);
     });
-  });
+  }
 
   function go(delta) {
     if (!galleryImgs.length) return;
