@@ -1166,20 +1166,32 @@
         return fullHeight > metaEl.clientHeight + 1;
       }
 
+      function isMetaClippedByCard(metaEl) {
+        const card = metaEl.closest('.ped-card');
+        if (!card) return false;
+
+        const metaRect = metaEl.getBoundingClientRect();
+        const cardRect = card.getBoundingClientRect();
+
+        return metaRect.bottom > cardRect.bottom + 1;
+      }
+
       function updateTruncatedMetaUI() {
         document.querySelectorAll('.ped-grid > .ped-card .ped-meta').forEach((metaEl) => {
-            const text = metaEl.innerText.replace(/\n{3,}/g, '\n\n').trim();
-            const card = metaEl.closest('.ped-card');
+          const text = metaEl.innerText.replace(/\n{3,}/g, '\n\n').trim();
+          const card = metaEl.closest('.ped-card');
 
-            metaEl.removeAttribute('title');
-            if (card) card.classList.remove('meta-truncated');
+          metaEl.removeAttribute('title');
+          if (card) card.classList.remove('meta-truncated');
 
-            if (!text) return;
-            if (!isMetaVisuallyTruncated(metaEl)) return;
+          if (!text) return;
 
-            metaEl.setAttribute('title', text);
-            if (card) card.classList.add('meta-truncated');
-          });
+          const isTruncated = isMetaVisuallyTruncated(metaEl) || isMetaClippedByCard(metaEl);
+          if (!isTruncated) return;
+
+          metaEl.setAttribute('title', text);
+          if (card) card.classList.add('meta-truncated');
+        });
       }
 
       setHighlight('none');
