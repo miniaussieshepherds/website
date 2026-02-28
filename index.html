@@ -1342,151 +1342,53 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   const topbarLogo = document.getElementById('topbarLogo');
   if (!topbar || !heroLogo || !topbarLogo) return;
 
-  const reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  // Animation removed by request: no morph/ghost transition on scroll.
   const threshold = 10;
   let isVisible = false;
-  let isAnimating = false;
   let ticking = false;
   const hasInitialHash = Boolean(window.location.hash);
-  // If we land via a hash (e.g. index.html#pedigree), the browser scroll jump can
-  // trigger a "first" scroll event. We suppress morph until after that settles.
-  let morphEnabled = !hasInitialHash;
-
-  function morphWithRects({ src, fromRect, toRect }, onDone) {
-    if (reduceMotion) {
-      onDone?.();
-      return;
+  function syncLogos(shouldShowTopbar) {
+    // Keep one visible at all times; avoid intermediate hidden states.
+    if (shouldShowTopbar) {
+      heroLogo.classList.add('logo-morph-hide');
+      topbarLogo.classList.remove('logo-morph-hide');
+    } else {
+      topbarLogo.classList.add('logo-morph-hide');
+      heroLogo.classList.remove('logo-morph-hide');
     }
-    if (!fromRect.width || !toRect.width) {
-      onDone?.();
-      return;
-    }
-
-    const ghost = document.createElement('img');
-    ghost.src = src || '';
-    ghost.alt = '';
-    ghost.setAttribute('aria-hidden', 'true');
-    ghost.decoding = 'async';
-    ghost.style.position = 'fixed';
-    ghost.style.left = `${fromRect.left}px`;
-    ghost.style.top = `${fromRect.top}px`;
-    ghost.style.width = `${fromRect.width}px`;
-    ghost.style.height = `${fromRect.height}px`;
-    ghost.style.transformOrigin = 'top left';
-    ghost.style.zIndex = '10000';
-    ghost.style.pointerEvents = 'none';
-    document.body.appendChild(ghost);
-
-    const dx = toRect.left - fromRect.left;
-    const dy = toRect.top - fromRect.top;
-    const scale = toRect.width / fromRect.width;
-
-    const anim = ghost.animate(
-      [
-        { transform: 'translate(0px, 0px) scale(1)' },
-        { transform: `translate(${dx}px, ${dy}px) scale(${scale})` }
-      ],
-      {
-        duration: 460,
-        easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
-        fill: 'forwards'
-      }
-    );
-
-    anim.addEventListener('finish', () => {
-      ghost.remove();
-      onDone?.();
-    }, { once: true });
   }
 
-  function getLogoRects(fromEl, toEl) {
-    const fromRect = fromEl.getBoundingClientRect();
-    const toRect = toEl.getBoundingClientRect();
-    const src = fromEl.getAttribute('src') || toEl.getAttribute('src') || '';
-    return { src, fromRect, toRect };
-  }
-
-  function hideBothLogos() {
-    heroLogo.classList.add('logo-morph-hide');
-    topbarLogo.classList.add('logo-morph-hide');
-  }
-
-  function showHeroLogo() {
-    heroLogo.classList.remove('logo-morph-hide');
-  }
-
-  function showTopbarLogo() {
-    topbarLogo.classList.remove('logo-morph-hide');
-  }
-
-  function showTopbar({ allowMorph }) {
+  function showTopbar() {
     document.body.classList.add('is-topbar-visible');
     isVisible = true;
-
-    if (!allowMorph || reduceMotion) return;
-    isAnimating = true;
-    document.body.classList.add('is-morphing');
-    requestAnimationFrame(() => {
-      // Ensure the topbar is laid out before we measure.
-      topbar.getBoundingClientRect();
-      const rects = getLogoRects(heroLogo, topbarLogo);
-      hideBothLogos();
-      morphWithRects(rects, () => {
-        requestAnimationFrame(() => {
-          showTopbarLogo();
-          document.body.classList.remove('is-morphing');
-          isAnimating = false;
-        });
-      });
-    });
+    syncLogos(true);
   }
 
-  function hideTopbar({ allowMorph }) {
-    if (!allowMorph || reduceMotion) {
-      document.body.classList.remove('is-topbar-visible');
-      isVisible = false;
-      return;
-    }
-
-    isAnimating = true;
-    document.body.classList.add('is-morphing');
-    requestAnimationFrame(() => {
-      // Keep header visible while we measure + morph.
-      topbar.getBoundingClientRect();
-      const rects = getLogoRects(topbarLogo, heroLogo);
-      hideBothLogos();
-      morphWithRects(rects, () => {
-        document.body.classList.remove('is-topbar-visible');
-        isVisible = false;
-        requestAnimationFrame(() => {
-          showHeroLogo();
-          document.body.classList.remove('is-morphing');
-          isAnimating = false;
-        });
-      });
-    });
+  function hideTopbar() {
+    document.body.classList.remove('is-topbar-visible');
+    isVisible = false;
+    syncLogos(false);
   }
 
-  function update({ allowMorph }) {
-    if (isAnimating) return;
+  function update() {
     const shouldShow = window.scrollY > threshold;
     if (shouldShow === isVisible) return;
-    if (shouldShow) showTopbar({ allowMorph });
-    else hideTopbar({ allowMorph });
+    if (shouldShow) showTopbar();
+    else hideTopbar();
   }
 
-  // If user loads mid-page (or refreshes while scrolled), show the header without morph.
-  update({ allowMorph: false });
+  // Initial sync (handles mid-page load/refresh/hash).
+  // Ensure header logo hidden when at top.
+  syncLogos(window.scrollY > threshold);
+  update();
 
   if (hasInitialHash) {
-    // Ensure the post-hash scroll position is reflected without animation.
-    // Keep morph disabled until the window load event (after the anchor jump).
-    requestAnimationFrame(() => update({ allowMorph: false }));
+    // Ensure the post-hash scroll position is reflected after the anchor jump.
+    requestAnimationFrame(() => update());
     window.addEventListener(
       'load',
       () => {
-        update({ allowMorph: false });
-        morphEnabled = true;
+        update();
       },
       { once: true }
     );
@@ -1495,8 +1397,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   // On bfcache restore (back/forward), sync without morph.
   window.addEventListener('pageshow', (e) => {
     if (!e.persisted) return;
-    update({ allowMorph: false });
-    morphEnabled = true;
+    syncLogos(window.scrollY > threshold);
+    update();
   });
 
   window.addEventListener('scroll', () => {
@@ -1504,7 +1406,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     ticking = true;
     requestAnimationFrame(() => {
       ticking = false;
-      update({ allowMorph: morphEnabled });
+      update();
     });
   }, { passive: true });
 })();
