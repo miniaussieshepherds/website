@@ -54,9 +54,17 @@
     }
 
     .brand img {
-      width: 150px;
+      width: 300px;
+      max-width: 46vw;
       height: auto;
       display: block;
+    }
+
+    @media (max-width: 520px) {
+      .brand img {
+        width: 220px;
+        max-width: 60vw;
+      }
     }
 
     .brand .brand-text {
@@ -672,7 +680,7 @@
       <div class="page-head">
         <div>
           <h1>Pedigree Overview</h1>
-          <p class="sub">This page is designed to present a clean, breeder‑friendly 5‑generation pedigree. Add ancestor names, titles, registrations, and photos over time — and use the highlight controls to quickly show sire‑side or dam‑side strength during inquiries.</p>
+          <p class="sub">This five-generation pedigree chart highlights Buddy's strong lineage, with a focus on health, temperament, and performance. Use the controls below to explore specific branches and key ancestors.</p>
           <p class="sub" id="pedigreeOverviewAuto" hidden></p>
         </div>
         <aside class="panel">
@@ -925,12 +933,12 @@
         const genetic = signals.genetic || [];
         const ortho = signals.ortho || [];
 
-        if (titles.length) addListItem(strengthsList, `Key titles represented: ${formatTop(titles, 8)}`);
+        if (titles.length) addListItem(strengthsList, `Key titles: ${formatTop(titles, 8)}`);
         if (genetic.length || ortho.length) {
           const healthParts = [];
           if (genetic.length) healthParts.push(`Genetics: ${formatTop(genetic, 6)}`);
           if (ortho.length) healthParts.push(`Ortho: ${formatTop(ortho, 6)}`);
-          addListItem(strengthsList, `Health testing shown: ${healthParts.join(' | ')}`);
+          addListItem(strengthsList, `Health testing: ${healthParts.join(' | ')}`);
         }
 
         if (!strengthsList.children.length) {

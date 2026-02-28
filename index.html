@@ -189,6 +189,21 @@
       gap: 18px;
     }
 
+    .stud-collage {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 0 0 18px;
+    }
+
+    .stud-collage__tile {
+      aspect-ratio: 1 / 1;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(245, 242, 236, 0.55) 0%, var(--white) 60%);
+      border: 1px dashed rgba(28, 28, 30, 0.22);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.08);
+    }
+
     .pro-tile {
       background: linear-gradient(180deg, rgba(245, 242, 236, 0.55) 0%, var(--white) 60%);
       border-radius: 18px;
@@ -363,6 +378,16 @@
       background: var(--cream);
       border-radius: 8px;
       min-width: 220px;
+    }
+
+    .parent-photo {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: 8px;
+      margin: 12px 0 12px;
+      background: var(--white);
+      border: 1px dashed rgba(28, 28, 30, 0.22);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.08);
     }
 
     .parent h3 {
@@ -740,6 +765,10 @@
       .hero-content {
         padding: 0 16px;
       }
+
+      .stud-collage {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     /* Professional stat cards */
@@ -840,6 +869,12 @@
   <!-- STATS -->
   <section class="stats" id="profile">
     <div class="section-inner">
+      <div class="stud-collage" aria-label="Buddy photo collage placeholder">
+        <div class="stud-collage__tile" role="img" aria-label="Buddy photo placeholder"></div>
+        <div class="stud-collage__tile" role="img" aria-label="Buddy photo placeholder"></div>
+        <div class="stud-collage__tile" role="img" aria-label="Buddy photo placeholder"></div>
+        <div class="stud-collage__tile" role="img" aria-label="Buddy photo placeholder"></div>
+      </div>
       <div class="section-header">
         <h2>Stud Profile</h2>
         <p>Key details at a glance for breeders focused on structure, health, and temperament.</p>
@@ -952,10 +987,12 @@
       <div class="pedigree-tree">
         <div class="parent">
           <h3>Sire</h3>
+          <div class="parent-photo" role="img" aria-label="Sire photo placeholder"></div>
           <p>Champion‑sired blue merle with strong performance and conformation background.</p>
         </div>
         <div class="parent">
           <h3>Dam</h3>
+          <div class="parent-photo" role="img" aria-label="Dam photo placeholder"></div>
           <p>Health‑tested dam with stable, people‑oriented temperament and clean movement.</p>
         </div>
       </div>
