@@ -673,9 +673,10 @@
         <div>
           <h1>Pedigree Overview</h1>
           <p class="sub">This page is designed to present a clean, breeder‑friendly 5‑generation pedigree. Add ancestor names, titles, registrations, and photos over time — and use the highlight controls to quickly show sire‑side or dam‑side strength during inquiries.</p>
+          <p class="sub" id="pedigreeOverviewAuto" hidden></p>
         </div>
         <aside class="panel">
-          <h2>Pedigree Strengths (edit these)</h2>
+          <h2>Pedigree Strengths</h2>
           <ul id="pedigreeStrengthsList">
             <li>Notable titles / proven producers (placeholder)</li>
             <li>Health testing transparency across key ancestors (placeholder)</li>
@@ -694,7 +695,6 @@
         <button class="btn" type="button" data-cols="4">4</button>
         <button class="btn" type="button" data-cols="5">5</button>
         <button class="btn" type="button" id="printBtn">Print / Save PDF</button>
-        <span class="hint">Tip: on desktop, click and drag to pan. On mobile, scroll sideways.</span>
       </div>
 
       <div class="subject-row" aria-label="Dog summary">
@@ -835,6 +835,7 @@
       const photoModalName = document.getElementById('photoModalName');
       const photoModalMeta = document.getElementById('photoModalMeta');
       const strengthsList = document.getElementById('pedigreeStrengthsList');
+      const overviewAuto = document.getElementById('pedigreeOverviewAuto');
 
       function toUniqueSortedArray(set) {
         return Array.from(set).sort((a, b) => a.localeCompare(b));
@@ -846,9 +847,7 @@
         ul.appendChild(li);
       }
 
-      function populateStrengthsFromPedigree() {
-        if (!strengthsList) return;
-
+      function collectPedigreeSignals() {
         const titleSet = new Set();
         const geneticSet = new Set();
         const orthoSet = new Set();
@@ -875,8 +874,8 @@
 
           // Titles: also pick up common title abbreviations used inline.
           lines.forEach((l) => {
-            const matches = l.match(/\b(HCH|GCH|CH|TKP|CGC|ETD)\b/g);
-            if (matches) matches.forEach((m) => titleSet.add(m));
+            const matches = l.match(/\b(HCH|GCH|CH|INT\s*CH|TKP|CGC|ETD)\b/g);
+            if (matches) matches.forEach((m) => titleSet.add(m.replace(/\s+/g, ' ').trim()));
           });
 
           // Health/testing/structure: classify by common keywords.
@@ -885,6 +884,7 @@
             if (/^(Reg\s*#\s*:|AKC\b|LOF\b)/i.test(l)) return;
             if (/^Titles\s*:/i.test(l)) return;
             if (/^Color\s*:/i.test(l)) return;
+            if (/^[-–—]+$/.test(l)) return;
 
             const isGenetic =
               /\b(N\/?N|clear|panel|DNA|CDPA|MDR1|DM|HSF4|CEA|PRA|HC[-\s]?DNA|CDDY|IVDD)\b/i.test(l);
@@ -905,28 +905,59 @@
           });
         });
 
-        // Replace placeholder list with scraped items.
+        return {
+          titles: toUniqueSortedArray(titleSet),
+          genetic: toUniqueSortedArray(geneticSet),
+          ortho: toUniqueSortedArray(orthoSet),
+          other: toUniqueSortedArray(otherHealthSet),
+        };
+      }
+
+      function formatTop(arr, max) {
+        return arr.length > max ? `${arr.slice(0, max).join(', ')} ...` : arr.join(', ');
+      }
+
+      function populateStrengthsFromSignals(signals) {
+        if (!strengthsList) return;
         strengthsList.innerHTML = '';
 
-        const titles = toUniqueSortedArray(titleSet);
-        const genetic = toUniqueSortedArray(geneticSet);
-        const ortho = toUniqueSortedArray(orthoSet);
-        const other = toUniqueSortedArray(otherHealthSet);
+        const titles = signals.titles || [];
+        const genetic = signals.genetic || [];
+        const ortho = signals.ortho || [];
 
-        const formatTop = (arr, max) => (arr.length > max ? `${arr.slice(0, max).join(', ')} ...` : arr.join(', '));
+        if (titles.length) addListItem(strengthsList, `Key titles represented: ${formatTop(titles, 8)}`);
+        if (genetic.length || ortho.length) {
+          const healthParts = [];
+          if (genetic.length) healthParts.push(`Genetics: ${formatTop(genetic, 6)}`);
+          if (ortho.length) healthParts.push(`Ortho: ${formatTop(ortho, 6)}`);
+          addListItem(strengthsList, `Health testing shown: ${healthParts.join(' | ')}`);
+        }
 
-        if (titles.length) addListItem(strengthsList, `Titles shown: ${formatTop(titles, 10)}`);
-        if (genetic.length) addListItem(strengthsList, `Genetic/health testing shown: ${formatTop(genetic, 10)}`);
-        if (ortho.length) addListItem(strengthsList, `Ortho/structure shown: ${formatTop(ortho, 10)}`);
-        if (other.length) addListItem(strengthsList, `Other notes shown: ${formatTop(other, 6)}`);
-
-        // If we couldn't find anything, keep a minimal editable fallback.
         if (!strengthsList.children.length) {
           addListItem(strengthsList, 'Notable titles / proven producers');
           addListItem(strengthsList, 'Health testing transparency across key ancestors');
-          addListItem(strengthsList, 'Temperament consistency and stable structure');
-          addListItem(strengthsList, 'Performance focus: agility / obedience / working drive');
         }
+      }
+
+      function populateOverviewFromSignals(signals) {
+        if (!overviewAuto) return;
+        const titles = signals.titles || [];
+        const genetic = signals.genetic || [];
+        const ortho = signals.ortho || [];
+
+        const parts = [];
+        if (titles.length) parts.push(`Titles represented include: ${formatTop(titles, 10)}.`);
+        if (genetic.length) parts.push(`Genetic/health testing shown includes: ${formatTop(genetic, 10)}.`);
+        if (ortho.length) parts.push(`Ortho/structure results shown include: ${formatTop(ortho, 10)}.`);
+
+        if (!parts.length) {
+          overviewAuto.hidden = true;
+          overviewAuto.textContent = '';
+          return;
+        }
+
+        overviewAuto.hidden = false;
+        overviewAuto.textContent = parts.join(' ');
       }
 
       function setHighlight(mode) {
@@ -1130,7 +1161,9 @@
 
       setHighlight('none');
       setColumns('5');
-      populateStrengthsFromPedigree();
+      const signals = collectPedigreeSignals();
+      populateStrengthsFromSignals(signals);
+      populateOverviewFromSignals(signals);
       requestAnimationFrame(updateTruncatedMetaUI);
     })();
   </script>
