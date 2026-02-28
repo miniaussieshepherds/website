@@ -106,21 +106,18 @@
       display: block;
     }
 
+    body.is-topbar-visible #heroLogo {
+      opacity: 0;
+    }
+
+    #heroLogo,
     #topbarLogo {
       transition: opacity 180ms ease;
       will-change: opacity;
     }
 
-    body.is-morphing #topbarLogo {
-      opacity: 0;
-    }
-
-    body.is-morphing #heroLogo {
-      opacity: 0;
-    }
-
-    body.is-topbar-visible #heroLogo {
-      opacity: 0;
+    .logo-morph-hide {
+      opacity: 0 !important;
     }
 
     @media (max-width: 520px) {
@@ -1351,21 +1348,18 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   let isAnimating = false;
   let ticking = false;
 
-  function morph(fromEl, toEl, onDone) {
+  function morphWithRects({ src, fromRect, toRect }, onDone) {
     if (reduceMotion) {
       onDone?.();
       return;
     }
-
-    const fromRect = fromEl.getBoundingClientRect();
-    const toRect = toEl.getBoundingClientRect();
     if (!fromRect.width || !toRect.width) {
       onDone?.();
       return;
     }
 
     const ghost = document.createElement('img');
-    ghost.src = fromEl.getAttribute('src') || toEl.getAttribute('src') || '';
+    ghost.src = src || '';
     ghost.alt = '';
     ghost.setAttribute('aria-hidden', 'true');
     ghost.decoding = 'async';
@@ -1401,6 +1395,26 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }, { once: true });
   }
 
+  function getLogoRects(fromEl, toEl) {
+    const fromRect = fromEl.getBoundingClientRect();
+    const toRect = toEl.getBoundingClientRect();
+    const src = fromEl.getAttribute('src') || toEl.getAttribute('src') || '';
+    return { src, fromRect, toRect };
+  }
+
+  function hideBothLogos() {
+    heroLogo.classList.add('logo-morph-hide');
+    topbarLogo.classList.add('logo-morph-hide');
+  }
+
+  function showHeroLogo() {
+    heroLogo.classList.remove('logo-morph-hide');
+  }
+
+  function showTopbarLogo() {
+    topbarLogo.classList.remove('logo-morph-hide');
+  }
+
   function showTopbar({ allowMorph }) {
     document.body.classList.add('is-topbar-visible');
     isVisible = true;
@@ -1409,9 +1423,16 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     isAnimating = true;
     document.body.classList.add('is-morphing');
     requestAnimationFrame(() => {
-      morph(heroLogo, topbarLogo, () => {
-        document.body.classList.remove('is-morphing');
-        isAnimating = false;
+      // Ensure the topbar is laid out before we measure.
+      topbar.getBoundingClientRect();
+      const rects = getLogoRects(heroLogo, topbarLogo);
+      hideBothLogos();
+      morphWithRects(rects, () => {
+        requestAnimationFrame(() => {
+          showTopbarLogo();
+          document.body.classList.remove('is-morphing');
+          isAnimating = false;
+        });
       });
     });
   }
@@ -1426,11 +1447,18 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     isAnimating = true;
     document.body.classList.add('is-morphing');
     requestAnimationFrame(() => {
-      morph(topbarLogo, heroLogo, () => {
+      // Keep header visible while we measure + morph.
+      topbar.getBoundingClientRect();
+      const rects = getLogoRects(topbarLogo, heroLogo);
+      hideBothLogos();
+      morphWithRects(rects, () => {
         document.body.classList.remove('is-topbar-visible');
-        document.body.classList.remove('is-morphing');
         isVisible = false;
-        isAnimating = false;
+        requestAnimationFrame(() => {
+          showHeroLogo();
+          document.body.classList.remove('is-morphing');
+          isAnimating = false;
+        });
       });
     });
   }
