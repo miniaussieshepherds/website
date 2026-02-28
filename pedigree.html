@@ -241,7 +241,7 @@
       box-shadow: 0 18px 40px rgba(0,0,0,0.10);
       overflow-x: hidden;
       overflow-y: auto;
-      cursor: grab;
+      cursor: default;
     }
 
     @media (max-width: 820px) {
@@ -261,7 +261,7 @@
     }
 
     .pedigree-scroll.is-dragging {
-      cursor: grabbing;
+      cursor: default;
     }
 
     .pedigree-scroll.is-dragging * {
@@ -343,6 +343,11 @@
       align-items: flex-start;
       gap: 6px;
       overflow: hidden;
+    }
+
+    /* Show magnifier cursor only on cards with truncated meta (2x/3x Great). */
+    .ped-card.meta-truncated {
+      cursor: zoom-in;
     }
 
     .ped-card[data-line="sire"] {
@@ -902,16 +907,24 @@
         )
         .forEach((metaEl) => {
           const text = metaEl.innerText.replace(/\n{3,}/g, '\n\n').trim();
+          const card = metaEl.closest('.ped-card');
+
           if (!text) {
             metaEl.removeAttribute('title');
+            if (card) card.classList.remove('meta-truncated');
             return;
           }
 
           // Only add a tooltip when it's likely to be truncated (more than 3 explicit lines).
           // These meta blocks use <br> heavily, so newline counting matches the "rows" intent.
           const lineCount = text.split('\n').filter(Boolean).length;
-          if (lineCount > 3) metaEl.setAttribute('title', text);
-          else metaEl.removeAttribute('title');
+          if (lineCount > 3) {
+            metaEl.setAttribute('title', text);
+            if (card) card.classList.add('meta-truncated');
+          } else {
+            metaEl.removeAttribute('title');
+            if (card) card.classList.remove('meta-truncated');
+          }
         });
 
       setHighlight('none');
