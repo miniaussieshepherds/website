@@ -902,7 +902,16 @@
         )
         .forEach((metaEl) => {
           const text = metaEl.innerText.replace(/\n{3,}/g, '\n\n').trim();
-          if (text) metaEl.setAttribute('title', text);
+          if (!text) {
+            metaEl.removeAttribute('title');
+            return;
+          }
+
+          // Only add a tooltip when it's likely to be truncated (more than 3 explicit lines).
+          // These meta blocks use <br> heavily, so newline counting matches the "rows" intent.
+          const lineCount = text.split('\n').filter(Boolean).length;
+          if (lineCount > 3) metaEl.setAttribute('title', text);
+          else metaEl.removeAttribute('title');
         });
 
       setHighlight('none');
