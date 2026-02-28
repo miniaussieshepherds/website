@@ -506,8 +506,8 @@
       white-space: normal;
     }
 
-    /* Clamp long meta to keep cards compact (except Parents column) */
-    .ped-grid > .ped-card:not([style*="grid-column: 1"]) .ped-meta {
+    /* Clamp long meta only in 2× Great and 3× Great columns */
+    .ped-grid > .ped-card[style*="grid-column: 4"] .ped-meta {
       overflow: hidden;
       display: -webkit-box;
       -webkit-box-orient: vertical;
@@ -896,10 +896,14 @@
       });
 
       // Full meta on hover (native tooltip), while UI stays clamped
-      document.querySelectorAll('.ped-grid > .ped-card:not([style*="grid-column: 1"]) .ped-meta').forEach((metaEl) => {
-        const text = metaEl.innerText.replace(/\n{3,}/g, '\n\n').trim();
-        if (text) metaEl.setAttribute('title', text);
-      });
+      document
+        .querySelectorAll(
+          '.ped-grid > .ped-card[style*="grid-column: 4"] .ped-meta, .ped-grid > .ped-card[style*="grid-column: 5"] .ped-meta'
+        )
+        .forEach((metaEl) => {
+          const text = metaEl.innerText.replace(/\n{3,}/g, '\n\n').trim();
+          if (text) metaEl.setAttribute('title', text);
+        });
 
       setHighlight('none');
       setColumns('5');
