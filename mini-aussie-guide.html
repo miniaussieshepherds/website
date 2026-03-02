@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MWQ7R72V');</script>
+  <!-- End Google Tag Manager -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q13BS2H508"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Q13BS2H508');
+  </script>
   <meta charset="UTF-8">
   <title>Mini Australian Shepherd Guide | Breed Information & Care</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -88,82 +103,172 @@
         display: none;
       }
 
-      .nav-link {
-        margin-bottom: 18px;
+      .site-header {
+        position: sticky;
+        top: 12px;
+        z-index: 40;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin-bottom: 28px;
+        padding: 14px 18px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(74, 94, 114, 0.12);
+        box-shadow: 0 14px 30px rgba(0,0,0,0.06);
+        backdrop-filter: blur(10px);
       }
+      .site-brand {
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--charcoal);
+        text-decoration: none;
+        font-size: 0.85rem;
+      }
+      .nav-toggle {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .nav-toggle-label {
+        display: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 999px;
+        border: 1px solid rgba(74, 94, 114, 0.2);
+        background: rgba(74, 94, 114, 0.08);
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        gap: 4px;
+        flex-direction: column;
+      }
+      .nav-toggle-label span {
+        width: 18px;
+        height: 2px;
+        background: var(--steel-blue);
+        border-radius: 999px;
+        display: block;
+      }
+      .site-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .site-nav a {
+        text-decoration: none;
+        color: var(--steel-blue);
+        font-weight: 600;
+        font-size: 0.85rem;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(74, 94, 114, 0.08);
+        transition: background 200ms ease, color 200ms ease;
+      }
+      .site-nav a:hover {
+        background: rgba(164, 106, 61, 0.18);
+        color: var(--copper);
+      }
+      .site-footer {
+        position: sticky;
+        bottom: 12px;
+        margin-top: 40px;
+        padding: 14px 18px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(74, 94, 114, 0.12);
+        box-shadow: 0 14px 30px rgba(0,0,0,0.06);
+        backdrop-filter: blur(10px);
+        z-index: 30;
+      }
+      .site-footer-inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        font-size: 0.85rem;
+        color: #555;
+      }
+      .site-footer-links a {
+        color: var(--steel-blue);
+        text-decoration: none;
+        margin-right: 12px;
+        font-weight: 600;
+      }
+      .site-footer-links a:last-child {
+        margin-right: 0;
+      }
+      .site-footer-links a:hover {
+        color: var(--copper);
+      }
+      @media (max-width: 720px) {
+        .site-header {
+          padding: 10px 12px;
+          border-radius: 16px;
+          justify-content: space-between;
+        }
 
-      .hero {
-        padding: 18px;
+        .site-brand {
+          display: none;
+        }
+
+        .nav-toggle-label {
+          display: flex;
+        }
+
+        .site-nav {
+          display: none;
+          position: absolute;
+          left: 12px;
+          right: 12px;
+          top: calc(100% + 10px);
+          flex-direction: column;
+          padding: 12px;
+          background: rgba(255, 255, 255, 0.96);
+          border-radius: 14px;
+          border: 1px solid rgba(74, 94, 114, 0.12);
+          box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+        }
+
+        .nav-toggle:checked + .nav-toggle-label + .site-nav {
+          display: flex;
+        }
+
+        .site-nav a {
+          font-size: 0.8rem;
+          padding: 8px 10px;
+          justify-content: center;
+        }
+
+        .nav-link {
+          margin-bottom: 18px;
+        }
+
+        .hero {
+          padding: 18px;
+        }
+
+        .site-footer {
+          border-radius: 16px;
+          bottom: 8px;
+        }
+
+        .site-footer-inner {
+          justify-content: center;
+          text-align: center;
+        }
+
+        .site-footer-links {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          gap: 12px;
+        }
       }
-    }
-    .hero {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 28px;
-      align-items: center;
-      margin-bottom: 40px;
-      padding: 26px;
-      background: var(--white);
-      border-radius: 20px;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.08);
-      border: 1px solid rgba(74, 94, 114, 0.12);
-    }
-    .hero h1 {
-      font-size: 2.8rem;
-      margin: 0 0 12px;
-      font-family: "Georgia", "Times New Roman", serif;
-    }
-    .hero p {
-      margin: 0 0 16px;
-      font-size: 1.1rem;
-      color: #4c4c4c;
-    }
-    .hero-media {
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid rgba(74, 94, 114, 0.12);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.12);
-    }
-    .hero-media img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
-    }
-    h2 {
-      font-size: 2rem;
-      margin-top: 50px;
-      margin-bottom: 20px;
-      color: var(--steel-blue);
-      border-bottom: 2px solid rgba(169, 215, 242, 0.6);
-      padding-bottom: 10px;
-    }
-    h3 {
-      font-size: 1.3rem;
-      margin-top: 0;
-      margin-bottom: 12px;
-      color: var(--steel-blue);
-    }
-    p {
-      margin-bottom: 16px;
-      font-size: 1.05rem;
-    }
-    ul, ol {
-      margin-bottom: 20px;
-      padding-left: 22px;
-    }
-    li {
-      margin-bottom: 10px;
-    }
-    .feature-box {
-      background: linear-gradient(135deg, rgba(169, 215, 242, 0.25), rgba(245, 242, 236, 0.8));
-      padding: 24px;
-      border-left: 4px solid var(--copper);
-      border-radius: 14px;
-      margin: 25px 0;
-      box-shadow: 0 16px 36px rgba(0,0,0,0.06);
-    }
-    .trait-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
@@ -411,6 +516,16 @@
     <h2>Learn More</h2>
     <p>Ready to learn about Buddy or our breeding program? <a href="contact.html">Contact us</a> to discuss Mini Australian Shepherds, our breeding practices, and available stud services.</p>
 
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <div>Mini Aussie Shepherds</div>
+        <div class="site-footer-links">
+          <a href="index.html">Home</a>
+          <a href="pedigree.html">Pedigree</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </footer>
   </div>
 </body>
 </html>
