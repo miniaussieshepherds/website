@@ -17,6 +17,14 @@
   <script type="application/ld+json">
   {\n    "@context": "https://schema.org",\n    "@type": "Article",\n    "headline": "Complete Mini Australian Shepherd Breed Guide",\n    "description": "Comprehensive guide to Mini Australian Shepherds including breed characteristics, care, and training",\n    "url": "https://miniaussieshepherds.com/mini-aussie-guide.html",\n    "author": {\n      "@type": "Organization",\n      "name": "Mini Aussie Shepherds"\n    }\n  }\n  </script>
   <style>
+    :root {
+      --charcoal: #1C1C1E;
+      --steel-blue: #4A5E72;
+      --ice-blue: #A9D7F2;
+      --copper: #A46A3D;
+      --cream: #F5F2EC;
+      --white: #FFFFFF;
+    }
     * {
       box-sizing: border-box;
     }
@@ -25,65 +33,135 @@
     }
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
-      color: #1C1C1E;
-      background: #FFFFFF;
-      line-height: 1.7;
+      font-family: "Georgia", "Times New Roman", serif;
+      color: var(--charcoal);
+      background: linear-gradient(180deg, #ffffff 0%, #f7f5f1 100%);
+      line-height: 1.75;
     }
     .container {
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 40px 20px;
+      padding: 40px 20px 80px;
     }
-    h1 {
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 30px;
+      padding: 10px 18px;
+      background: rgba(74, 94, 114, 0.12);
+      color: var(--steel-blue);
+      text-decoration: none;
+      border-radius: 999px;
+      font-weight: 600;
+      transition: background 300ms ease, color 300ms ease;
+    }
+    .nav-link:hover {
+      background: rgba(164, 106, 61, 0.18);
+      color: var(--copper);
+    }
+    @media (max-width: 720px) {
+      .site-header {
+        padding: 10px 12px;
+        border-radius: 14px;
+        justify-content: center;
+      }
+
+      .site-brand {
+        width: 100%;
+        text-align: center;
+        font-size: 0.8rem;
+      }
+
+      .site-nav {
+        width: 100%;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .site-nav a {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+      }
+
+      .site-nav a:nth-child(n+4) {
+        display: none;
+      }
+
+      .nav-link {
+        margin-bottom: 18px;
+      }
+
+      .hero {
+        padding: 18px;
+      }
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+      align-items: center;
+      margin-bottom: 40px;
+      padding: 26px;
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.08);
+      border: 1px solid rgba(74, 94, 114, 0.12);
+    }
+    .hero h1 {
       font-size: 2.8rem;
-      margin-bottom: 20px;
-      color: #1C1C1E;
+      margin: 0 0 12px;
+      font-family: "Georgia", "Times New Roman", serif;
+    }
+    .hero p {
+      margin: 0 0 16px;
+      font-size: 1.1rem;
+      color: #4c4c4c;
+    }
+    .hero-media {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(74, 94, 114, 0.12);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+    }
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
     }
     h2 {
       font-size: 2rem;
       margin-top: 50px;
-      margin-bottom: 25px;
-      color: #4A5E72;
-      border-bottom: 2px solid #A9D7F2;
+      margin-bottom: 20px;
+      color: var(--steel-blue);
+      border-bottom: 2px solid rgba(169, 215, 242, 0.6);
       padding-bottom: 10px;
     }
     h3 {
-      font-size: 1.4rem;
-      margin-top: 30px;
-      margin-bottom: 15px;
-      color: #4A5E72;
+      font-size: 1.3rem;
+      margin-top: 0;
+      margin-bottom: 12px;
+      color: var(--steel-blue);
     }
     p {
-      margin-bottom: 15px;
+      margin-bottom: 16px;
       font-size: 1.05rem;
     }
     ul, ol {
       margin-bottom: 20px;
-      padding-left: 25px;
+      padding-left: 22px;
     }
     li {
-      margin-bottom: 12px;
-    }
-    .nav-link {
-      display: inline-block;
-      margin-bottom: 30px;
-      padding: 10px 20px;
-      background: #4A5E72;
-      color: white;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: background 300ms ease;
-    }
-    .nav-link:hover {
-      background: #A46A3D;
+      margin-bottom: 10px;
     }
     .feature-box {
-      background: #F5F2EC;
-      padding: 25px;
-      border-left: 4px solid #A46A3D;
-      border-radius: 4px;
+      background: linear-gradient(135deg, rgba(169, 215, 242, 0.25), rgba(245, 242, 236, 0.8));
+      padding: 24px;
+      border-left: 4px solid var(--copper);
+      border-radius: 14px;
       margin: 25px 0;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.06);
     }
     .trait-grid {
       display: grid;
@@ -92,10 +170,11 @@
       margin: 25px 0;
     }
     .trait-card {
-      background: #F5F2EC;
+      background: var(--white);
       padding: 20px;
-      border-radius: 8px;
-      border-top: 3px solid #4A5E72;
+      border-radius: 12px;
+      border: 1px solid rgba(74, 94, 114, 0.1);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.06);
     }
     .trait-card h3 {
       margin-top: 0;
@@ -104,6 +183,11 @@
       width: 100%;
       border-collapse: collapse;
       margin: 20px 0;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(74, 94, 114, 0.12);
+      background: var(--white);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.06);
     }
     th, td {
       padding: 12px;
@@ -113,17 +197,44 @@
     th {
       background: #4A5E72;
       color: white;
-      font-weight: bold;
+      font-weight: 700;
+    }
+    .inline-media {
+      margin: 30px 0;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(74, 94, 114, 0.12);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.1);
+    }
+    .inline-media img {
+      width: 100%;
+      display: block;
+      height: auto;
     }
   </style>
 </head>
 <body>
   <div class="container">
+    <header class="site-header">
+      <a class="site-brand" href="index.html">Mini Aussie Shepherds</a>
+      <nav class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="pedigree.html">Pedigree</a>
+        <a href="breeding-practices.html">Breeding</a>
+        <a href="health-testing.html">Health</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
     <a href="index.html" class="nav-link">← Back to Home</a>
-    
-    <h1>Complete Mini Australian Shepherd Breed Guide</h1>
-    
-    <p style="font-size: 1.2rem; color: #666; margin-bottom: 30px;">Everything you need to know about Mini Australian Shepherds, from breed characteristics to care requirements and training tips.</p>
+    <header class="hero">
+      <div>
+        <h1>Complete Mini Australian Shepherd Breed Guide</h1>
+        <p>Everything you need to know about Mini Australian Shepherds, from breed characteristics to care requirements and training tips.</p>
+      </div>
+      <div class="hero-media">
+        <img src="./images/banner-1.jpg" alt="Mini Australian Shepherd" loading="lazy" decoding="async">
+      </div>
+    </header>
 
     <h2>What is a Mini Australian Shepherd?</h2>
     <p>The Mini Australian Shepherd (also called Miniature American Shepherd) is a small herding dog that combines intelligence, athleticism, and loyalty in a compact package. These dogs are known for their keen working instinct, striking appearance, and devoted temperament.</p>
@@ -140,6 +251,9 @@
     </div>
 
     <h2>Physical Characteristics</h2>
+    <figure class="inline-media">
+      <img src="./images/gallery-04.jpg" alt="Mini Australian Shepherd coat" loading="lazy" decoding="async">
+    </figure>
     <div class="trait-grid">
       <div class="trait-card">
         <h3>Coat</h3>

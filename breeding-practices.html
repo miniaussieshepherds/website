@@ -17,6 +17,14 @@
   <script type="application/ld+json">
   {\n    "@context": "https://schema.org",\n    "@type": "WebPage",\n    "name": "Ethical Mini Aussie Shepherd Breeding Practices",\n    "description": "Learn about ethical breeding practices for Mini American Shepherds",\n    "url": "https://miniaussieshepherds.com/breeding-practices.html",\n    "mainEntity": {\n      "@type": "LocalBusiness",\n      "name": "Mini Aussie Shepherds"\n    }\n  }\n  </script>
   <style>
+    :root {
+      --charcoal: #1C1C1E;
+      --steel-blue: #4A5E72;
+      --ice-blue: #A9D7F2;
+      --copper: #A46A3D;
+      --cream: #F5F2EC;
+      --white: #FFFFFF;
+    }
     * {
       box-sizing: border-box;
     }
@@ -25,75 +33,219 @@
     }
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
-      color: #1C1C1E;
-      background: #FFFFFF;
-      line-height: 1.6;
+      font-family: "Georgia", "Times New Roman", serif;
+      color: var(--charcoal);
+      background: linear-gradient(180deg, #ffffff 0%, #f7f5f1 100%);
+      line-height: 1.7;
     }
     .container {
-      max-width: 1000px;
+      max-width: 1080px;
       margin: 0 auto;
-      padding: 40px 20px;
+      padding: 40px 20px 80px;
     }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: #1C1C1E;
+    .site-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 28px;
+      padding: 14px 18px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(74, 94, 114, 0.12);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.06);
+    }
+    .site-brand {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+    .site-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .site-nav a {
+      text-decoration: none;
+      color: var(--steel-blue);
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(74, 94, 114, 0.08);
+      transition: background 200ms ease, color 200ms ease;
+    }
+    .site-nav a:hover {
+      background: rgba(164, 106, 61, 0.18);
+      color: var(--copper);
+    }
+
+    @media (max-width: 720px) {
+      .site-header {
+        padding: 10px 12px;
+        border-radius: 14px;
+        justify-content: center;
+      }
+
+      .site-brand {
+        width: 100%;
+        text-align: center;
+        font-size: 0.8rem;
+      }
+
+      .site-nav {
+        width: 100%;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .site-nav a {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+      }
+
+      .site-nav a:nth-child(n+4) {
+        display: none;
+      }
+
+      .nav-link {
+        margin-bottom: 18px;
+      }
+
+      .hero {
+        padding: 18px;
+      }
+    }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 30px;
+      padding: 10px 18px;
+      background: rgba(74, 94, 114, 0.12);
+      color: var(--steel-blue);
+      text-decoration: none;
+      border-radius: 999px;
+      font-weight: 600;
+      transition: background 300ms ease, color 300ms ease;
+    }
+    .nav-link:hover {
+      background: rgba(164, 106, 61, 0.18);
+      color: var(--copper);
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+      align-items: center;
+      margin-bottom: 40px;
+      padding: 24px;
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.08);
+      border: 1px solid rgba(74, 94, 114, 0.12);
+    }
+    .hero h1 {
+      font-size: 2.6rem;
+      margin: 0 0 12px;
+      font-family: "Georgia", "Times New Roman", serif;
+    }
+    .hero p {
+      margin: 0 0 16px;
+      font-size: 1.05rem;
+      color: #4c4c4c;
+    }
+    .hero-media {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(74, 94, 114, 0.12);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+    }
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
     }
     h2 {
       font-size: 1.8rem;
       margin-top: 40px;
-      margin-bottom: 20px;
-      color: #4A5E72;
+      margin-bottom: 18px;
+      color: var(--steel-blue);
     }
     h3 {
-      font-size: 1.3rem;
-      margin-top: 25px;
-      margin-bottom: 15px;
-      color: #4A5E72;
+      font-size: 1.2rem;
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: var(--steel-blue);
     }
     p {
-      margin-bottom: 15px;
-      font-size: 1.05rem;
+      margin-bottom: 14px;
+      font-size: 1.02rem;
     }
     ul, ol {
-      margin-bottom: 20px;
-      padding-left: 25px;
+      margin-bottom: 18px;
+      padding-left: 22px;
     }
     li {
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
-    .nav-link {
-      display: inline-block;
-      margin-bottom: 30px;
-      padding: 10px 20px;
-      background: #4A5E72;
-      color: white;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: background 300ms ease;
-    }
-    .nav-link:hover {
-      background: #A46A3D;
+    .card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid rgba(74, 94, 114, 0.1);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.06);
+      margin-bottom: 22px;
     }
     .highlight {
-      background: #F5F2EC;
-      padding: 20px;
-      border-left: 4px solid #A46A3D;
-      border-radius: 4px;
-      margin: 20px 0;
+      background: linear-gradient(135deg, rgba(169, 215, 242, 0.25), rgba(245, 242, 236, 0.8));
+      border-left: 4px solid var(--copper);
+    }
+    .inline-media {
+      margin: 30px 0;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(74, 94, 114, 0.12);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.1);
+    }
+    .inline-media img {
+      width: 100%;
+      display: block;
+      height: auto;
     }
   </style>
 </head>
 <body>
   <div class="container">
+    <header class="site-header">
+      <a class="site-brand" href="index.html">Mini Aussie Shepherds</a>
+      <nav class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="pedigree.html">Pedigree</a>
+        <a href="health-testing.html">Health</a>
+        <a href="mini-aussie-guide.html">Breed Guide</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
     <a href="index.html" class="nav-link">← Back to Home</a>
-    
-    <h1>Ethical Mini Aussie Shepherd Breeding Practices</h1>
-    
-    <div class="highlight">
-      <p><strong>Our Commitment:</strong> We prioritize the health, temperament, and well-being of our Mini American Shepherds above all else. Every breeding decision is made with careful consideration of genetic health, conformation standards, and breed preservation.</p>
-    </div>
+    <header class="hero">
+      <div>
+        <h1>Ethical Mini Aussie Shepherd Breeding Practices</h1>
+        <p>We build every pairing around health, temperament, and breed preservation. Transparent testing, proven lines, and lifelong support.</p>
+        <div class="card highlight">
+          <h3>Our Commitment</h3>
+          <p>We prioritize the health, temperament, and well-being of our Mini American Shepherds above all else. Every breeding decision is made with careful consideration of genetic health, conformation standards, and breed preservation.</p>
+        </div>
+      </div>
+      <div class="hero-media">
+        <img src="./images/buddy-card.jpg" alt="Mini American Shepherd" loading="lazy" decoding="async">
+      </div>
+    </header>
 
     <h2>Health Testing Requirements</h2>
     <p>All breeding dogs undergo rigorous health screening before reproduction:</p>
@@ -104,6 +256,10 @@
       <li><strong>Cardiac Assessment:</strong> Screening for heart abnormalities</li>
       <li><strong>Genetic DNA Testing:</strong> Breed-specific genetic markers to ensure optimal genetic diversity</li>
     </ul>
+
+    <figure class="inline-media">
+      <img src="./images/gallery-02.jpg" alt="Mini American Shepherd profile" loading="lazy" decoding="async">
+    </figure>
 
     <h2>Breeding Standards</h2>
     <p>Our breeding program adheres to the American Kennel Club (AKC) and breed club guidelines:</p>

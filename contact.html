@@ -16,6 +16,14 @@
   <script type="application/ld+json">
   {\n    "@context": "https://schema.org",\n    "@type": "ContactPage",\n    "name": "Contact Mini Aussie Shepherds",\n    "mainEntity": {\n      "@type": "LocalBusiness",\n      "name": "Mini Aussie Shepherds",\n      "url": "https://miniaussieshepherds.com"\n    }\n  }\n  </script>
   <style>
+    :root {
+      --charcoal: #1C1C1E;
+      --steel-blue: #4A5E72;
+      --ice-blue: #A9D7F2;
+      --copper: #A46A3D;
+      --cream: #F5F2EC;
+      --white: #FFFFFF;
+    }
     * {
       box-sizing: border-box;
     }
@@ -24,52 +32,127 @@
     }
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
-      color: #1C1C1E;
-      background: #FFFFFF;
-      line-height: 1.6;
+      font-family: "Georgia", "Times New Roman", serif;
+      color: var(--charcoal);
+      background: linear-gradient(180deg, #ffffff 0%, #f7f5f1 100%);
+      line-height: 1.7;
     }
     .container {
-      max-width: 800px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 40px 20px;
+      padding: 40px 20px 80px;
     }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: #1C1C1E;
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 30px;
+      padding: 10px 18px;
+      background: rgba(74, 94, 114, 0.12);
+      color: var(--steel-blue);
+      text-decoration: none;
+      border-radius: 999px;
+      font-weight: 600;
+      transition: background 300ms ease, color 300ms ease;
+    }
+    .nav-link:hover {
+      background: rgba(164, 106, 61, 0.18);
+      color: var(--copper);
+    }
+    
+      @media (max-width: 720px) {
+        .site-header {
+          padding: 10px 12px;
+          border-radius: 14px;
+          justify-content: center;
+        }
+      
+        .site-brand {
+          width: 100%;
+          text-align: center;
+          font-size: 0.8rem;
+        }
+      
+        .site-nav {
+          width: 100%;
+          justify-content: center;
+          gap: 8px;
+        }
+      
+        .site-nav a {
+          font-size: 0.7rem;
+          padding: 4px 8px;
+        }
+      
+        .site-nav a:nth-child(n+4) {
+          display: none;
+        }
+      
+        .nav-link {
+          margin-bottom: 18px;
+        }
+      
+        .hero {
+          padding: 18px;
+        }
+      }
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+      align-items: center;
+      margin-bottom: 32px;
+      padding: 26px;
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.08);
+      border: 1px solid rgba(74, 94, 114, 0.12);
+    }
+    .hero h1 {
+      font-size: 2.6rem;
+      margin: 0 0 12px;
+      font-family: "Georgia", "Times New Roman", serif;
+    }
+    .hero p {
+      margin: 0 0 16px;
+      font-size: 1.05rem;
+      color: #4c4c4c;
+    }
+    .hero-media {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(74, 94, 114, 0.12);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+    }
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
     }
     h2 {
       font-size: 1.8rem;
       margin-top: 40px;
-      margin-bottom: 20px;
-      color: #4A5E72;
+      margin-bottom: 18px;
+      color: var(--steel-blue);
     }
     p {
-      margin-bottom: 15px;
-      font-size: 1.05rem;
+      margin-bottom: 14px;
+      font-size: 1.02rem;
     }
-    .nav-link {
-      display: inline-block;
-      margin-bottom: 30px;
-      padding: 10px 20px;
-      background: #4A5E72;
-      color: white;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: background 300ms ease;
-    }
-    .nav-link:hover {
-      background: #A46A3D;
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
     }
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
     label {
       display: block;
       margin-bottom: 8px;
-      font-weight: 500;
-      color: #1C1C1E;
+      font-weight: 600;
+      color: var(--charcoal);
     }
     input[type="text"],
     input[type="email"],
@@ -80,9 +163,10 @@
       padding: 12px;
       font-family: inherit;
       font-size: 1rem;
-      border: 1px solid #D4D4D4;
-      border-radius: 6px;
-      transition: border-color 300ms ease;
+      border: 1px solid rgba(74, 94, 114, 0.25);
+      border-radius: 10px;
+      transition: border-color 300ms ease, box-shadow 300ms ease;
+      background: var(--white);
     }
     input[type="text"]:focus,
     input[type="email"]:focus,
@@ -90,73 +174,93 @@
     select:focus,
     textarea:focus {
       outline: none;
-      border-color: #4A5E72;
-      box-shadow: 0 0 0 3px rgba(74, 94, 114, 0.1);
+      border-color: var(--steel-blue);
+      box-shadow: 0 0 0 3px rgba(74, 94, 114, 0.15);
     }
     textarea {
       resize: vertical;
       min-height: 150px;
     }
     button {
-      background: #4A5E72;
+      background: var(--steel-blue);
       color: white;
       padding: 14px 32px;
       font-size: 1rem;
       border: none;
-      border-radius: 6px;
+      border-radius: 999px;
       cursor: pointer;
-      transition: background 300ms ease;
+      transition: background 300ms ease, transform 200ms ease;
       font-weight: 600;
     }
     button:hover {
-      background: #A46A3D;
+      background: var(--copper);
+      transform: translateY(-1px);
     }
     .info-box {
-      background: #F5F2EC;
+      background: var(--white);
       padding: 20px;
-      border-left: 4px solid #4A5E72;
-      border-radius: 4px;
-      margin-bottom: 30px;
+      border-left: 4px solid var(--steel-blue);
+      border-radius: 12px;
+      margin-bottom: 24px;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.06);
     }
   </style>
 </head>
 <body>
   <div class="container">
+    <header class="site-header">
+      <a class="site-brand" href="index.html">Mini Aussie Shepherds</a>
+      <nav class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="pedigree.html">Pedigree</a>
+        <a href="breeding-practices.html">Breeding</a>
+        <a href="health-testing.html">Health</a>
+        <a href="mini-aussie-guide.html">Breed Guide</a>
+      </nav>
+    </header>
     <a href="index.html" class="nav-link">← Back to Home</a>
-    
-    <h1>Get in Touch</h1>
-    
-    <div class="info-box">
-      <h2 style="margin-top: 0;">Contact Us</h2>
-      <p>Have questions about Buddy, stud services, or want to discuss breeding? We'd love to hear from you!</p>
-    </div>
+    <header class="hero">
+      <div>
+        <h1>Get in Touch</h1>
+        <p>Questions about Buddy, stud services, or breeding? We'd love to help you plan the right pairing.</p>
+        <div class="info-box">
+          <h2 style="margin-top: 0;">Contact Us</h2>
+          <p>Share your goals, timing, and any health details for your dam so we can help quickly.</p>
+        </div>
+      </div>
+      <div class="hero-media">
+        <img src="./images/puppy-01.jpg" alt="Mini American Shepherd puppy" loading="lazy" decoding="async">
+      </div>
+    </header>
 
     <form method="POST" action="https://formspree.io/f/YOUR_FORM_ID">
-      <div class="form-group">
-        <label for="name">Full Name *</label>
-        <input type="text" id="name" name="name" required>
-      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="name">Full Name *</label>
+          <input type="text" id="name" name="name" required>
+        </div>
 
-      <div class="form-group">
-        <label for="email">Email Address *</label>
-        <input type="email" id="email" name="email" required>
-      </div>
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" name="email" required>
+        </div>
 
-      <div class="form-group">
-        <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" name="phone">
-      </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone">
+        </div>
 
-      <div class="form-group">
-        <label for="breed">Inquiry Type *</label>
-        <select id="breed" name="inquiryType" required>
-          <option value="">Select an option</option>
-          <option value="stud">Stud Service Inquiry</option>
-          <option value="puppies">Puppy Availability</option>
-          <option value="breeding">Breeding Partnership</option>
-          <option value="general">General Question</option>
-          <option value="health">Health Testing Information</option>
-        </select>
+        <div class="form-group">
+          <label for="breed">Inquiry Type *</label>
+          <select id="breed" name="inquiryType" required>
+            <option value="">Select an option</option>
+            <option value="stud">Stud Service Inquiry</option>
+            <option value="puppies">Puppy Availability</option>
+            <option value="breeding">Breeding Partnership</option>
+            <option value="general">General Question</option>
+            <option value="health">Health Testing Information</option>
+          </select>
+        </div>
       </div>
 
       <div class="form-group">

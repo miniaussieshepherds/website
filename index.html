@@ -248,7 +248,7 @@
     }
 
     section {
-      padding: 80px 20px;
+      padding: 40px 20px;
     }
 
     h1, h2, h3 {
@@ -366,7 +366,7 @@
 
     .section-header {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 20px;
     }
 
     .section-header h2 {
@@ -599,6 +599,27 @@
     /* PEDIGREE */
     .pedigree {
       background: var(--white);
+      padding: 20px 0 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pedigree::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 1100px;
+      height: 360px;
+      transform: translateX(-50%);
+      background: radial-gradient(circle at center, rgba(169, 215, 242, 0.18), rgba(255, 255, 255, 0));
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .pedigree .section-inner {
+      position: relative;
+      z-index: 1;
     }
 
     .pedigree-sub {
@@ -610,84 +631,148 @@
 
     .pedigree-tree {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 48px;
-      max-width: 900px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      max-width: 920px;
       margin: 0 auto;
       justify-items: center;
+      align-items: start;
+      padding: 2em 0 0 0;
     }
 
     @media (min-width: 768px) {
       .pedigree-tree {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
     .parent {
-      padding: 24px;
-      border-left: 3px solid var(--steel-blue);
-      background: var(--cream);
-      border-radius: 12px;
+      padding: 22px 22px 20px;
+      border: 1px solid rgba(74, 94, 114, 0.18);
+      background: linear-gradient(180deg, rgba(245, 242, 236, 0.95), rgba(245, 242, 236, 0.6));
+      border-radius: 16px;
       width: 100%;
-      max-width: 340px;
-      animation: slideInParent 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+      max-width: 380px;
+      box-shadow: 0 20px 46px rgba(0,0,0,0.08);
     }
 
-    .parent:nth-child(1) {
-      animation-delay: 0.1s;
+    .parent.scroll-reveal {
+      opacity: 0;
+      transform: translateY(34px) scale(0.92);
+      transition: opacity 520ms ease, transform 620ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      transition-delay: var(--reveal-delay, 0ms);
+      will-change: transform, opacity;
     }
 
-    .parent:nth-child(2) {
-      animation-delay: 0.3s;
+    .parent.scroll-reveal.in-view {
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
 
-    @keyframes slideInParent {
-      from {
-        opacity: 0;
-        transform: translateY(30px) scale(0.92);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+    .parent-media {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid rgba(74, 94, 114, 0.12);
+      background: var(--white);
+      aspect-ratio: 5 / 4;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.12);
     }
 
     .parent-photo {
       width: 100%;
-      height: auto;
-      border-radius: 8px;
-      margin: 14px 0 14px 0;
-      background: var(--white);
-      border: 1px solid rgba(74, 94, 114, 0.15);
-      box-shadow: 0 10px 26px rgba(0,0,0,0.08);
+      height: 100%;
+      object-fit: cover;
       display: block;
-      transition: opacity 520ms ease, transform 520ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 300ms ease;
-      will-change: transform, opacity;
+      transition: transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1), filter 520ms ease;
+      will-change: transform;
     }
 
-    .parent-photo:not(.in-view) {
+    .parent-media.scroll-reveal {
       opacity: 0;
-      transform: translateY(18px) scale(0.985);
+      transform: translateY(24px) scale(0.92);
+      transition: opacity 520ms ease, transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      transition-delay: var(--reveal-delay, 0ms);
+      filter: blur(10px);
     }
 
-    .parent-photo.in-view {
+    .parent-media.scroll-reveal.in-view {
       opacity: 1;
       transform: translateY(0) scale(1);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+      filter: blur(0);
     }
 
-    .parent-photo:hover {
-      box-shadow: 0 16px 40px rgba(0,0,0,0.15);
+    .parent:hover .parent-photo {
+      transform: scale(1.07);
+      filter: saturate(1.12);
+    }
+
+    .parent-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .parent-tag {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      letter-spacing: 0.02em;
+      margin: 0;
+    }
+
+    .parent-pill {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(74, 94, 114, 0.12);
+      color: var(--steel-blue);
+      white-space: nowrap;
     }
 
     .parent h3 {
       font-size: 1rem;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
+      color: var(--charcoal);
     }
 
     .parent p {
       font-size: 0.95rem;
       color: #555;
+    }
+
+    @media (max-width: 720px) {
+      .pedigree-tree {
+        gap: 24px;
+        padding: 1.2em 0 0 0;
+      }
+
+      .parent {
+        padding: 16px;
+        border-radius: 12px;
+        max-width: 340px;
+      }
+
+      .parent-header {
+        margin-bottom: 8px;
+      }
+
+      .parent-tag {
+        font-size: 0.9rem;
+      }
+
+      .parent-pill {
+        font-size: 0.62rem;
+        padding: 4px 8px;
+      }
+
+      .parent p {
+        font-size: 0.9rem;
+      }
     }
 
     /* HEALTH */
@@ -1329,13 +1414,23 @@
       </div>
       <div class="pedigree-tree">
         <div class="parent">
-          <h3>Sire</h3>
-          <img src="./images/sire.jpg" alt="Sire" class="parent-photo">
+          <div class="parent-header">
+            <h3 class="parent-tag">Sire</h3>
+            <span class="parent-pill">Champion Line</span>
+          </div>
+          <div class="parent-media">
+            <img src="./images/sire.jpg" alt="Sire" class="parent-photo" loading="lazy" decoding="async">
+          </div>
           <p>Champion‑sired blue merle with strong performance and conformation background.</p>
         </div>
         <div class="parent">
-          <h3>Dam</h3>
-          <img src="./images/dam-blue-elks-shes-got-the-look.jpg" alt="Dam" class="parent-photo">
+          <div class="parent-header">
+            <h3 class="parent-tag">Dam</h3>
+            <span class="parent-pill">Health Tested</span>
+          </div>
+          <div class="parent-media">
+            <img src="./images/dam-blue-elks-shes-got-the-look.jpg" alt="Dam" class="parent-photo" loading="lazy" decoding="async">
+          </div>
           <p>Health‑tested dam with stable, people‑oriented temperament and clean movement.</p>
         </div>
       </div>
@@ -1637,20 +1732,30 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
   });
 
-  // Add parent images (sire/dam) to scroll-reveal targets
-  const parentPhotos = document.querySelectorAll('.parent-photo');
-  parentPhotos.forEach(img => {
-    revealTargets.push(img);
+  const parentCards = document.querySelectorAll('.parent');
+  parentCards.forEach((card, index) => {
+    card.classList.add('scroll-reveal');
+    card.style.setProperty('--reveal-delay', `${index * 120}ms`);
+    revealTargets.push(card);
+  });
+
+  const parentMedia = document.querySelectorAll('.parent-media');
+  parentMedia.forEach((media, index) => {
+    media.classList.add('scroll-reveal');
+    media.style.setProperty('--reveal-delay', `${index * 120 + 120}ms`);
+    revealTargets.push(media);
   });
 
   if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries, obs) => {
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('in-view');
-        obs.unobserve(entry.target);
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        } else {
+          entry.target.classList.remove('in-view');
+        }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' });
+    }, { threshold: 0.2, rootMargin: '0px 0px -12% 0px' });
 
     revealTargets.forEach(el => observer.observe(el));
   } else {
