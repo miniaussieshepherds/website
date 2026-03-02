@@ -134,13 +134,15 @@
       justify-content: center;
       padding: 10px 14px;
       border-radius: 4px;
-      border: 1px solid rgba(28,28,30,0.12);
-      text-decoration: none;
+      border: 1px solid rgba(28,28,30,0.14);
+      background: var(--white);
       color: var(--charcoal);
-      background: rgba(255,255,255,0.9);
-      font-weight: 600;
+      text-decoration: none;
+      font-weight: 650;
       font-size: 0.9rem;
       letter-spacing: 0.02em;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
       transition: transform 0.15s ease, background 0.2s ease, color 0.2s ease;
     }
 
@@ -168,6 +170,10 @@
       font-size: 0.7rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+    }
+
+    .btn.primary:hover {
+      background: rgba(164, 106, 61, 0.85);
     }
 
     .menu-toggle {

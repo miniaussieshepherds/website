@@ -209,6 +209,13 @@
       text-transform: uppercase;
     }
 
+    .mobile-menu a.mobile-cta {
+      background: var(--copper);
+      color: var(--white);
+      border: 1px solid transparent;
+      font-weight: 700;
+    }
+
     .menu-toggle:checked ~ .mobile-menu {
       display: flex;
     }
@@ -233,6 +240,12 @@
       .btn.primary {
         padding: 6px 9px;
         font-size: 0.66rem;
+      }
+    }
+
+    @media (max-width: 450px) {
+      .mobile-actions .btn.primary {
+        display: none;
       }
     }
 
@@ -632,8 +645,8 @@
       overflow: hidden;
     }
 
-    /* Show magnifier cursor only on cards with truncated meta. */
-    .ped-card.meta-truncated {
+    /* All pedigree grid cards are clickable to open full details. */
+    .ped-grid > .ped-card {
       cursor: zoom-in;
     }
 
@@ -983,7 +996,7 @@
       <a href="health-testing.html">Health Testing</a>
       <a href="mini-american-shepherd-guide.html">Guide</a>
       <a href="contact.html">Contact</a>
-      <a href="contact.html">Stud Inquiry</a>
+      <a class="mobile-cta" href="contact.html">Stud Inquiry</a>
     </nav>
   </div>
 
@@ -1411,15 +1424,14 @@
         document.body.style.overflow = '';
       }
 
-      // Clicking a truncated GX2/GX3 card opens the same modal with full meta.
-      // (Native tooltips don't reliably show on click, especially on touch.)
+      // Clicking any pedigree card opens the same modal with full details.
       document.addEventListener('click', (e) => {
         const target = e.target;
         if (!target || !target.closest) return;
 
-        const card = target.closest('.ped-grid > .ped-card.meta-truncated');
+        const card = target.closest('.ped-grid > .ped-card');
         if (!card) return;
-        if (target.closest('a, button, img')) return;
+        if (target.closest('a, button, img, input, textarea, select, label')) return;
 
         const nameEl = card.querySelector('.ped-name');
         const metaEl = card.querySelector('.ped-meta');
