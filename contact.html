@@ -164,8 +164,8 @@
       background: var(--copper);
       color: var(--white);
       border-color: transparent;
-      padding: 8px 12px;
-      font-size: 0.78rem;
+      padding: 6px 10px;
+      font-size: 0.7rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
@@ -249,8 +249,8 @@
       }
 
       .btn.primary {
-        padding: 8px 10px;
-        font-size: 0.74rem;
+        padding: 6px 9px;
+        font-size: 0.66rem;
       }
     }
 
@@ -359,6 +359,11 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 16px;
+    }
+    @media (max-width: 860px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
     }
     .form-group {
       margin-bottom: 18px;
@@ -541,18 +546,6 @@
         <div class="form-group">
           <label for="phone">Phone Number</label>
           <input type="tel" id="phone" name="phone">
-        </div>
-
-        <div class="form-group">
-          <label for="breed">Inquiry Type *</label>
-          <select id="breed" name="inquiryType" required>
-            <option value="">Select an option</option>
-            <option value="stud">Stud Service Inquiry</option>
-            <option value="puppies">Puppy Availability</option>
-            <option value="breeding">Breeding Partnership</option>
-            <option value="general">General Question</option>
-            <option value="health">Health Testing Information</option>
-          </select>
         </div>
       </div>
 

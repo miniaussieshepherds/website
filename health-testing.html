@@ -167,8 +167,8 @@
       background: var(--copper);
       color: var(--white);
       border-color: transparent;
-      padding: 8px 12px;
-      font-size: 0.78rem;
+      padding: 6px 10px;
+      font-size: 0.7rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
@@ -252,8 +252,8 @@
       }
 
       .btn.primary {
-        padding: 8px 10px;
-        font-size: 0.74rem;
+        padding: 6px 9px;
+        font-size: 0.66rem;
       }
     }
     .container {
@@ -539,12 +539,18 @@
       border: 1px solid rgba(74, 94, 114, 0.12);
       box-shadow: 0 16px 40px rgba(0,0,0,0.12);
       max-height: 360px;
+      display: flex;
     }
     .hero-media img {
       width: 100%;
-      height: 100%;
+      height: auto;
       display: block;
       object-fit: cover;
+    }
+    @media (max-width: 860px) {
+      .hero-media {
+        max-height: 280px;
+      }
     }
     .inline-media {
       margin: 30px auto;
