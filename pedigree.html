@@ -502,7 +502,7 @@
 
       .ped-head,
       .ped-grid {
-        grid-template-columns: repeat(var(--ped-cols), 200px);
+        grid-template-columns: repeat(var(--ped-cols), 220px);
       }
 
       .ped-head {
@@ -524,7 +524,7 @@
 
       .ped-head,
       .ped-grid {
-        grid-template-columns: repeat(var(--ped-cols), 200px);
+        grid-template-columns: repeat(var(--ped-cols), 220px);
       }
     }
 
@@ -556,7 +556,7 @@
 
     .ped-head {
       display: grid;
-      grid-template-columns: repeat(var(--ped-cols), 240px);
+      grid-template-columns: repeat(var(--ped-cols), 200px);
       gap: 12px;
       padding: 10px;
       margin-bottom: 14px;
@@ -567,6 +567,12 @@
       background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,248,248,0.9));
       backdrop-filter: blur(10px);
       z-index: 2;
+    }
+
+    @media (min-width: 1600px) {
+      .ped-head {
+        grid-template-columns: repeat(var(--ped-cols), 220px);
+      }
     }
 
     .ped-head strong {
@@ -596,9 +602,15 @@
 
     .ped-grid {
       display: grid;
-      grid-template-columns: repeat(var(--ped-cols), 240px);
+      grid-template-columns: repeat(var(--ped-cols), 200px);
       grid-auto-rows: 54px;
       gap: 10px;
+    }
+
+    @media (min-width: 1600px) {
+      .ped-grid {
+        grid-template-columns: repeat(var(--ped-cols), 220px);
+      }
     }
 
     #pageRoot[data-cols="4"] .ped-head strong:nth-child(5) {
