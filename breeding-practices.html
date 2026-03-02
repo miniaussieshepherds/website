@@ -572,6 +572,53 @@
       max-height: 420px;
       object-fit: cover;
     }
+
+    /* Scroll-to-top button */
+    .scroll-top {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 9998;
+      width: 46px;
+      height: 46px;
+      border-radius: 999px;
+      border: 1px solid rgba(28,28,30,0.14);
+      background: rgba(255,255,255,0.92);
+      color: var(--charcoal);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.14);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(6px);
+      transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .scroll-top span {
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1;
+      transform: translateY(-1px);
+      display: inline-block;
+    }
+
+    .scroll-top.is-visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .scroll-top:hover {
+      transform: translateY(-1px);
+    }
+
+    .scroll-top:focus-visible {
+      outline: 3px solid rgba(169, 215, 242, 0.85);
+      outline-offset: 3px;
+    }
   </style>
 </head>
 <body>
@@ -725,5 +772,36 @@
         <p>© 2026 MiniAussieShepherds.com — All Rights Reserved.</p>
       </div>
   </footer>
+
+  <button class="scroll-top" id="scrollTop" type="button" aria-label="Scroll to top" title="Back to top">
+    <span aria-hidden="true">⬆</span>
+  </button>
+
+  <script>
+  function initScrollTop() {
+    const btn = document.getElementById('scrollTop');
+    if (!btn) return;
+
+    const reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+    function updateVisibility() {
+      const shouldShow = window.scrollY > 600;
+      btn.classList.toggle('is-visible', shouldShow);
+    }
+
+    updateVisibility();
+    window.addEventListener('scroll', updateVisibility, { passive: true });
+
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScrollTop, { once: true });
+  } else {
+    initScrollTop();
+  }
+  </script>
 </body>
 </html>
