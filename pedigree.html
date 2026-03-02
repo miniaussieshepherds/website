@@ -463,6 +463,10 @@
       .ped-grid {
         grid-template-columns: repeat(var(--ped-cols), 200px);
       }
+
+      .ped-head {
+        width: max-content;
+      }
     }
 
     /* Mobile/touch: always use horizontal scroll + fixed column widths (avoid squished cards) */
@@ -479,7 +483,7 @@
 
       .ped-head,
       .ped-grid {
-        grid-template-columns: repeat(var(--ped-cols), 240px);
+        grid-template-columns: repeat(var(--ped-cols), 200px);
       }
     }
 
@@ -537,6 +541,16 @@
       text-transform: uppercase;
       color: rgba(28,28,30,0.72);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    @media (max-width: 980px) {
+      .ped-head strong {
+        font-size: 0.6rem;
+        letter-spacing: 0.12em;
+      }
     }
 
     .ped-grid {
