@@ -14,7 +14,7 @@
   </url>
   <url>
     <loc>https://miniaussieshepherds.com/pedigree.html</loc>
-    <lastmod>2024-01-01</lastmod>
+    <lastmod>2026-03-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -32,8 +32,14 @@
   </url>
   <url>
     <loc>https://miniaussieshepherds.com/contact.html</loc>
-    <lastmod>2026-03-01</lastmod>
+    <lastmod>2026-03-02</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://miniaussieshepherds.com/mini-aussie-guide.html</loc>
+    <lastmod>2026-03-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>
