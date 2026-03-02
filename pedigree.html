@@ -556,7 +556,7 @@
 
     .ped-head {
       display: grid;
-      grid-template-columns: repeat(var(--ped-cols), 200px);
+      grid-template-columns: repeat(var(--ped-cols), minmax(0, 1fr));
       gap: 12px;
       padding: 10px;
       margin-bottom: 14px;
@@ -569,12 +569,6 @@
       z-index: 2;
     }
 
-    @media (min-width: 1600px) {
-      .ped-head {
-        grid-template-columns: repeat(var(--ped-cols), 220px);
-      }
-    }
-
     .ped-head strong {
       display: flex;
       align-items: center;
@@ -583,14 +577,14 @@
       border-radius: 10px;
       border: 1px solid rgba(28,28,30,0.10);
       background: rgba(245,246,248,0.95);
-      font-size: 0.68rem;
-      letter-spacing: 0.2em;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: rgba(28,28,30,0.72);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      white-space: normal;
+      text-align: center;
+      line-height: 1.2;
     }
 
     @media (max-width: 980px) {
@@ -602,15 +596,9 @@
 
     .ped-grid {
       display: grid;
-      grid-template-columns: repeat(var(--ped-cols), 200px);
+      grid-template-columns: repeat(var(--ped-cols), minmax(0, 1fr));
       grid-auto-rows: 54px;
       gap: 10px;
-    }
-
-    @media (min-width: 1600px) {
-      .ped-grid {
-        grid-template-columns: repeat(var(--ped-cols), 220px);
-      }
     }
 
     #pageRoot[data-cols="4"] .ped-head strong:nth-child(5) {
@@ -793,6 +781,30 @@
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 3;
       line-clamp: 3;
+    }
+
+    @media (min-width: 981px) {
+      .ped-grid > .ped-card[style*="grid-column: 5"] {
+        gap: 8px;
+      }
+
+      .ped-grid > .ped-card[style*="grid-column: 5"] .ped-name {
+        font-size: 0.5rem;
+        white-space: normal;
+        line-height: 1.15;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+      }
+
+      .ped-grid > .ped-card[style*="grid-column: 5"] .ped-meta {
+        font-size: 0.58rem;
+        line-height: 1.1;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+      }
     }
 
     .ped-name {
@@ -1369,48 +1381,6 @@
       }
 
       window.addEventListener('resize', () => requestAnimationFrame(updateTruncatedMetaUI));
-
-      // Click + drag anywhere to pan the pedigree (desktop)
-      if (scroller) {
-        let isDragging = false;
-        let startX = 0;
-        let startY = 0;
-        let startScrollLeft = 0;
-        let startScrollTop = 0;
-
-        scroller.addEventListener('pointerdown', (e) => {
-          if (e.pointerType !== 'mouse') return; // keep native touch scrolling
-          if (e.button !== 0) return;
-          if (e.target && e.target.closest && e.target.closest('a, button, input, textarea, select, label, img')) return;
-
-          isDragging = true;
-          startX = e.clientX;
-          startY = e.clientY;
-          startScrollLeft = scroller.scrollLeft;
-          startScrollTop = scroller.scrollTop;
-          scroller.classList.add('is-dragging');
-
-          scroller.setPointerCapture(e.pointerId);
-          e.preventDefault();
-        });
-
-        scroller.addEventListener('pointermove', (e) => {
-          if (!isDragging) return;
-          const dx = e.clientX - startX;
-          const dy = e.clientY - startY;
-          scroller.scrollLeft = startScrollLeft - dx;
-          scroller.scrollTop = startScrollTop - dy;
-        });
-
-        function endDrag() {
-          isDragging = false;
-          scroller.classList.remove('is-dragging');
-        }
-
-        scroller.addEventListener('pointerup', endDrag);
-        scroller.addEventListener('pointercancel', endDrag);
-        scroller.addEventListener('lostpointercapture', endDrag);
-      }
 
       // Clickable photos -> modal
       function openPhotoModal({ src, alt, name, meta }) {
