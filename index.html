@@ -584,12 +584,13 @@
 
     .parent-photo {
       width: 100%;
-      aspect-ratio: 16 / 10;
+      height: auto;
       border-radius: 8px;
       margin: 12px 0 12px;
       background: var(--white);
       border: 1px dashed rgba(28, 28, 30, 0.22);
       box-shadow: 0 10px 26px rgba(0,0,0,0.08);
+      display: block;
     }
 
     .parent h3 {
@@ -738,6 +739,16 @@
     .reveal.in-view {
       opacity: 1;
       transform: translateY(0) scale(1);
+    }
+
+    .parent-photo {
+      transition: opacity 520ms ease, transform 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      will-change: transform, opacity;
+    }
+
+    .parent-photo:not(.in-view) {
+      opacity: 0;
+      transform: translateY(18px) scale(0.985);
     }
 
     /* Full-screen gallery viewer */
@@ -1547,6 +1558,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       card.style.setProperty('--reveal-delay', `${delay}ms`);
       revealTargets.push(card);
     });
+  });
+
+  // Add parent images (sire/dam) to scroll-reveal targets
+  const parentPhotos = document.querySelectorAll('.parent-photo');
+  parentPhotos.forEach(img => {
+    revealTargets.push(img);
   });
 
   if ('IntersectionObserver' in window) {
