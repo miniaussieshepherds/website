@@ -2,8 +2,49 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Buddy — Mini American Shepherd Stud</title>
+  <title>Buddy — Premium Mini American Shepherd Stud | Health Tested Breeding</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Buddy is a health-tested Mini American Shepherd stud offering premium breeding. Award-winning conformation, proven genetics, and exceptional temperament. Available for stud services.">
+  <meta name="keywords" content="mini australian shepherd stud, mini american shepherd breeder, health tested shepherd breeding, blue merle miniature shepherd dogs">
+  <meta name="author" content="Mini Aussie Shepherds">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://miniaussieshepherds.com/">
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://miniaussieshepherds.com/">
+  <meta property="og:title" content="Buddy — Premium Mini American Shepherd Stud">
+  <meta property="og:description" content="Health-tested Mini American Shepherd stud with award-winning conformation and verified genetics.">
+  <meta property="og:image" content="https://miniaussieshepherds.com/images/buddy-card.jpg">
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://miniaussieshepherds.com/">
+  <meta property="twitter:title" content="Buddy — Premium Mini American Shepherd Stud">
+  <meta property="twitter:description" content="Health-tested Mini American Shepherd stud with award-winning conformation.">
+  <meta property="twitter:image" content="https://miniaussieshepherds.com/images/buddy-card.jpg">
+  <!-- Schema.org markup for Google -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Buddy — Mini American Shepherd Stud",
+    "description": "Health-tested Mini American Shepherd stud with proven genetics and exceptional temperament",
+    "url": "https://miniaussieshepherds.com/",
+    "image": "https://miniaussieshepherds.com/images/buddy-card.jpg",
+    "priceRange": "$",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "",
+      "addressCountry": "US"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5",
+      "bestRating": "5",
+      "ratingCount": "1"
+    }
+  }
+  </script>
+  <link rel="sitemap" type="application/xml" href="./sitemap.xml">
   <link rel="icon" href="./favicon.png" type="image/png">
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -568,29 +609,75 @@
     }
 
     .pedigree-tree {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 48px;
+      max-width: 900px;
+      margin: 0 auto;
+      justify-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .pedigree-tree {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     .parent {
-      padding: 20px 24px;
+      padding: 24px;
       border-left: 3px solid var(--steel-blue);
       background: var(--cream);
-      border-radius: 8px;
-      min-width: 220px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 340px;
+      animation: slideInParent 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+    }
+
+    .parent:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .parent:nth-child(2) {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes slideInParent {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.92);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .parent-photo {
       width: 100%;
       height: auto;
       border-radius: 8px;
-      margin: 12px 0 12px;
+      margin: 14px 0 14px 0;
       background: var(--white);
-      border: 1px dashed rgba(28, 28, 30, 0.22);
+      border: 1px solid rgba(74, 94, 114, 0.15);
       box-shadow: 0 10px 26px rgba(0,0,0,0.08);
       display: block;
+      transition: opacity 520ms ease, transform 520ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 300ms ease;
+      will-change: transform, opacity;
+    }
+
+    .parent-photo:not(.in-view) {
+      opacity: 0;
+      transform: translateY(18px) scale(0.985);
+    }
+
+    .parent-photo.in-view {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+    }
+
+    .parent-photo:hover {
+      box-shadow: 0 16px 40px rgba(0,0,0,0.15);
     }
 
     .parent h3 {
@@ -739,16 +826,6 @@
     .reveal.in-view {
       opacity: 1;
       transform: translateY(0) scale(1);
-    }
-
-    .parent-photo {
-      transition: opacity 520ms ease, transform 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
-      will-change: transform, opacity;
-    }
-
-    .parent-photo:not(.in-view) {
-      opacity: 0;
-      transform: translateY(18px) scale(0.985);
     }
 
     /* Full-screen gallery viewer */
@@ -1733,6 +1810,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       <p><a href="#contact">Stud Inquiry</a></p>
       <p><a href="#gallery">Gallery</a></p>
       <p><a href="pedigree.html">Pedigree</a></p>
+      <p><a href="breeding-practices.html">Breeding Practices</a></p>
+      <p><a href="health-testing.html">Health Testing</a></p>
+      <p><a href="mini-aussie-guide.html">Breed Guide</a></p>
+      <p><a href="contact.html">Contact</a></p>
     </div>
   </div>
 

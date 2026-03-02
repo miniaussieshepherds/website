@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Allow: *.jpg
+Allow: *.png
+Allow: *.css
+Allow: *.js
+
+Disallow: /private/
+Disallow: /temp/
+
+Sitemap: https://miniaussieshepherds.com/sitemap.xml
+
+# Crawl delay for responsible crawling
+Crawl-delay: 1
