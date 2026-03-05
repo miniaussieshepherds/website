@@ -317,49 +317,49 @@
       font-size: 0.85rem;
       color: rgba(255,255,255,0.6);
     }
-    .hero {
+    .container {
+      max-width: 1100px;
+      margin: 40px auto 70px;
+      padding: 0 20px;
+    }
+    .contact-layout {
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 28px;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
       align-items: flex-start;
-      margin-bottom: 40px;
-      padding: 24px;
-      background: var(--white);
-      border-radius: 20px;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.08);
-      border: 1px solid rgba(74, 94, 114, 0.12);
     }
-    .hero h1 {
-      font-size: 2.4rem;
+    .contact-inform h1 {
+      font-size: 2.6rem;
       margin: 0 0 12px;
+      line-height: 1.2;
     }
-    .hero p {
-      margin: 0 0 16px;
+    .contact-inform p {
+      margin: 0 0 20px;
       font-size: 1.05rem;
       color: #4c4c4c;
     }
-    .hero-media {
-      border-radius: 4px;
+    .contact-media {
+      border-radius: 16px;
       overflow: hidden;
       border: 1px solid rgba(74, 94, 114, 0.12);
       box-shadow: 0 16px 40px rgba(0,0,0,0.12);
-      max-height: 500px;
-      width: 320px;
-      flex-shrink: 0;
+      position: sticky;
+      top: 100px;
     }
-    .hero-media img {
+    .contact-media img {
       width: 100%;
-      height: 100%;
+      height: auto;
       display: block;
-      object-fit: contain;
+      object-fit: cover;
     }
-    @media (max-width: 860px) {
-      .hero {
+    @media (max-width: 920px) {
+      .contact-layout {
         grid-template-columns: 1fr;
+        gap: 40px;
       }
-      .hero-media {
-        width: 100%;
-        max-height: 360px;
+      .contact-media {
+        position: static;
+        order: -1;
       }
     }
     h2 {
@@ -374,10 +374,10 @@
     }
     .form-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 16px;
     }
-    @media (max-width: 860px) {
+    @media (max-width: 600px) {
       .form-grid {
         grid-template-columns: 1fr;
       }
@@ -532,53 +532,55 @@
     </nav>
   </div>
   <div class="container">
-    <header class="hero">
-      <div>
+    <div class="contact-layout">
+      <div class="contact-inform">
         <h1>Get in Touch</h1>
         <p>Questions about Buddy or stud services? We'd love to help you plan the right pairing.</p>
+        
         <div class="info-box">
-          <h2 style="margin-top: 0;">Contact Us</h2>
-          <p>Share your goals, timing, and any health details for your dam so we can help quickly.</p>
+          <h2 style="margin-top: 0; font-size: 1.3rem;">Contact Us</h2>
+          <p style="margin-bottom: 0;">Share your goals, timing, and any health details for your dam so we can help quickly.</p>
         </div>
+
+        <form method="POST" action="https://formspree.io/f/YOUR_FORM_ID">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="name">Full Name *</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone">
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" required placeholder="Tell us more about your inquiry..."></textarea>
+          </div>
+
+          <button type="submit" style="width: 100%;">Send Message</button>
+        </form>
+
+        <h2 style="margin-top: 50px; font-size: 1.4rem;">Quick Links</h2>
+        <ul style="padding-left: 20px;">
+          <li><a href="mini-american-shepherd-guide.html">Learn about the Mini American Shepherd guide</a></li>
+          <li><a href="health-testing.html">View health testing results</a></li>
+          <li><a href="pedigree.html">View Buddy's pedigree</a></li>
+          <li><a href="index.html">Return to homepage</a></li>
+        </ul>
       </div>
-      <div class="hero-media">
+
+      <div class="contact-media">
         <img src="./images/puppy-01.jpg" alt="Mini American Shepherd puppy" loading="lazy" decoding="async">
       </div>
-    </header>
-
-    <form method="POST" action="https://formspree.io/f/YOUR_FORM_ID">
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="name">Full Name *</label>
-          <input type="text" id="name" name="name" required>
-        </div>
-
-        <div class="form-group">
-          <label for="email">Email Address *</label>
-          <input type="email" id="email" name="email" required>
-        </div>
-
-        <div class="form-group">
-          <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" name="phone">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="message">Message *</label>
-        <textarea id="message" name="message" required placeholder="Tell us more about your inquiry..."></textarea>
-      </div>
-
-      <button type="submit">Send Message</button>
-    </form>
-
-    <h2 style="margin-top: 50px;">Quick Links</h2>
-    <ul>
-      <li><a href="mini-american-shepherd-guide.html">Learn about the Mini American Shepherd guide</a></li>
-      <li><a href="health-testing.html">View health testing results</a></li>
-      <li><a href="pedigree.html">View Buddy's pedigree</a></li>
-      <li><a href="index.html">Return to homepage</a></li>
-    </ul>
+    </div>
   </div>
 
   <!-- FOOTER -->
